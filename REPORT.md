@@ -108,6 +108,16 @@ weights frozen (that is where knowledge lives). Eval end-to-end: PPL + 300-quest
 | distill_A_v1 | latent 512, loop-shared, FP4 | 4,416 | release | **running** (since ~01:10) |
 | distill_B_v1 | latent 256, loop + pair shared, FP4 | 1,050 | Preview, old absolute lr | **running** (since 22:52, slower than planned) |
 | distill_B_v2 | same as B | 1,050 | release | queued (auto-push when B v1 ends) |
+**distill_E_v1 RESULT** (release weights; results/distill_E_v1/results.json): config E = 512 latent per stored slot +
+128 residual latent for second-pass visits, shared FP8 RoPE key, FP4 latents.
+| release weights | KV B/token | smaller by | WikiText PPL | fineweb PPL | MMLU (300 q) |
+|---|---|---|---|---|---|
+| teacher | 57,344 | 1x | 19.80 | 14.87 | 72.3% |
+| config A | 4,416 | 13x | 20.49 (+3.5%) | 15.64 (+5.2%) | 68.7% |
+| config E | 3,660 | 15.7x | 20.19 (+1.9%) | 15.40 (+3.6%) | 68.7% |
+E beats A on size and perplexity (second-pass error 0.39–0.45 vs 0.41–0.56). MMLU is −3.7 pt in both → the ceiling of
+layer-local training; end-to-end KD is the next step for knowledge preservation.
+
 **distill_A_v1 RESULT** (release weights; from the run's live log, results/distill_A_v1/live_log.txt):
 | | teacher | student (4,416 B/token, 13x smaller KV) |
 |---|---|---|

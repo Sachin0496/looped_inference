@@ -56,7 +56,7 @@ Read PLAN.md for the design. This file is the work queue + rules for each check-
 | kv-analysis v4 | T4x2 | 18.11 22:40 | ~2.5 h | results/kv_analysis_v4 |
 | distill-b v1 | T4x2 | 18.11 22:52 | 12 h cap (crashed step 1, then hung) | results/distill_B_v1 (none) |
 | distill-a v1 | T4x2 | 19.11 01:10 | 3.6 h work + hang to 12 h cap | results/distill_A_v1/live_log.txt |
-| distill-e v1 | T4x2 | 19.11 10:56 | ? | results/distill_E_v1 |
+| distill-e v1 | T4x2 | 19.11 10:56 | 3.7 h | results/distill_E_v1 |
 | loop-conv v1 | T4x2 | 19.11 12:49 | ~8 min | results/loop_conv_v1 |
 | engine-e2e v1 | T4x2 | 19.11 13:00 | 14 min | results/engine_e2e_v1 |
 | kv-release v1 | T4x2 | 18.11 22:16 | pending | results/kv_release_v1 |
@@ -102,3 +102,4 @@ Opus burns ~1%/min of the 5-hour window and ~0.2%/min weekly during heavy work. 
 - 13:13 IST: loop_conv v1 COMPLETE (7.6 min): skipping pass 2 → PPL 18.8→88.9 (+372%), top-1 45%; r median 2.1, Spearman(r, KL)=0.11, (r, dNLL)=−0.03 → no training-free early exit. engine_e2e pushed 13:00 RUNNING; distill-e RUNNING.
 - 14:15 IST: engine-e2e v1 COMPLETE: 15.5 tok/s @1K vs HF 1.8; 87% top-1, KL 0.048; weights 5.05 GB but peak 14.2 GiB (HF still in process) → 8K OOM. Haiku building v2 (fresh-process engine, 1K/8K/32K memory). distill-e RUNNING.
 - 14:21 IST: Kaggle WEEKLY GPU QUOTA (30 h) EXHAUSTED — mostly by the two hung distill sessions (~24 h). engine_e2e v2 (fresh-process memory bench, CPU-checked) ready but cannot run until the weekly reset; its watcher stopped. distill-e v1 still RUNNING (watch whether Kaggle lets it finish). Rule added: always add the hard-exit footer + excepthook before pushing any job.
+- 14:45 IST: distill-e v1 COMPLETE in 3.7 h and EXITED (hard-exit fix works). E: 3,660 B/token (15.7x), wiki +1.9%, fineweb +3.6%, MMLU 68.7% (teacher 72.3%). Beats A on bytes and PPL; MMLU gap unchanged → end-to-end KD needed. GPU quota exhausted; awaiting user choice (TPU KD port vs wait).
