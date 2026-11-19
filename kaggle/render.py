@@ -74,6 +74,13 @@ JOBS = {
         "gpu": True,
         "internet": True,
     },
+    "loop_conv": {
+        "template": "kaggle/loop_conv/loop_conv.py",
+        "subs": {},
+        "id": "sachin0496/sensenovakv-loop-conv",
+        "gpu": True,
+        "internet": True,
+    },
 }
 
 name = sys.argv[1]

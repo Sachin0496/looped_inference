@@ -40,6 +40,7 @@ Read PLAN.md for the design. This file is the work queue + rules for each check-
 - [done] W7b tensor-core attention v2: all_correct; 1.5–2.3x over v1, 10–21x over SDPA at T=1; 17–34% BW (dequant-bound?, follow-up).
 - [todo] W8 Morning report: REPORT.md with measured tables
 - [queued] W9 engine_e2e v1 (engine/runtime/snkv_engine.py + engine/README.md; Kaggle `sachin0496/sensenovakv-engine-e2e`, T4x2, internet): 4-bit packed decode engine on cuda:0 (56 visits, mHC/DeltaNet/GEMV kernels, CUDA graph) vs HF fp16 teacher, 3 prompts x 64 teacher-forced steps (top-1, max|dlogit| step 1, KL), tokens/s 1K/8K HF vs engine, peak mem 8K, KV at 32K/128K. CPU tests pass (tests/test_engine_cpu.py: fp32 plumbing 4e-6 rel). GPU path unrun. Watcher scratchpad engine_watch.py (caffeinate, log engine_watch.log) holds the push until distill-a/b are idle, retries 5 min, fetches to results/engine_e2e_v1. Not committed.
+- [queued] W10 loop-convergence diagnostic (training-free, SenseNova-Loop-9B Preview, T4x2): kaggle/loop_conv/loop_conv.py, Kaggle `sachin0496/sensenovakv-loop-conv`. Per token: r_t = ||h2−h1||/||h1|| at layer 27 (last looped layer, after mHC leave) from the 2-loop run; KL(p_2loop||p_1loop), top-1 agreement and dNLL from a 1-loop run on the same 16 fineweb-edu + 16 WikiText-2 sequences x 2048. Outputs NLL/PPL, r quantiles, Spearman(r, KL / dNLL), oracle-exit table at r quantiles, top-20 tokens. Per-token approximation (caveat in results). Smoke test on the tiny model passed (CPU, plan check exact). Watcher scratchpad loop_conv_watch.py (caffeinate, log loop_conv_watch.log) retries the push every 5 min, max 2 accepted pushes, fetches to results/loop_conv_v1. Not committed.
 
 ## Kaggle ledger
 | run | accel | start (IST) | wall | result |
@@ -57,6 +58,7 @@ Read PLAN.md for the design. This file is the work queue + rules for each check-
 | distill-b v1 | T4x2 | 18.11 22:52 | running (known bug, see W4) | results/distill_B_v1 |
 | distill-a v1 | T4x2 | pending (session limit, watcher retries) | - | results/distill_A_v1 |
 | engine-e2e v1 | T4x2 | queued (watcher: waits for distill-a/b idle, then pushes) | - | results/engine_e2e_v1 |
+| loop-conv v1 | T4x2 | queued 19.11 09:01 (watcher retries push every 5 min, session limit) | - | results/loop_conv_v1 |
 
 ## Pacing
 Opus burns ~1%/min of the 5-hour window and ~0.2%/min weekly during heavy work. Keep check-ins short; give implementation to Haiku.
