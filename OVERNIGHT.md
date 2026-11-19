@@ -112,3 +112,5 @@ Opus burns ~1%/min of the 5-hour window and ~0.2%/min weekly during heavy work. 
 - 14:45 IST: distill-e v1 COMPLETE in 3.7 h and EXITED (hard-exit fix works). E: 3,660 B/token (15.7x), wiki +1.9%, fineweb +3.6%, MMLU 68.7% (teacher 72.3%). Beats A on bytes and PPL; MMLU gap unchanged → end-to-end KD needed. GPU quota exhausted; awaiting user choice (TPU KD port vs wait).
 - 15:13 IST: nothing runnable (Kaggle GPU quota exhausted), nothing pending, REPORT.md complete. Hourly check-in cron stopped; waiting for the user's choice (TPU KD port vs GPU reset).
 - 16:10 IST: user chose TPU KD. JAX port + config-E student done by Haiku agents and verified vs torch; KD job smoke-tested (tiny KL 0.158→0.132). TPU probe queued (holds the 1 TPU slot); kd_tpu push waits for it. Hourly check-in cron restarted.
+- 17:33 IST: probe still QUEUED (~1 h 50 m, single TPU slot); kd-tpu not pushed yet (404 = no version). Usage 5h 17%, weekly 8%. Waiting.
+- 18:33 IST: probe still QUEUED (~2 h 50 m). Official kaggle-cli docs/kernels_metadata.md confirm machine_shape `TpuV5E8` = TPU v5e-8, so this is TPU demand, not a bad shape. kd-tpu waits. Usage 5h 18%, weekly 8%.

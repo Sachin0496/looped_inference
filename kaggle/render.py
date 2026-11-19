@@ -1,5 +1,9 @@
-"""Render a Kaggle script kernel with sources inlined. Usage: python3 kaggle/render.py mhc_bench"""
+"""Render a Kaggle script kernel with sources inlined. Usage: python3 kaggle/render.py mhc_bench
+
+Set KAGGLE_USER=<your kaggle username> to render the kernel ids (and kernel_sources) under your own account.
+"""
 import json
+import os
 import pathlib
 import sys
 
@@ -106,6 +110,10 @@ JOBS = {
 
 name = sys.argv[1]
 job = JOBS[name]
+OWNER = os.environ.get("KAGGLE_USER")
+if OWNER:
+    job["id"] = OWNER + "/" + job["id"].split("/", 1)[1]
+    job["kernel_sources"] = [OWNER + "/" + k.split("/", 1)[1] for k in job.get("kernel_sources", [])]
 text = (ROOT / job["template"]).read_text()
 if "prelude" in job:
     text = job["prelude"] + text
