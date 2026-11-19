@@ -11,6 +11,11 @@
 #      share{r}_pair... + paired looped layers (7,11) (15,19) (23,27): 2nd layer rebuilds from 1st's latent
 #    Regression maps are least-squares fits computed from the covariances (closed form).
 # Every number written to results.json is measured in this run.
+import sys as _sys0, os as _os0, traceback as _tb0
+def _hard_exit_on_error(et, ev, tb):  # streaming-dataset threads keep the process alive after an exception
+    _tb0.print_exception(et, ev, tb); _sys0.stdout.flush(); _sys0.stderr.flush(); _os0._exit(1)
+_sys0.excepthook = _hard_exit_on_error
+
 import json, math, os, subprocess, sys, time
 
 T0 = time.time()

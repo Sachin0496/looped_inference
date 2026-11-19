@@ -18,6 +18,11 @@
 # Setup, weight download and smoke mode mirror kaggle/kv_analysis/kv_analysis.py.
 # Smoke test: SNKV_TINY=<SenseNova-Loop checkout> python3 loop_conv.py  (CPU, random tiny model)
 # Output: /kaggle/working/results.json and /kaggle/working/per_token.npz
+import sys as _sys0, os as _os0, traceback as _tb0
+def _hard_exit_on_error(et, ev, tb):  # streaming-dataset threads keep the process alive after an exception
+    _tb0.print_exception(et, ev, tb); _sys0.stdout.flush(); _sys0.stderr.flush(); _os0._exit(1)
+_sys0.excepthook = _hard_exit_on_error
+
 import json, math, os, subprocess, sys, time
 
 T0 = time.time()

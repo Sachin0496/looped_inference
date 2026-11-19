@@ -4,6 +4,11 @@
 # a probe (init / final), or replace the teacher's attention output (eval).
 # Config via SNKV_CONFIG (A, B, C). SNKV_TINY=<SenseNova-Loop checkout> runs a CPU smoke test on a random tiny model.
 # Weights via SNKV_RELEASE=1 (RELEASE GGUF converted to HF, see release_hf_dir) or the Preview checkpoint (default).
+import sys as _sys0, os as _os0, traceback as _tb0
+def _hard_exit_on_error(et, ev, tb):  # streaming-dataset threads keep the process alive after an exception
+    _tb0.print_exception(et, ev, tb); _sys0.stdout.flush(); _sys0.stderr.flush(); _os0._exit(1)
+_sys0.excepthook = _hard_exit_on_error
+
 import json, math, os, random, shutil, subprocess, sys, time
 from contextlib import nullcontext
 

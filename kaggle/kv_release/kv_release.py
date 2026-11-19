@@ -3,6 +3,11 @@
 # Converter (engine/convert/gguf_to_hf.py) and KV analysis sources are embedded by kaggle/render.py.
 # Note: the converter takes the Preview config.json (release config is not published); GGUF metadata
 # overrides are applied by the converter itself. Vision tower is not in the GGUF (random init, text-only use).
+import sys as _sys0, os as _os0, traceback as _tb0
+def _hard_exit_on_error(et, ev, tb):  # streaming-dataset threads keep the process alive after an exception
+    _tb0.print_exception(et, ev, tb); _sys0.stdout.flush(); _sys0.stderr.flush(); _os0._exit(1)
+_sys0.excepthook = _hard_exit_on_error
+
 import glob, json, importlib.util, os, shutil, subprocess, sys, time, traceback
 
 T0 = time.time()

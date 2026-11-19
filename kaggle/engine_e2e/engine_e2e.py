@@ -9,6 +9,11 @@
 #   -> engine_validation (teacher-forced: the HF greedy tokens are fed to the engine, logits compared per step)
 #   -> engine_bench 1K / 8K (CUDA graph tokens/s, peak memory on cuda:0), projected KV at 32K / 128K.
 # results.json is rewritten after every stage; engine_e2e.log holds the full log.
+import sys as _sys0, os as _os0, traceback as _tb0
+def _hard_exit_on_error(et, ev, tb):  # streaming-dataset threads keep the process alive after an exception
+    _tb0.print_exception(et, ev, tb); _sys0.stdout.flush(); _sys0.stderr.flush(); _os0._exit(1)
+_sys0.excepthook = _hard_exit_on_error
+
 import gc, json, os, shutil, subprocess, sys, time, traceback, types
 
 import torch
