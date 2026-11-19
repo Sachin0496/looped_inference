@@ -58,3 +58,7 @@ every 20 steps. Throughput reference: teacher forward ≈ 313 tok/s on 2xT4 with
 - "A": r=512, share_loop, rope group, no pair, FP4 latent + FP8 rope (QAT on), Hadamard on.
 - "B": r=256, share_loop, rope shared, pair_share, FP4 + FP8 QAT, Hadamard on.   (≈1 KB/token target)
 - "C": r=512, no sharing, bf16 (no QAT) — the easy reference point.
+- "E": r=512 stored visit-0 latent (FP4 + Hadamard, as A) and, for looped layers, a residual latent c_res = W_dres·x_visit1
+  (r_res=128, FP4, stored). Visit-1 k/v = W_uk1·c0 + W_ukres·c_res (same for V). Rope "shared", every visit stores its own
+  rope key. No pair sharing. Init: W1 = least squares from c0 (cross-covariance E[x1 x0^T]); residual M − W1·Wd0·Q with
+  Q = E[x0 x1^T]E[x1 x1^T]^-1, factored by activation-aware SVD. kv bytes = 8×(256+32) + 6×(64+8) + 14×66 = 3660.

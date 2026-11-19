@@ -403,3 +403,9 @@ if __name__ == "__main__":
         RES["wall_s"] = round(time.time() - T0, 1)
         save()
         log("finished; outputs in", OUT, sorted(os.listdir(OUT)))
+
+# Streaming-dataset worker threads can keep the interpreter alive after the script ends (seen on Kaggle:
+# distill A printed "done" at 3.6 h, then the session stayed RUNNING for hours). Exit hard after flushing.
+import sys as _sys, os as _os
+_sys.stdout.flush(); _sys.stderr.flush()
+_os._exit(0)

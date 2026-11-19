@@ -431,3 +431,9 @@ for name, row in RES["variants"].items():
         row["d_fineweb_ppl_pct"] = 100 * (math.exp(row["fineweb_nll"] - base["fineweb_nll"]) - 1)
 save()
 log("done")
+
+# Streaming-dataset worker threads can keep the interpreter alive after the script ends (seen on Kaggle:
+# distill A printed "done" at 3.6 h, then the session stayed RUNNING for hours). Exit hard after flushing.
+import sys as _sys, os as _os
+_sys.stdout.flush(); _sys.stderr.flush()
+_os._exit(0)

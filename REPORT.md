@@ -89,7 +89,21 @@ weights frozen (that is where knowledge lives). Eval end-to-end: PPL + 300-quest
 | distill_A_v1 | latent 512, loop-shared, FP4 | 4,416 | release | **running** (since ~01:10) |
 | distill_B_v1 | latent 256, loop + pair shared, FP4 | 1,050 | Preview, old absolute lr | **running** (since 22:52, slower than planned) |
 | distill_B_v2 | same as B | 1,050 | release | queued (auto-push when B v1 ends) |
-Results: **pending**. Both runs exceed the planned ~4.5 h; cause unknown without live logs (CLI cannot stream them).
+**distill_A_v1 RESULT** (release weights; from the run's live log, results/distill_A_v1/live_log.txt):
+| | teacher | student (4,416 B/token, 13x smaller KV) |
+|---|---|---|
+| WikiText-2 PPL | 19.80 | 20.49 (+3.5%) |
+| fineweb-edu PPL | 14.87 | 15.64 (+5.2%) |
+| MMLU (300 q, 0-shot) | 72.3% | 68.7% (−3.7 pt; ±2.6 sampling error) |
+Per-layer relative output error after 4.1M training tokens: first-pass visits 0.09–0.32, but second-pass visits that reuse
+the first pass's latent 0.41–0.56 (barely improved by training) → **cross-loop sharing is the main source of loss**.
+Knowledge is therefore NOT yet at baseline. Next: config E (second pass gets a small residual latent, 3,660 B/token),
+queued on Kaggle; then end-to-end KD.
+
+Also found: the runs were not slow — they finished (A in 3.6 h) but the process never exited (streaming-dataset threads),
+so Kaggle showed them RUNNING until its 12 h cap. Fixed with a hard exit in every job.
+
+Older note: Both runs exceed the planned ~4.5 h; cause unknown without live logs (CLI cannot stream them).
 Kaggle's 12 h cap ends B v1 by ~10:50 and A by ~13:10 at the latest.
 
 ## 6. Release-weight converter — engine/convert/gguf_to_hf.py

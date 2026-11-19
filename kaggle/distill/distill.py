@@ -10,9 +10,12 @@ from contextlib import nullcontext
 T0 = time.time()
 CFG_NAME = os.environ.get("SNKV_CONFIG", "B")
 CONFIGS = {
-    "A": dict(r=512, share_loop=True, pair=False, rope="group", qat=True, hadamard=True),
-    "B": dict(r=256, share_loop=True, pair=True, rope="shared", qat=True, hadamard=True),
-    "C": dict(r=512, share_loop=False, pair=False, rope="group", qat=False, hadamard=False),
+    "A": dict(r=512, res=0, share_loop=True, pair=False, rope="group", qat=True, hadamard=True),
+    "B": dict(r=256, res=0, share_loop=True, pair=True, rope="shared", qat=True, hadamard=True),
+    "C": dict(r=512, res=0, share_loop=False, pair=False, rope="group", qat=False, hadamard=False),
+    # E: visit 1 of looped layers gets its own residual latent (res dims, FP4) on top of the visit-0 latent c0:
+    # k/v = W_uk1 c0 + W_ukres c_res. Every visit owns its rope key (shared mode). No pair sharing.
+    "E": dict(r=512, res=128, share_loop=True, pair=False, rope="shared", qat=True, hadamard=True),
 }
 CFG = dict(CONFIGS[CFG_NAME], name=CFG_NAME)
 WEIGHTS = os.environ.get("SNKV_WEIGHTS", "sensenova/SenseNova-Loop-9B-Preview")
@@ -171,11 +174,13 @@ G, HD, H, HQ = tcfg.num_key_value_heads, tcfg.head_dim, tcfg.hidden_size, tcfg.n
 ROT = int(HD * tcfg.rope_parameters.get("partial_rotary_factor", 1.0))  # rotary dims per head (64 of 256)
 NOPE, HALF = HD - ROT, ROT // 2
 RANK = CFG["r"] // 8 if TINY else CFG["r"]  # TINY: all dims scaled down by 8 (hidden 64 -> full rank = 64)
+RRES = (CFG["res"] // 8 if TINY else CFG["res"]) if CFG["res"] else 0  # residual latent of looped visit 1 (config E)
 RK = G * ROT if CFG["rope"] == "group" else ROT
 REAL_G, REAL_ROT = 4, 64  # real-model dims, used for the byte accounting in both modes
-log("full-attn", FULL, "looped", LOOPED, "pairs", PAIRS, "G", G, "HD", HD, "H", H, "ROT", ROT, "rank", RANK, "RK", RK)
+log("full-attn", FULL, "looped", LOOPED, "pairs", PAIRS, "G", G, "HD", HD, "H", H, "ROT", ROT, "rank", RANK, "res", RRES, "RK", RK)
 assert RANK % 16 == 0 and RANK <= H
-RES.update(full=FULL, looped=LOOPED, pairs=PAIRS, rank=RANK, rot=ROT, rope_slots=RK)
+assert RRES == 0 or (RRES % 16 == 0 and RRES <= H)
+RES.update(full=FULL, looped=LOOPED, pairs=PAIRS, rank=RANK, res_rank=RRES, rot=ROT, rope_slots=RK)
 
 ATT = {i: text_model.layers[i].self_attn for i in FULL}
 for i in FULL:
@@ -193,16 +198,24 @@ def src_of(L, v):
         for a, b in PAIRS:
             if L == b:
                 return (a, 0)
-    if CFG["share_loop"] and L in LOOPED and v == 1:
+    if CFG["share_loop"] and not CFG["res"] and L in LOOPED and v == 1:
         return (L, 0)
     return (L, v)
+
+
+def lat_dim(L, v):
+    """Width of the latent stored at slot (L, v)."""
+    return RRES if (CFG["res"] and v == 1 and L in LOOPED) else RANK
 
 
 SELF = [(L, v) for L in FULL for v in visits_of(L)]
 SRC = {k: src_of(*k) for k in SELF}
 OWNERS = [k for k in SELF if SRC[k] == k]
 USERS = [k for k in SELF if SRC[k] != k]
-log("slots (owners)", OWNERS, "users", USERS)
+# Residual visits (config E) own a latent AND read the visit-0 latent of the same layer as a base: k/v use [c0 ; c_res].
+BASE = {(L, 1): (L, 0) for L in LOOPED} if CFG["res"] else {}
+XREF = {**{u: SRC[u] for u in USERS}, **BASE}  # cross-covariance partners for calibration
+log("slots (owners)", OWNERS, "users", USERS, "residual bases", BASE)
 
 # ------------------------------------------------------------------ student modules
 
@@ -247,9 +260,9 @@ def fp8_fake(x):
 
 
 def quantize(c, kr):
-    """c: [B,T,RANK] latent, kr: [B,T,RK] rope keys (pre-norm). Optional Hadamard + FP4 / FP8 fake quant (STE)."""
+    """c: [B,T,r] latent (r = RANK or RRES), kr: [B,T,RK] rope keys (pre-norm). Optional Hadamard + FP4 / FP8 fake quant (STE)."""
     if CFG["hadamard"]:
-        Hm = hadamard(RANK, c.device)
+        Hm = hadamard(c.shape[-1], c.device)
         c = c @ Hm
     if CFG["qat"]:
         c = ste(c, fp4_fake(c))
@@ -272,10 +285,11 @@ class StudentAttn(nn.Module):
         self.alpha = nn.ParameterDict()
         for v in visits_of(L):
             if SRC[(L, v)] == (L, v):
-                self.enc_dkv[f"v{v}"] = nn.Parameter(torch.zeros(RANK, H, device=dev))
+                self.enc_dkv[f"v{v}"] = nn.Parameter(torch.zeros(lat_dim(L, v), H, device=dev))
                 self.enc_kr[f"v{v}"] = nn.Parameter(torch.zeros(RK, H, device=dev))
-            self.up_k[f"v{v}"] = nn.Parameter(torch.zeros(G, NOPE, RANK, device=dev))
-            self.up_v[f"v{v}"] = nn.Parameter(torch.zeros(G, HD, RANK, device=dev))
+            cin = lat_dim(*SRC[(L, v)]) + (lat_dim(*BASE[(L, v)]) if (L, v) in BASE else 0)
+            self.up_k[f"v{v}"] = nn.Parameter(torch.zeros(G, NOPE, cin, device=dev))
+            self.up_v[f"v{v}"] = nn.Parameter(torch.zeros(G, HD, cin, device=dev))
             if CFG["rope"] == "shared":
                 self.alpha[f"v{v}"] = nn.Parameter(torch.zeros(G, HALF, 2, device=dev))
 
@@ -295,8 +309,11 @@ class StudentAttn(nn.Module):
             else:
                 c, kr = stash[src]
                 c, kr = c.to(dev), kr.to(dev)
-            k_nope = F.linear(c, self.up_k[f"v{v}"].reshape(G * NOPE, RANK)).float().view(B, T, G, NOPE)
-            v_ = F.linear(c, self.up_v[f"v{v}"].reshape(G * HD, RANK)).float().view(B, T, G, HD)
+            if (self.L, v) in BASE:  # residual visit: up-project from [c0 ; c_res]
+                c = torch.cat([stash[BASE[(self.L, v)]][0].to(dev), c], -1)
+            cin = c.shape[-1]
+            k_nope = F.linear(c, self.up_k[f"v{v}"].reshape(G * NOPE, cin)).float().view(B, T, G, NOPE)
+            v_ = F.linear(c, self.up_v[f"v{v}"].reshape(G * HD, cin)).float().view(B, T, G, HD)
             if CFG["rope"] == "shared":
                 al = self.alpha[f"v{v}"]
                 a, b = al[..., 0], al[..., 1]  # complex scale per (group, frequency), pairs (i, i+HALF)
@@ -506,21 +523,25 @@ def probe(seqs):
 
 
 def kv_bytes_per_token():
-    slots = len(OWNERS)
+    """Sum over stored slots (real-model dims): latent + its rope key. Each slot has its own width (E: 8 x 512, 6 x 128)."""
     rk_real = REAL_G * REAL_ROT if CFG["rope"] == "group" else REAL_ROT
-    if CFG["qat"]:
-        lat = CFG["r"] * 0.5 + CFG["r"] / 16          # FP4 values + E4M3 scale per 16
-        rope = rk_real * 1 + (rk_real // REAL_ROT) * 2  # FP8 keys + 2-byte scale per (token, group)
-    else:
-        lat = 2 * CFG["r"]                             # bf16
-        rope = 2 * rk_real
-    return slots * (lat + rope)
+    tot = 0.0
+    for (L, v) in OWNERS:
+        r_real = (CFG["res"] if (CFG["res"] and v == 1 and L in LOOPED) else CFG["r"])
+        if CFG["qat"]:
+            lat = r_real * 0.5 + r_real / 16              # FP4 values + E4M3 scale per 16
+            rope = rk_real * 1 + (rk_real // REAL_ROT) * 2  # FP8 keys + 2-byte scale per (token, group)
+        else:
+            lat = 2 * r_real                              # bf16
+            rope = 2 * rk_real
+        tot += lat + rope
+    return int(tot)
 
 
 # ------------------------------------------------------------------ calibration statistics
 
 COV = {k: torch.zeros(H, H, dtype=torch.float64) for k in SELF}
-XC = {k: torch.zeros(H, H, dtype=torch.float64) for k in USERS}
+XC = {k: torch.zeros(H, H, dtype=torch.float64) for k in XREF}
 NTOK = 0
 STATE["mode"] = "collect"
 t_cal = time.time()
@@ -531,15 +552,15 @@ for si, s in enumerate(CALIB):
     X = {k: STATE["collect"][k].reshape(-1, H).float().to(dev0) for k in SELF}
     for k in SELF:
         COV[k] += (X[k].T @ X[k]).double().cpu()
-    for u in USERS:
-        XC[u] += (X[u].T @ X[SRC[u]]).double().cpu()
+    for u, ref in XREF.items():
+        XC[u] += (X[u].T @ X[ref]).double().cpu()
     NTOK += X[SELF[0]].shape[0]
     del X
 STATE["mode"] = "off"
 STATE["collect"] = {}
 for k in SELF:
     COV[k] /= NTOK
-for u in USERS:
+for u in XREF:
     XC[u] /= NTOK
 log(f"calibration: {len(CALIB)} seqs, {NTOK} tokens, {time.time() - t_cal:.0f}s")
 
@@ -580,12 +601,35 @@ def set_(p, t):
 
 INIT_METHOD = {}
 t_init = time.time()
+def ridge(A, eps=1e-6):
+    return A + eps * A.diagonal().mean() * torch.eye(A.shape[0], dtype=A.dtype)
+
+
 for (L, v) in OWNERS:
     S, Sinv = sqrt_inv(COV[(L, v)])
     M, rows = map_teacher(L)
-    U, Sig, Vh = torch.linalg.svd(M @ S, full_matrices=False)
-    Wdkv = Vh[:RANK] @ Sinv
-    Wup = U[:, :RANK] * Sig[:RANK]
+    st = STU[str(L)]
+    if (L, v) in BASE:
+        # Residual visit (E). Target t = M x1. Stage 1: W1 = least squares from the visit-0 latent c0 = Wd0 x0,
+        # W1 = E[t c0^T] E[c0 c0^T]^-1 with E[x1 x0^T] = XC. Stage 2: the best linear-in-x1 residual of that fit is
+        # M_res = M - W1 Wd0 Q, Q = E[x0 x1^T] E[x1 x1^T]^-1; factor it by activation-aware SVD: c_res = Wdres x1,
+        # W_ukres = U_r Sigma_r. Up-projection of [c0 ; c_res] is [W1 | W_ukres].
+        b = BASE[(L, v)]
+        Wd0 = st.enc_dkv[f"v{b[1]}"].detach().double().cpu()
+        Cb, Cx, X10 = COV[b], COV[(L, v)], XC[(L, v)]
+        W1 = torch.linalg.solve(ridge(Wd0 @ Cb @ Wd0.T), (M @ X10 @ Wd0.T).T).T
+        Q = torch.linalg.solve(ridge(Cx), X10).T
+        Mres = M - W1 @ Wd0 @ Q
+        S1, S1inv = sqrt_inv(Cx)
+        U, Sig, Vh = torch.linalg.svd(Mres @ S1, full_matrices=False)
+        Wdkv = Vh[:RRES] @ S1inv
+        Wup = torch.cat([W1, U[:, :RRES] * Sig[:RRES]], -1)
+        method = f"residual: LS from base {b[0]}.{b[1]} + activation-aware SVD of residual"
+    else:
+        U, Sig, Vh = torch.linalg.svd(M @ S, full_matrices=False)
+        Wdkv = Vh[:RANK] @ Sinv
+        Wup = U[:, :RANK] * Sig[:RANK]
+        method = "activation-aware SVD (owner)"
     if CFG["rope"] == "group":
         Wkr = rows.reshape(G * ROT, H)
         alpha = None
@@ -594,14 +638,13 @@ for (L, v) in OWNERS:
         Wkr = Vh2[:ROT] @ Sinv
         Rrec = ((U2[:, :ROT] * S2[:ROT]) @ Wkr).reshape(G, ROT, H)
         alpha = fit_alpha(Rrec, Wkr, COV[(L, v)], COV[(L, v)])
-    st = STU[str(L)]
     set_(st.enc_dkv[f"v{v}"], Wdkv)
     set_(st.enc_kr[f"v{v}"], Wkr)
-    set_(st.up_k[f"v{v}"], Wup[:G * NOPE].reshape(G, NOPE, RANK))
-    set_(st.up_v[f"v{v}"], Wup[G * NOPE:].reshape(G, HD, RANK))
+    set_(st.up_k[f"v{v}"], Wup[:G * NOPE].reshape(G, NOPE, -1))
+    set_(st.up_v[f"v{v}"], Wup[G * NOPE:].reshape(G, HD, -1))
     if alpha is not None:
         set_(st.alpha[f"v{v}"], alpha)
-    INIT_METHOD[f"{L}.{v}"] = "activation-aware SVD (owner)"
+    INIT_METHOD[f"{L}.{v}"] = method
 for (L, v) in USERS:
     Ls, vs = SRC[(L, v)]
     Cs, Cxs = COV[(Ls, vs)], XC[(L, v)]
@@ -713,3 +756,9 @@ RES["eval_seconds"] = time.time() - t_ev
 RES["total_seconds"] = time.time() - T0
 save()
 log("done")
+
+# Streaming-dataset worker threads can keep the interpreter alive after the script ends (seen on Kaggle:
+# distill A printed "done" at 3.6 h, then the session stayed RUNNING for hours). Exit hard after flushing.
+import sys as _sys, os as _os
+_sys.stdout.flush(); _sys.stderr.flush()
+_os._exit(0)

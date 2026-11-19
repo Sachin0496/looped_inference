@@ -54,6 +54,14 @@ JOBS = {
         "gpu": True,
         "internet": True,
     },
+    "distill_E": {
+        "template": "kaggle/distill/distill.py",
+        "subs": {"__CONVERTER_SOURCE__": "engine/convert/gguf_to_hf.py"},
+        "prelude": 'import os\nos.environ["SNKV_CONFIG"] = "E"\nos.environ["SNKV_RELEASE"] = "1"\n',
+        "id": "sachin0496/sensenovakv-distill-e",
+        "gpu": True,
+        "internet": True,
+    },
     "engine_e2e": {
         "template": "kaggle/engine_e2e/engine_e2e.py",
         "subs": {

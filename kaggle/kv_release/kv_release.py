@@ -142,3 +142,9 @@ if __name__ == "__main__":
         except Exception:
             traceback.print_exc()
         sys.exit(1)
+
+# Streaming-dataset worker threads can keep the interpreter alive after the script ends (seen on Kaggle:
+# distill A printed "done" at 3.6 h, then the session stayed RUNNING for hours). Exit hard after flushing.
+import sys as _sys, os as _os
+_sys.stdout.flush(); _sys.stderr.flush()
+_os._exit(0)

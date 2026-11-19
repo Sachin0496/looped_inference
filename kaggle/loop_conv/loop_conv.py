@@ -335,3 +335,9 @@ log("least converged:", [x["token"] for x in RES["top20_least_converged"]])
 RES["wall_s"] = time.time() - T0
 log("done")
 save()
+
+# Streaming-dataset worker threads can keep the interpreter alive after the script ends (seen on Kaggle:
+# distill A printed "done" at 3.6 h, then the session stayed RUNNING for hours). Exit hard after flushing.
+import sys as _sys, os as _os
+_sys.stdout.flush(); _sys.stderr.flush()
+_os._exit(0)
