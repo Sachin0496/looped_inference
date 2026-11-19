@@ -82,6 +82,19 @@ JOBS = {
         "gpu": True,
         "internet": True,
     },
+    "kd_tpu": {
+        "template": "tpu/kd_train.py",
+        "subs": {
+            "__CONVERTER_SOURCE__": "engine/convert/gguf_to_hf.py",
+            "__JAX_MODEL_SOURCE__": "tpu/jax_model.py",
+            "__JAX_STUDENT_SOURCE__": "tpu/jax_student.py",
+        },
+        "id": "sachin0496/sensenovakv-kd-tpu",
+        "gpu": False,
+        "tpu": "TpuV5E8",
+        "internet": True,
+        "kernel_sources": ["sachin0496/sensenovakv-distill-e"],
+    },
     "loop_conv": {
         "template": "kaggle/loop_conv/loop_conv.py",
         "subs": {},
@@ -106,7 +119,9 @@ out.mkdir(parents=True, exist_ok=True)
 (out / "kernel-metadata.json").write_text(json.dumps({
     "id": job["id"], "title": job["id"].split("/")[1], "code_file": f"{name}.py",
     "language": "python", "kernel_type": "script", "is_private": "true",
-    "enable_gpu": str(job["gpu"]).lower(), "enable_tpu": "false", "enable_internet": str(job.get("internet", False)).lower(),
-    "competition_sources": [], "dataset_sources": [], "kernel_sources": [], "model_sources": [],
+    "enable_gpu": str(job["gpu"]).lower(), "enable_tpu": str(bool(job.get("tpu"))).lower(),
+    "enable_internet": str(job.get("internet", False)).lower(),
+    "competition_sources": [], "dataset_sources": [], "kernel_sources": job.get("kernel_sources", []), "model_sources": [],
+    **({"machine_shape": job["tpu"]} if job.get("tpu") else {}),
 }, indent=2))
 print(out)
