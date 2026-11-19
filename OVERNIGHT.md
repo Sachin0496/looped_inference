@@ -114,3 +114,4 @@ Opus burns ~1%/min of the 5-hour window and ~0.2%/min weekly during heavy work. 
 - 16:10 IST: user chose TPU KD. JAX port + config-E student done by Haiku agents and verified vs torch; KD job smoke-tested (tiny KL 0.158→0.132). TPU probe queued (holds the 1 TPU slot); kd_tpu push waits for it. Hourly check-in cron restarted.
 - 17:33 IST: probe still QUEUED (~1 h 50 m, single TPU slot); kd-tpu not pushed yet (404 = no version). Usage 5h 17%, weekly 8%. Waiting.
 - 18:33 IST: probe still QUEUED (~2 h 50 m). Official kaggle-cli docs/kernels_metadata.md confirm machine_shape `TpuV5E8` = TPU v5e-8, so this is TPU demand, not a bad shape. kd-tpu waits. Usage 5h 18%, weekly 8%.
+- 19:00 IST: teammate GPU queue opened as GitHub issue Sachin0496/looped_inference#1 (engine_e2e v2, distill_E repro, gate suite, engine FP4 cache, KV sweep, engine speed); render.py KAGGLE_USER override pushed. TPU probe still queued.
