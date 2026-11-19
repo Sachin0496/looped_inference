@@ -30,3 +30,4 @@ results/gemv_bench_v1/build/w4_gemv.cuda.o
 results/gemv_bench_v1/build/w4_gemv.so
 results/gemv_bench_v2/build/w4_gemv.cuda.o
 results/gemv_bench_v2/build/w4_gemv.so
+*.npz

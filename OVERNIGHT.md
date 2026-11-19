@@ -13,7 +13,7 @@ Read PLAN.md for the design. This file is the work queue + rules for each check-
 3. Kaggle: account sachin0496, private kernels only. MAX 2 concurrent GPU sessions (push fails otherwise). Log every run in the ledger below with
    accelerator and wall time. Stop launching GPU runs if ledger total > 20 GPU-h this week.
    Kaggle may queue for 30+ min — that's normal.
-4. Never commit/push to GitHub, never publish HF repos, never upload weights publicly.
+4. Code/notes may be pushed to github.com/Sachin0496/looped_inference (user asked, PUBLIC repo): never weights (*.pt/*.npz/*.gguf/*.safetensors), secrets or large data. Never publish HF repos or upload weights publicly.
 5. Label every number: measured (with result file) vs estimated.
 
 ## Work queue (status: todo / running / done / blocked)
@@ -41,6 +41,13 @@ Read PLAN.md for the design. This file is the work queue + rules for each check-
 - [todo] W8 Morning report: REPORT.md with measured tables
 - [queued] W9 engine_e2e v1 (engine/runtime/snkv_engine.py + engine/README.md; Kaggle `sachin0496/sensenovakv-engine-e2e`, T4x2, internet): 4-bit packed decode engine on cuda:0 (56 visits, mHC/DeltaNet/GEMV kernels, CUDA graph) vs HF fp16 teacher, 3 prompts x 64 teacher-forced steps (top-1, max|dlogit| step 1, KL), tokens/s 1K/8K HF vs engine, peak mem 8K, KV at 32K/128K. CPU tests pass (tests/test_engine_cpu.py: fp32 plumbing 4e-6 rel). GPU path unrun. Watcher scratchpad engine_watch.py (caffeinate, log engine_watch.log) holds the push until distill-a/b are idle, retries 5 min, fetches to results/engine_e2e_v1. Not committed.
 - [queued] W10 loop-convergence diagnostic (training-free, SenseNova-Loop-9B Preview, T4x2): kaggle/loop_conv/loop_conv.py, Kaggle `sachin0496/sensenovakv-loop-conv`. Per token: r_t = ||h2−h1||/||h1|| at layer 27 (last looped layer, after mHC leave) from the 2-loop run; KL(p_2loop||p_1loop), top-1 agreement and dNLL from a 1-loop run on the same 16 fineweb-edu + 16 WikiText-2 sequences x 2048. Outputs NLL/PPL, r quantiles, Spearman(r, KL / dNLL), oracle-exit table at r quantiles, top-20 tokens. Per-token approximation (caveat in results). Smoke test on the tiny model passed (CPU, plan check exact). Watcher scratchpad loop_conv_watch.py (caffeinate, log loop_conv_watch.log) retries the push every 5 min, max 2 accepted pushes, fetches to results/loop_conv_v1. Not committed.
+
+- [running] W11 END-TO-END KD on Kaggle TPU v5e-8 (user OK 2026-11-19 "tpu takes way too much time is that fine then go ahead").
+  JAX port: tpu/jax_model.py (Haiku; tiny-model logits vs torch rel 6.5e-5), tpu/jax_student.py (Haiku; config E vs distill.py rel 1e-7, grads 3e-7),
+  job tpu/kd_train.py → render `kd_tpu` → Kaggle `sachin0496/sensenovakv-kd-tpu` (machine_shape TpuV5E8, kernel_sources distill-e for student_E.pt).
+  KL(teacher||student) full vocab, only config-E KV tensors train, relative lr 1e-3, batch 8x2048, 5 h budget, eval init+final (wiki/fineweb ppl, MMLU-300).
+  Aborts if JAX teacher wiki ppl > 25 (torch ref 19.80). Probe kernel `sachin0496/sensenovakv-tpu-probe` (env check) holds the single TPU slot first;
+  push kd_tpu after it ends (MAX 1 TPU session). TPU quota 20 h/week, resets 2026-11-21. Outputs → results/kd_tpu_v1 (npz gitignored).
 
 ## Kaggle ledger
 | run | accel | start (IST) | wall | result |
@@ -104,3 +111,4 @@ Opus burns ~1%/min of the 5-hour window and ~0.2%/min weekly during heavy work. 
 - 14:21 IST: Kaggle WEEKLY GPU QUOTA (30 h) EXHAUSTED — mostly by the two hung distill sessions (~24 h). engine_e2e v2 (fresh-process memory bench, CPU-checked) ready but cannot run until the weekly reset; its watcher stopped. distill-e v1 still RUNNING (watch whether Kaggle lets it finish). Rule added: always add the hard-exit footer + excepthook before pushing any job.
 - 14:45 IST: distill-e v1 COMPLETE in 3.7 h and EXITED (hard-exit fix works). E: 3,660 B/token (15.7x), wiki +1.9%, fineweb +3.6%, MMLU 68.7% (teacher 72.3%). Beats A on bytes and PPL; MMLU gap unchanged → end-to-end KD needed. GPU quota exhausted; awaiting user choice (TPU KD port vs wait).
 - 15:13 IST: nothing runnable (Kaggle GPU quota exhausted), nothing pending, REPORT.md complete. Hourly check-in cron stopped; waiting for the user's choice (TPU KD port vs GPU reset).
+- 16:10 IST: user chose TPU KD. JAX port + config-E student done by Haiku agents and verified vs torch; KD job smoke-tested (tiny KL 0.158→0.132). TPU probe queued (holds the 1 TPU slot); kd_tpu push waits for it. Hourly check-in cron restarted.
