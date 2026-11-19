@@ -1,0 +1,670 @@
+{
+ "weights": "sensenova/SenseNova-Loop-9B-Preview",
+ "seq": 2048,
+ "n_seq_per_dataset": 16,
+ "tiny": false,
+ "caveat": "PER-TOKEN APPROXIMATION. The 1-loop run changes every position, so KL_t and dNLL_t at position t also include the effect of earlier positions' skipped second pass (through their attention inputs). A real early exit would also change later tokens' attention to visit-2 KV, which this diagnostic does not model. The oracle-exit table groups measured per-token costs by r quantile; it is not an exit policy and not an end-to-end quality number.",
+ "log": [
+  "[      0s] $ pip install -q 'transformers==5.18.0' 'accelerate>=1.11,<2' 'safetensors>=0.8' datasets 2>&1 | tail -2",
+  "[     16s] $ pip install -q --no-deps git+https://github.com/OpenSenseNova/SenseNova-Loop.git 2>&1 | tail -2",
+  "[     32s] torch 2.11.0+cu130 gpus 2 ['Tesla T4', 'Tesla T4']",
+  "[    118s] weights at /tmp/weights",
+  "[    193s] loaded; device map sample: {'model.visual': '0', 'model.language_model.embed_tokens': '0', 'model.language_model.layers.0': '0', 'model.language_model.layers.1': '0', 'model.language_model.layers.2': '0', 'model.language_model.layers.3': '0'}",
+  "[    193s] loop block (4, 28) last looped layer 27 plan2 len 56 plan1 len 32",
+  "[    201s] data: 16 sequences x 2048 tokens per dataset {'wikitext2': 16, 'fineweb_edu': 16}",
+  "[    213s] wikitext2 seq 1/16: mean r 1.906, mean dNLL 1.908, plan check rel diff 0.00e+00",
+  "[    242s] wikitext2 seq 5/16: mean r 1.922, mean dNLL 1.783, plan check rel diff 0.00e+00",
+  "[    272s] wikitext2 seq 9/16: mean r 1.972, mean dNLL 1.776, plan check rel diff 0.00e+00",
+  "[    303s] wikitext2 seq 13/16: mean r 2.018, mean dNLL 1.589, plan check rel diff 0.00e+00",
+  "[    335s] fineweb_edu seq 1/16: mean r 2.346, mean dNLL 1.382, plan check rel diff 0.00e+00",
+  "[    367s] fineweb_edu seq 5/16: mean r 2.063, mean dNLL 1.33, plan check rel diff 0.00e+00",
+  "[    400s] fineweb_edu seq 9/16: mean r 2.188, mean dNLL 1.295, plan check rel diff 0.00e+00",
+  "[    434s] fineweb_edu seq 13/16: mean r 2.194, mean dNLL 1.508, plan check rel diff 0.00e+00",
+  "[    458s] forward passes done in 257s",
+  "[    458s] plan check (visit-1 output, 2-loop vs 1-loop plan): max rel diff 0.0",
+  "[    458s] tokens scored: 65504",
+  "[    459s] CAVEAT: PER-TOKEN APPROXIMATION. The 1-loop run changes every position, so KL_t and dNLL_t at position t also include the effect of earlier positions' skipped second pass (through their attention inputs). A real early exit would also change later tokens' attention to visit-2 KV, which this diagnostic does not model. The oracle-exit table groups measured per-token costs by r quantile; it is not an exit policy and not an end-to-end quality number.",
+  "[    459s] overall: PPL 1-loop 88.8755 vs 2-loop 18.8118 (+372.45%), mean KL 2.091, top-1 agree 0.4475",
+  "[    459s]   wikitext2: PPL 1-loop 115.0587 vs 2-loop 19.7950 (+481.25%)",
+  "[    459s]   fineweb_edu: PPL 1-loop 68.6506 vs 2-loop 17.8774 (+284.01%)",
+  "[    459s] r quantiles: {\"q0.01\": 1.30839, \"q0.05\": 1.4977, \"q0.10\": 1.60914, \"q0.25\": 1.82096, \"q0.50\": 2.11156, \"q0.75\": 2.44698, \"q0.90\": 2.777, \"q0.95\": 2.98589, \"q0.99\": 3.40844}",
+  "[    459s] spearman: {\"r_vs_kl\": 0.11386087254833395, \"r_vs_dnll\": -0.03405400193699985, \"per_dataset_r_vs_kl\": {\"wikitext2\": 0.1558732900504331, \"fineweb_edu\": 0.17488941662844795}, \"per_dataset_r_vs_dnll\": {\"wikitext2\": -0.05206770748616797, \"fineweb_edu\": 0.03139463327258687}}",
+  "[    459s] oracle q0.10 tau=1.609: frac 0.100 | on KL 1.758 dNLL 1.789 top1 0.4711 | rest KL 2.128 dNLL 1.526 top1 0.4449",
+  "[    459s] oracle q0.25 tau=1.821: frac 0.250 | on KL 1.798 dNLL 1.745 top1 0.4855 | rest KL 2.189 dNLL 1.489 top1 0.4348",
+  "[    459s] oracle q0.50 tau=2.112: frac 0.500 | on KL 1.917 dNLL 1.719 top1 0.4797 | rest KL 2.265 dNLL 1.387 top1 0.4154",
+  "[    459s] oracle q0.75 tau=2.447: frac 0.750 | on KL 2.04 dNLL 1.619 top1 0.4631 | rest KL 2.243 dNLL 1.355 top1 0.4008",
+  "[    459s] pos [0,16): n 512 mean r 1.738 median r 1.71",
+  "[    459s] pos [16,64): n 1536 mean r 2.205 median r 2.165",
+  "[    459s] pos [64,256): n 6144 mean r 2.281 median r 2.257",
+  "[    459s] pos [256,512): n 8192 mean r 2.189 median r 2.147",
+  "[    459s] pos [512,1024): n 16384 mean r 2.167 median r 2.11",
+  "[    459s] pos [1024,2048): n 32736 mean r 2.13 median r 2.085",
+  "[    459s] most converged: [\"'\\\\n'\", \"'\\\\n'\", \"'\\\\n'\", \"'\\\\n'\", \"' @'\", \"','\", \"'2'\", \"','\", \"'0'\", \"'0'\", \"'\\\\n'\", \"' the'\", \"' '\", \"' ger'\", \"'is'\", \"'awa'\", \"' in'\", \"'.'\", \"'\u58eb'\", \"'ib'\"]",
+  "[    459s] least converged: [\"' the'\", \"' the'\", \"' '\", \"' the'\", '\"\\'t\"', '\"\\'t\"', \"'2'\", \"' the'\", \"' the'\", \"' you'\", \"' you'\", \"'2'\", \"' you'\", \"' the'\", \"','\", \"' you'\", '\"\\'t\"', \"' the'\", \"' the'\", \"' the'\"]",
+  "[    459s] done"
+ ],
+ "loop": [
+  4,
+  28
+ ],
+ "last_looped_layer": 27,
+ "plan2_len": 56,
+ "plan1_len": 32,
+ "data": {
+  "wikitext2": 16,
+  "fineweb_edu": 16
+ },
+ "plan_check_visit1_rel_diff_max": 0.0,
+ "overall": {
+  "tokens": 65504,
+  "nll_1loop": 4.48723653664413,
+  "nll_2loop": 2.934483407694387,
+  "ppl_1loop": 88.87550201369727,
+  "ppl_2loop": 18.81178260247731,
+  "ppl_delta_pct": 372.4459339754082,
+  "mean_kl": 2.090828402604999,
+  "median_kl": 1.3914353847503662,
+  "top1_agree": 0.4475146555935515
+ },
+ "per_dataset": {
+  "wikitext2": {
+   "tokens": 32752,
+   "nll_1loop": 4.745442849283541,
+   "nll_2loop": 2.9854306122765033,
+   "ppl_1loop": 115.05874790644891,
+   "ppl_2loop": 19.79502438188093,
+   "ppl_delta_pct": 481.2508521675082,
+   "mean_kl": 2.397045181346466,
+   "median_kl": 1.6932827830314636,
+   "top1_agree": 0.4053798241328774
+  },
+  "fineweb_edu": {
+   "tokens": 32752,
+   "nll_1loop": 4.229030224004718,
+   "nll_2loop": 2.8835362031122704,
+   "ppl_1loop": 68.65062415427148,
+   "ppl_2loop": 17.87737958063793,
+   "ppl_delta_pct": 284.0083153384708,
+   "mean_kl": 1.7846116238635306,
+   "median_kl": 1.1569234132766724,
+   "top1_agree": 0.4896494870542257
+  }
+ },
+ "spearman": {
+  "r_vs_kl": 0.11386087254833395,
+  "r_vs_dnll": -0.03405400193699985,
+  "per_dataset_r_vs_kl": {
+   "wikitext2": 0.1558732900504331,
+   "fineweb_edu": 0.17488941662844795
+  },
+  "per_dataset_r_vs_dnll": {
+   "wikitext2": -0.05206770748616797,
+   "fineweb_edu": 0.03139463327258687
+  }
+ },
+ "r_quantiles": {
+  "q0.01": 1.3083897018432618,
+  "q0.05": 1.4977004408836365,
+  "q0.10": 1.6091375350952148,
+  "q0.25": 1.820958137512207,
+  "q0.50": 2.1115612983703613,
+  "q0.75": 2.446984052658081,
+  "q0.90": 2.7769953012466435,
+  "q0.95": 2.985891616344452,
+  "q0.99": 3.408436965942383
+ },
+ "r_mean": 2.1594940773964395,
+ "r_hist_log10": {
+  "edges": [
+   -0.22801738628683088,
+   -0.18289257462062256,
+   -0.13776776295441423,
+   -0.09264295128820588,
+   -0.04751813962199755,
+   -0.002393327955789226,
+   0.04273148371041913,
+   0.08785629537662742,
+   0.13298110704283578,
+   0.17810591870904413,
+   0.22323073037525243,
+   0.2683555420414608,
+   0.31348035370766913,
+   0.35860516537387743,
+   0.40372997704008573,
+   0.44885478870629414,
+   0.49397960037250244,
+   0.5391044120387107,
+   0.5842292237049191,
+   0.6293540353711274,
+   0.6744788470373357
+  ],
+  "counts": [
+   1,
+   1,
+   1,
+   12,
+   10,
+   58,
+   229,
+   778,
+   2389,
+   5549,
+   9199,
+   11490,
+   12160,
+   10461,
+   7255,
+   3914,
+   1473,
+   407,
+   103,
+   14
+  ]
+ },
+ "kl_quantiles": {
+  "q0.01": 0.0017314562120009213,
+  "q0.05": 0.031933941133320334,
+  "q0.10": 0.11712060496211052,
+  "q0.25": 0.5154991149902344,
+  "q0.50": 1.3914353847503662,
+  "q0.75": 2.8281421065330505,
+  "q0.90": 4.991495037078859,
+  "q0.95": 6.754527831077575,
+  "q0.99": 10.649807577133183
+ },
+ "dnll_quantiles": {
+  "q0.01": -6.347170829772949,
+  "q0.05": -2.1899524927139282,
+  "q0.10": -0.9537126302719116,
+  "q0.25": -5.066393100605637e-07,
+  "q0.50": 0.8893458545207977,
+  "q0.75": 2.988598585128784,
+  "q0.90": 5.407341289520266,
+  "q0.95": 7.101317811012264,
+  "q0.99": 10.568653984069831
+ },
+ "r_by_position": {
+  "[0,16)": {
+   "n": 512,
+   "mean_r": 1.7378512658178806,
+   "median_r": 1.7102761268615723,
+   "mean_kl": 0.7147854649074361,
+   "mean_dnll": 0.8025757103741853
+  },
+  "[16,64)": {
+   "n": 1536,
+   "mean_r": 2.205485883867368,
+   "median_r": 2.165101170539856,
+   "mean_kl": 1.352251952336682,
+   "mean_dnll": 1.329951704396952
+  },
+  "[64,256)": {
+   "n": 6144,
+   "mean_r": 2.2808564118264862,
+   "median_r": 2.256853461265564,
+   "mean_kl": 1.7420801558895758,
+   "mean_dnll": 1.5055453656325426
+  },
+  "[256,512)": {
+   "n": 8192,
+   "mean_r": 2.1894620076418505,
+   "median_r": 2.1473580598831177,
+   "mean_kl": 1.9347673541725676,
+   "mean_dnll": 1.5992860669216842
+  },
+  "[512,1024)": {
+   "n": 16384,
+   "mean_r": 2.1666377166693565,
+   "median_r": 2.1099103689193726,
+   "mean_kl": 2.1107654887588354,
+   "mean_dnll": 1.6050186937766968
+  },
+  "[1024,2048)": {
+   "n": 32736,
+   "mean_r": 2.130078414262055,
+   "median_r": 2.0849422216415405,
+   "mean_kl": 2.2415340333707254,
+   "mean_dnll": 1.5459973111070107
+  }
+ },
+ "oracle_exit": [
+  {
+   "quantile": 0.1,
+   "tau": 1.6091375350952148,
+   "on_r_below_tau": {
+    "n": 6551,
+    "frac": 0.10000915974596972,
+    "mean_kl": 1.7578446519850859,
+    "mean_dnll": 1.7893780654570064,
+    "top1_agree": 0.4710731186078461
+   },
+   "rest": {
+    "n": 58953,
+    "frac": 0.8999908402540303,
+    "mean_kl": 2.127830362646235,
+    "mean_dnll": 1.5264587945780832,
+    "top1_agree": 0.4448967821824165
+   }
+  },
+  {
+   "quantile": 0.25,
+   "tau": 1.820958137512207,
+   "on_r_below_tau": {
+    "n": 16376,
+    "frac": 0.25,
+    "mean_kl": 1.7976780332999631,
+    "mean_dnll": 1.7450660694470752,
+    "top1_agree": 0.4855276013678554
+   },
+   "rest": {
+    "n": 49128,
+    "frac": 0.75,
+    "mean_kl": 2.1885451923733434,
+    "mean_dnll": 1.4886488167705847,
+    "top1_agree": 0.43484367366878357
+   }
+  },
+  {
+   "quantile": 0.5,
+   "tau": 2.1115612983703613,
+   "on_r_below_tau": {
+    "n": 32752,
+    "frac": 0.5,
+    "mean_kl": 1.9168926268627742,
+    "mean_dnll": 1.7185013502036648,
+    "top1_agree": 0.47966536394723985
+   },
+   "rest": {
+    "n": 32752,
+    "frac": 0.5,
+    "mean_kl": 2.2647641783472223,
+    "mean_dnll": 1.3870049096757497,
+    "top1_agree": 0.4153639472398632
+   }
+  },
+  {
+   "quantile": 0.75,
+   "tau": 2.446984052658081,
+   "on_r_below_tau": {
+    "n": 49128,
+    "frac": 0.75,
+    "mean_kl": 2.040241386343306,
+    "mean_dnll": 1.6186135307862382,
+    "top1_agree": 0.46309640123758344
+   },
+   "rest": {
+    "n": 16376,
+    "frac": 0.25,
+    "mean_kl": 2.242589451390075,
+    "mean_dnll": 1.3551719274001144,
+    "top1_agree": 0.40076941866145577
+   }
+  }
+ ],
+ "oracle_exit_note": "Tokens with r_t < tau would use one loop pass. KL / dNLL / top-1 are the measured per-token values of the 1-loop run, grouped by r. Per-token approximation, see caveat.",
+ "top20_most_converged": [
+  {
+   "token": "'\\n'",
+   "id": 198,
+   "r": 0.5915379524230957,
+   "kl": 0.3087196350097656,
+   "dnll": 1.9688506126403809,
+   "pos": 8,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "'\\n'",
+   "id": 198,
+   "r": 0.6958677172660828,
+   "kl": 0.22826915979385376,
+   "dnll": 0.8944568634033203,
+   "pos": 14,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "'\\n'",
+   "id": 198,
+   "r": 0.7658715844154358,
+   "kl": 0.4699714481830597,
+   "dnll": 1.730142593383789,
+   "pos": 14,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "'\\n'",
+   "id": 198,
+   "r": 0.8112358450889587,
+   "kl": 0.18346205353736877,
+   "dnll": -0.768794059753418,
+   "pos": 19,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' @'",
+   "id": 554,
+   "r": 0.8144157528877258,
+   "kl": 2.664808988571167,
+   "dnll": 4.88786506652832,
+   "pos": 1109,
+   "dataset": "wikitext2"
+  },
+  {
+   "token": "','",
+   "id": 11,
+   "r": 0.8160360455513,
+   "kl": 0.8424297571182251,
+   "dnll": 1.149871826171875,
+   "pos": 307,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "'2'",
+   "id": 17,
+   "r": 0.8182315230369568,
+   "kl": 2.4672739505767822,
+   "dnll": 0.08180737495422363,
+   "pos": 948,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "','",
+   "id": 11,
+   "r": 0.8286592364311218,
+   "kl": 0.8034148216247559,
+   "dnll": 1.616274356842041,
+   "pos": 301,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "'0'",
+   "id": 15,
+   "r": 0.836103618144989,
+   "kl": 1.5016610622406006,
+   "dnll": -0.8781352043151855,
+   "pos": 993,
+   "dataset": "wikitext2"
+  },
+  {
+   "token": "'0'",
+   "id": 15,
+   "r": 0.8417457938194275,
+   "kl": 0.005356027744710445,
+   "dnll": 0.0009649301646277308,
+   "pos": 1542,
+   "dataset": "wikitext2"
+  },
+  {
+   "token": "'\\n'",
+   "id": 198,
+   "r": 0.8420022130012512,
+   "kl": 0.28892675042152405,
+   "dnll": 0.45850181579589844,
+   "pos": 12,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' the'",
+   "id": 279,
+   "r": 0.847822368144989,
+   "kl": 0.1552782654762268,
+   "dnll": 0.4282188415527344,
+   "pos": 4,
+   "dataset": "wikitext2"
+  },
+  {
+   "token": "' '",
+   "id": 220,
+   "r": 0.8548776507377625,
+   "kl": 0.0012571880361065269,
+   "dnll": 0.003856413532048464,
+   "pos": 40,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' ger'",
+   "id": 16731,
+   "r": 0.8602608442306519,
+   "kl": 5.440273284912109,
+   "dnll": 5.4673662185668945,
+   "pos": 778,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "'is'",
+   "id": 284,
+   "r": 0.883722186088562,
+   "kl": 4.45685338973999,
+   "dnll": -6.9844865798950195,
+   "pos": 1836,
+   "dataset": "wikitext2"
+  },
+  {
+   "token": "'awa'",
+   "id": 13674,
+   "r": 0.9246442317962646,
+   "kl": 1.3237700462341309,
+   "dnll": 4.40298318862915,
+   "pos": 1555,
+   "dataset": "wikitext2"
+  },
+  {
+   "token": "' in'",
+   "id": 303,
+   "r": 0.9255056381225586,
+   "kl": 0.17860011756420135,
+   "dnll": -0.385159969329834,
+   "pos": 1,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "'.'",
+   "id": 13,
+   "r": 0.9275080561637878,
+   "kl": 0.4236494302749634,
+   "dnll": -1.3206192255020142,
+   "pos": 13,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "'\u58eb'",
+   "id": 96412,
+   "r": 0.9415705800056458,
+   "kl": 1.9892146587371826,
+   "dnll": 2.500081777572632,
+   "pos": 1793,
+   "dataset": "wikitext2"
+  },
+  {
+   "token": "'ib'",
+   "id": 564,
+   "r": 0.9460991024971008,
+   "kl": 12.741107940673828,
+   "dnll": 13.74012279510498,
+   "pos": 352,
+   "dataset": "fineweb_edu"
+  }
+ ],
+ "top20_least_converged": [
+  {
+   "token": "' the'",
+   "id": 279,
+   "r": 4.7258381843566895,
+   "kl": 1.5272133350372314,
+   "dnll": -0.9911849498748779,
+   "pos": 855,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' the'",
+   "id": 279,
+   "r": 4.498075485229492,
+   "kl": 4.827426433563232,
+   "dnll": 2.059171676635742,
+   "pos": 585,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' '",
+   "id": 220,
+   "r": 4.4635419845581055,
+   "kl": 2.158604383468628,
+   "dnll": 2.160686492919922,
+   "pos": 291,
+   "dataset": "wikitext2"
+  },
+  {
+   "token": "' the'",
+   "id": 279,
+   "r": 4.455543041229248,
+   "kl": 5.842157363891602,
+   "dnll": 3.0536837577819824,
+   "pos": 574,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "\"'t\"",
+   "id": 914,
+   "r": 4.444234371185303,
+   "kl": 0.1778368055820465,
+   "dnll": 0.1017390713095665,
+   "pos": 1941,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "\"'t\"",
+   "id": 914,
+   "r": 4.433245658874512,
+   "kl": 3.099074363708496,
+   "dnll": 4.737768650054932,
+   "pos": 636,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "'2'",
+   "id": 17,
+   "r": 4.426513195037842,
+   "kl": 1.8438283205032349,
+   "dnll": -2.108041286468506,
+   "pos": 283,
+   "dataset": "wikitext2"
+  },
+  {
+   "token": "' the'",
+   "id": 279,
+   "r": 4.398148059844971,
+   "kl": 4.587733745574951,
+   "dnll": 4.173679828643799,
+   "pos": 231,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' the'",
+   "id": 279,
+   "r": 4.363458633422852,
+   "kl": 3.41678524017334,
+   "dnll": 6.004405975341797,
+   "pos": 382,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' you'",
+   "id": 488,
+   "r": 4.348703384399414,
+   "kl": 2.351677417755127,
+   "dnll": 2.847242832183838,
+   "pos": 1795,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' you'",
+   "id": 488,
+   "r": 4.338136196136475,
+   "kl": 1.2247955799102783,
+   "dnll": -3.5220277309417725,
+   "pos": 624,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "'2'",
+   "id": 17,
+   "r": 4.3301167488098145,
+   "kl": 3.511803388595581,
+   "dnll": 0.9641752243041992,
+   "pos": 895,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' you'",
+   "id": 488,
+   "r": 4.324070930480957,
+   "kl": 0.6288428902626038,
+   "dnll": -0.5083856582641602,
+   "pos": 1152,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' the'",
+   "id": 279,
+   "r": 4.302102088928223,
+   "kl": 6.663867950439453,
+   "dnll": -0.9365525245666504,
+   "pos": 835,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "','",
+   "id": 11,
+   "r": 4.2485880851745605,
+   "kl": 1.0578793287277222,
+   "dnll": 3.5092368125915527,
+   "pos": 914,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' you'",
+   "id": 488,
+   "r": 4.244908809661865,
+   "kl": 1.8869622945785522,
+   "dnll": 1.6640737056732178,
+   "pos": 967,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "\"'t\"",
+   "id": 914,
+   "r": 4.2365007400512695,
+   "kl": 1.834885835647583,
+   "dnll": 0.16991567611694336,
+   "pos": 399,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' the'",
+   "id": 279,
+   "r": 4.222938060760498,
+   "kl": 0.7279971837997437,
+   "dnll": 0.7794341444969177,
+   "pos": 701,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' the'",
+   "id": 279,
+   "r": 4.207345008850098,
+   "kl": 0.4533192813396454,
+   "dnll": 0.445235013961792,
+   "pos": 265,
+   "dataset": "fineweb_edu"
+  },
+  {
+   "token": "' the'",
+   "id": 279,
+   "r": 4.196915149688721,
+   "kl": 8.094594955444336,
+   "dnll": 9.09473705291748,
+   "pos": 1267,
+   "dataset": "fineweb_edu"
+  }
+ ],
+ "wall_s": 458.66461205482483
+}

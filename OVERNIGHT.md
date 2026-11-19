@@ -53,7 +53,12 @@ Read PLAN.md for the design. This file is the work queue + rules for each check-
 | kv-analysis v1 | T4x2 | 18.11 20:40 | ~3 min (ERROR: missing mtp file) | results/kv_analysis_v1 |
 | kv-analysis v2 | T4x2 | 18.11 21:25 | ~3 min (ERROR: index still points at mtp.safetensors) | results/kv_analysis_v2 |
 | kv-analysis v3 | T4x2 | 18.11 ~22:20 | ~8 min (ERROR: cross-GPU in pair R²) | results/kv_analysis_v3 |
-| kv-analysis v4 | T4x2 | 18.11 22:40 | ? (~3.5 h) | results/kv_analysis_v4 |
+| kv-analysis v4 | T4x2 | 18.11 22:40 | ~2.5 h | results/kv_analysis_v4 |
+| distill-b v1 | T4x2 | 18.11 22:52 | 12 h cap (crashed step 1, then hung) | results/distill_B_v1 (none) |
+| distill-a v1 | T4x2 | 19.11 01:10 | 3.6 h work + hang to 12 h cap | results/distill_A_v1/live_log.txt |
+| distill-e v1 | T4x2 | 19.11 10:56 | ? | results/distill_E_v1 |
+| loop-conv v1 | T4x2 | 19.11 12:49 | ~8 min | results/loop_conv_v1 |
+| engine-e2e v1 | T4x2 | 19.11 13:00 | ? | results/engine_e2e_v1 |
 | kv-release v1 | T4x2 | 18.11 22:16 | pending | results/kv_release_v1 |
 | distill-b v1 | T4x2 | 18.11 22:52 | running (known bug, see W4) | results/distill_B_v1 |
 | distill-a v1 | T4x2 | pending (session limit, watcher retries) | - | results/distill_A_v1 |
@@ -90,3 +95,8 @@ Opus burns ~1%/min of the 5-hour window and ~0.2%/min weekly during heavy work. 
 - 09:30 IST: ROOT CAUSE of the "slow" distill runs: they finish, then the process never exits (streaming-dataset threads) → Kaggle shows RUNNING until the 12 h cap. Found via `kaggle kernels logs -f`. Fix: hard os._exit(0) footer in all 5 job scripts; builds re-rendered.
   distill A v1 (release, r512 loop-shared FP4, 4,416 B/token = 13x smaller) RESULT (results/distill_A_v1/live_log.txt): teacher wiki/fineweb PPL 19.80/14.87 → student 20.49/15.64 (+3.5%/+5.2%); MMLU-300 72.3% → 68.7% (−3.7 pt, ±2.6). Final per-layer rel. error: visit-0 0.09–0.32, visit-1 (shared latent) 0.41–0.56 → cross-loop sharing is the main loss; layer-local training barely reduced it (4.1M tokens).
   Decision: drop release B v2 (more sharing → worse); Haiku implements config E (visit-1 residual latent r=128, ≈3.3 KB/token). Queue order when slots free (B v1 hung until ~10:50, A until ~13:10): distill_E > loop_conv > engine_e2e.
+- 10:20 IST: distill-b v1 had actually CRASHED at step 1 (cross-GPU loss sum, ~15 min in) and then hung 11 h. Added excepthook → os._exit(1) to all jobs, re-rendered, TINY E OK, pushed to GitHub. Queue (E > loop_conv > engine) waits for slots.
+- 11:13 IST: distill-b v1 cancelled at the 12 h cap (CANCEL_ACKNOWLEDGED). distill_E pushed 10:56, RUNNING (~4.3 h → ~15:15). distill-a hung until ~13:10. loop_conv, engine_e2e queued next.
+- 12:13 IST: distill-e RUNNING (~1h15m in), distill-a still hung (cap ~13:10). No change.
+- ~12:50 IST: distill-a session ended; outputs fetched (results.json confirms live-log numbers; student_A.pt 152 MB kept local, gitignored). Freed slot → queue pushes loop_conv next.
+- 13:13 IST: loop_conv v1 COMPLETE (7.6 min): skipping pass 2 → PPL 18.8→88.9 (+372%), top-1 45%; r median 2.1, Spearman(r, KL)=0.11, (r, dNLL)=−0.03 → no training-free early exit. engine_e2e pushed 13:00 RUNNING; distill-e RUNNING.

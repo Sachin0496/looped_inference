@@ -1,0 +1,220 @@
+[{"stream_name":"stdout","time":0.923419423,"data":"[      0s] $ pip install -q 'transformers==5.18.0' 'accelerate\u003e=1.11,\u003c2' 'safetensors\u003e=0.8' datasets 2\u003e\u00261 | tail -2\n"}
+,{"stream_name":"stdout","time":16.035291587,"data":"[     15s] $ pip install -q --no-deps git+https://github.com/OpenSenseNova/SenseNova-Loop.git 2\u003e\u00261 | tail -2\n"}
+,{"stream_name":"stdout","time":34.975991425,"data":"[     34s] torch 2.11.0+cu130 gpus 2 config A {'r': 512, 'share_loop': True, 'pair': False, 'rope': 'group', 'qat': True, 'hadamard': True, 'name': 'A'}\n"}
+,{"stream_name":"stdout","time":34.976029556,"data":"[     34s] $ /usr/bin/python3 -m pip install -q gguf huggingface_hub\n"}
+,{"stream_name":"stdout","time":125.868710035,"data":"[    125s] gguf at /tmp/release_src/SenseNova-Loop-9B-BF16.gguf 18.42 GB\n"}
+,{"stream_name":"stderr","time":126.099885284,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":127.952267287,"data":"[    127s] preview config/tokenizer files: ['chat_template.jinja', 'config.json', 'generation_config.json', 'model.safetensors.index.json', 'preprocessor_config.json', 'processor_config.json', 'tokenizer.json', 'tokenizer_config.json', 'video_preprocessor_config.json']\n"}
+,{"stream_name":"stdout","time":127.952515908,"data":"[    127s] $ /usr/bin/python3 -u /tmp/gguf_to_hf.py --gguf /tmp/release_src/SenseNova-Loop-9B-BF16.gguf --config /tmp/preview_meta/config.json --preview-index /tmp/preview_meta/model.safetensors.index.json --check\n"}
+,{"stream_name":"stderr","time":128.418159109,"data":"GGUF v3: 490 tensors, data starts at byte 10972576\n"}
+,{"stream_name":"stdout","time":137.360544392,"data":"config vs GGUF metadata:\n"}
+,{"stream_name":"stdout","time":137.360599415,"data":"  OK   loop.start: GGUF=4 config=4\n"}
+,{"stream_name":"stdout","time":137.36062128,"data":"  OK   loop.end: GGUF=28 config=28\n"}
+,{"stream_name":"stdout","time":137.360627504,"data":"  OK   loop.count: GGUF=2 config=2\n"}
+,{"stream_name":"stdout","time":137.36063299,"data":"  OK   mhc.start: GGUF=4 config=4\n"}
+,{"stream_name":"stdout","time":137.360638657,"data":"  OK   mhc.end: GGUF=28 config=28\n"}
+,{"stream_name":"stdout","time":137.360643894,"data":"  OK   mhc.streams: GGUF=2 config=2\n"}
+,{"stream_name":"stdout","time":137.360649324,"data":"  OK   mhc.iterations: GGUF=20 config=20\n"}
+,{"stream_name":"stdout","time":137.360654648,"data":"  OK   mhc.fixed_identity: GGUF=False config=False\n"}
+,{"stream_name":"stdout","time":137.360660039,"data":"  OK   mhc.pre_scale: GGUF=1.0 config=1.0\n"}
+,{"stream_name":"stdout","time":137.360665594,"data":"  OK   block_count (phys+mtp): GGUF=57 config=57\n"}
+,{"stream_name":"stdout","time":137.360673962,"data":"  OK   ssm.conv_kernel: GGUF=4 config=4\n"}
+,{"stream_name":"stdout","time":137.360678725,"data":"  OK   ssm.state_size: GGUF=128 config=128\n"}
+,{"stream_name":"stdout","time":137.36068392,"data":"  OK   ssm.group_count: GGUF=16 config=16\n"}
+,{"stream_name":"stdout","time":137.360688098,"data":"  OK   ssm.time_step_rank: GGUF=32 config=32\n"}
+,{"stream_name":"stdout","time":137.360693472,"data":"  OK   embedding_length: GGUF=4096 config=4096\n"}
+,{"stream_name":"stdout","time":137.360698826,"data":"  OK   feed_forward_length: GGUF=12288 config=12288\n"}
+,{"stream_name":"stdout","time":137.36070427,"data":"  OK   attention.head_count: GGUF=16 config=16\n"}
+,{"stream_name":"stdout","time":137.360709636,"data":"  OK   attention.head_count_kv: GGUF=4 config=4\n"}
+,{"stream_name":"stdout","time":137.36071489,"data":"  OK   attention.key_length: GGUF=256 config=256\n"}
+,{"stream_name":"stdout","time":137.360719525,"data":"  OK   rope.freq_base: GGUF=10000000.0 config=10000000\n"}
+,{"stream_name":"stdout","time":137.360738143,"data":"  OK   rope.dimension_count: GGUF=64 config=64\n"}
+,{"stream_name":"stdout","time":137.360741679,"data":"  DIFF rope.scaling.type: GGUF=yarn config=None\n"}
+,{"stream_name":"stdout","time":137.360744951,"data":"  DIFF context_length: GGUF=524288 config=262144\n"}
+,{"stream_name":"stdout","time":137.360748285,"data":"  OK   recurrent_layers (per slot): GGUF=True config=True\n"}
+,{"stream_name":"stdout","time":137.360752214,"data":"GGUF tensors consumed: 490/490\n"}
+,{"stream_name":"stdout","time":137.360755629,"data":"HF outputs derived: 538 (distinct names 538), Preview index names: 871\n"}
+,{"stream_name":"stdout","time":137.360759009,"data":"HF names with no GGUF source (vision, expected): 333\n"}
+,{"stream_name":"stdout","time":137.360762307,"data":"HF names with no GGUF source (UNEXPECTED): 0\n"}
+,{"stream_name":"stdout","time":137.360765707,"data":"problems: 0\n"}
+,{"stream_name":"stdout","time":137.360770551,"data":"CHECK PASS\n"}
+,{"stream_name":"stdout","time":137.396089951,"data":"[    136s] $ /usr/bin/python3 -u /tmp/gguf_to_hf.py --gguf /tmp/release_src/SenseNova-Loop-9B-BF16.gguf --config /tmp/preview_meta/config.json --preview-index /tmp/preview_meta/model.safetensors.index.json --text-only --out /tmp/release_hf\n"}
+,{"stream_name":"stderr","time":137.805804901,"data":"GGUF v3: 490 tensors, data starts at byte 10972576\n"}
+,{"stream_name":"stderr","time":145.382520197,"data":"WARNING: 333 vision tensors not written (not in the GGUF). Pass --visual-src DIR, or --text-only; the output will not load into the full model without them.\n"}
+,{"stream_name":"stderr","time":145.382551419,"data":"config: rope: GGUF declares YaRN (factor 2.0, original 262144); written into text_config.rope_parameters. Preview config has none. Pass --keep-config-rope to keep the config unchanged.\n"}
+,{"stream_name":"stderr","time":145.382556539,"data":"config: --text-only: mtp_num_hidden_layers set to 0\n"}
+,{"stream_name":"stderr","time":153.203010539,"data":"wrote model-00001-of-00006.safetensors: 1 tensors, 2.03 GB\n"}
+,{"stream_name":"stderr","time":194.854259619,"data":"wrote model-00002-of-00006.safetensors: 68 tensors, 3.90 GB\n"}
+,{"stream_name":"stderr","time":243.059985153,"data":"wrote model-00003-of-00006.safetensors: 156 tensors, 3.90 GB\n"}
+,{"stream_name":"stderr","time":286.793767829,"data":"wrote model-00004-of-00006.safetensors: 156 tensors, 3.90 GB\n"}
+,{"stream_name":"stderr","time":331.567042274,"data":"wrote model-00005-of-00006.safetensors: 133 tensors, 3.97 GB\n"}
+,{"stream_name":"stderr","time":332.432965031,"data":"wrote model-00006-of-00006.safetensors: 9 tensors, 0.22 GB\n"}
+,{"stream_name":"stderr","time":332.513396087,"data":"done: /tmp/release_hf\n"}
+,{"stream_name":"stdout","time":332.621811343,"data":"[    332s] converted dir: ['chat_template.jinja', 'config.json', 'generation_config.json', 'model-00001-of-00006.safetensors', 'model-00002-of-00006.safetensors', 'model-00003-of-00006.safetensors', 'model-00004-of-00006.safetensors', 'model-00005-of-00006.safetensors', 'model-00006-of-00006.safetensors', 'model.safetensors.index.json', 'preprocessor_config.json', 'processor_config.json', 'tokenizer.json', 'tokenizer_config.json', 'video_preprocessor_config.json']\n"}
+,{"stream_name":"stdout","time":332.8090292,"data":"[    332s] deleted GGUF to free disk\n"}
+,{"stream_name":"stdout","time":332.80905541,"data":"[    332s] weights used: release-gguf-converted at /tmp/release_hf\n"}
+,{"stream_name":"stderr","time":358.21345473,"data":"[transformers] The tokenizer you are loading from '/tmp/release_hf' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.\n"}
+,{"stream_name":"stderr","time":427.28415847,"data":"\rLoading weights:   0%|          | 0/523 [00:00\u003c?, ?it/s]\rLoading weights:   0%|          | 1/523 [00:27\u003c3:59:25, 27.52s/it]\rLoading weights:   0%|          | 2/523 [00:30\u003c1:54:10, 13.15s/it]\rLoading weights:  27%|██▋       | 140/523 [00:32\u003c00:47,  8.14it/s]\rLoading weights:  30%|███       | 157/523 [00:33\u003c00:41,  8.83it/s]\rLoading weights:  31%|███       | 161/523 [00:33\u003c00:41,  8.71it/s]\rLoading weights:  33%|███▎      | 175/523 [00:34\u003c00:37,  9.26it/s]\rLoading weights:  34%|███▍      | 178/523 [00:35\u003c00:38,  9.01it/s]\rLoading weights:  35%|███▌      | 185/523 [00:36\u003c00:38,  8.81it/s]\rLoading weights:  36%|███▌      | 187/523 [00:36\u003c00:41,  8.08it/s]\rLoading weights:  38%|███▊      | 200/523 [00:36\u003c00:27, 11.65it/s]\rLoading weights:  40%|███▉      | 208/523 [00:38\u003c00:33,  9.48it/s]\rLoading weights:  40%|████      | 210/523 [00:38\u003c00:32,  9.74it/s]\rLoading weights:  42%|████▏     | 221/523 [00:38\u003c00:22, 13.55it/s]\rLoading weights:  43%|████▎     | 226/523 [00:39\u003c00:31,  9.36it/s]\rLoading weights:  45%|████▌     | 237/523 [00:40\u003c00:22, 12.81it/s]\rLoading weights:  46%|████▌     | 240/523 [00:40\u003c00:21, 13.29it/s]\rLoading weights:  47%|████▋     | 244/523 [00:41\u003c00:30,  9.02it/s]\rLoading weights:  47%|████▋     | 246/523 [00:41\u003c00:30,  8.97it/s]\rLoading weights:  48%|████▊     | 253/523 [00:41\u003c00:21, 12.64it/s]\rLoading weights:  49%|████▉     | 256/523 [00:42\u003c00:34,  7.71it/s]\rLoading weights:  51%|█████▏    | 269/523 [00:43\u003c00:20, 12.48it/s]\rLoading weights:  53%|█████▎    | 277/523 [00:44\u003c00:24, 10.25it/s]\rLoading weights:  53%|█████▎    | 279/523 [00:44\u003c00:28,  8.69it/s]\rLoading weights:  56%|█████▋    | 295/523 [00:46\u003c00:23,  9.79it/s]\rLoading weights:  59%|█████▊    | 306/523 [00:46\u003c00:15, 14.05it/s]\rLoading weights:  59%|█████▉    | 310/523 [00:46\u003c00:15, 13.93it/s]\rLoading weights:  60%|█████▉    | 313/523 [00:48\u003c00:24,  8.64it/s]\rLoading weights:  62%|██████▏   | 322/523 [00:48\u003c00:18, 11.11it/s]\rLoading weights:  62%|██████▏   | 324/523 [00:49\u003c00:27,  7.18it/s]\rLoading weights:  65%|██████▍   | 338/523 [00:49\u003c00:15, 12.12it/s]\rLoading weights:  66%|██████▌   | 346/523 [00:51\u003c00:18,  9.70it/s]\rLoading weights:  67%|██████▋   | 348/523 [00:51\u003c00:19,  8.99it/s]\rLoading weights:  69%|██████▊   | 359/523 [00:51\u003c00:11, 14.72it/s]\rLoading weights:  70%|██████▉   | 364/523 [00:53\u003c00:18,  8.56it/s]\rLoading weights:  72%|███████▏  | 375/523 [00:53\u003c00:10, 13.55it/s]\rLoading weights:  73%|███████▎  | 380/523 [00:53\u003c00:09, 14.67it/s]\rLoading weights:  73%|███████▎  | 384/523 [00:54\u003c00:12, 11.03it/s]\rLoading weights:  75%|███████▍  | 392/523 [00:54\u003c00:11, 11.46it/s]\rLoading weights:  76%|███████▌  | 395/523 [00:55\u003c00:11, 11.24it/s]\rLoading weights:  78%|███████▊  | 407/523 [00:55\u003c00:08, 14.49it/s]\rLoading weights:  79%|███████▉  | 415/523 [00:56\u003c00:09, 11.45it/s]\rLoading weights:  80%|███████▉  | 417/523 [00:57\u003c00:10,  9.72it/s]\rLoading weights:  82%|████████▏ | 428/523 [00:57\u003c00:05, 16.18it/s]\rLoading weights:  83%|████████▎ | 433/523 [00:58\u003c00:09,  9.76it/s]\rLoading weights:  83%|████████▎ | 436/523 [00:58\u003c00:08, 10.12it/s]\rLoading weights:  85%|████████▍ | 444/523 [00:58\u003c00:05, 14.80it/s]\rLoading weights:  86%|████████▌ | 448/523 [00:59\u003c00:04, 16.57it/s]\rLoading weights:  86%|████████▋ | 452/523 [01:00\u003c00:08,  8.16it/s]\rLoading weights:  88%|████████▊ | 460/523 [01:00\u003c00:05, 11.08it/s]\rLoading weights:  89%|████████▊ | 463/523 [01:01\u003c00:08,  7.08it/s]\rLoading weights:  91%|█████████ | 476/523 [01:02\u003c00:03, 11.93it/s]\rLoading weights:  92%|█████████▏| 480/523 [01:03\u003c00:05,  8.29it/s]\rLoading weights:  92%|█████████▏| 482/523 [01:03\u003c00:05,  8.13it/s]\rLoading weights:  94%|█████████▍| 491/523 [01:03\u003c00:02, 12.71it/s]\rLoading weights:  94%|█████████▍| 494/523 [01:05\u003c00:04,  6.98it/s]\rLoading weights:  95%|█████████▍| 496/523 [01:05\u003c00:03,  7.48it/s]\rLoading weights:  97%|█████████▋| 507/523 [01:05\u003c00:01, 12.43it/s]\rLoading weights:  98%|█████████▊| 510/523 [01:06\u003c00:01,  7.83it/s]\rLoading weights:  98%|█████████▊| 513/523 [01:07\u003c00:01,  7.61it/s]\rLoading weights:  98%|█████████▊| 515/523 [01:08\u003c00:01,  5.54it/s]\rLoading weights: 100%|██████████| 523/523 [01:08\u003c00:00,  7.67it/s]\n"}
+,{"stream_name":"stderr","time":427.596937299,"data":"[transformers] \u001b[1mSenseNovaLoopForConditionalGeneration LOAD REPORT\u001b[0m from: /tmp/release_hf\n"}
+,{"stream_name":"stderr","time":427.596971714,"data":"Key                                                | Status  | \n"}
+,{"stream_name":"stderr","time":427.596976444,"data":"---------------------------------------------------+---------+-\n"}
+,{"stream_name":"stderr","time":427.596990825,"data":"model.visual.blocks.{0...26}.mlp.linear_fc1.bias   | MISSING | \n"}
+,{"stream_name":"stderr","time":427.596993521,"data":"model.visual.blocks.{0...26}.norm2.bias            | MISSING | \n"}
+,{"stream_name":"stderr","time":427.596995933,"data":"model.visual.blocks.{0...26}.attn.proj.bias        | MISSING | \n"}
+,{"stream_name":"stderr","time":427.596998251,"data":"model.visual.blocks.{0...26}.norm1.bias            | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597000652,"data":"model.visual.blocks.{0...26}.mlp.linear_fc2.weight | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597002889,"data":"model.visual.blocks.{0...26}.attn.qkv.weight       | MISSING | \n"}
+,{"stream_name":"stderr","time":427.59700516,"data":"model.visual.blocks.{0...26}.attn.qkv.bias         | MISSING | \n"}
+,{"stream_name":"stderr","time":427.59700745,"data":"model.visual.blocks.{0...26}.mlp.linear_fc2.bias   | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597009657,"data":"model.visual.blocks.{0...26}.norm1.weight          | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597012204,"data":"model.visual.blocks.{0...26}.norm2.weight          | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597014432,"data":"model.visual.blocks.{0...26}.attn.proj.weight      | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597016722,"data":"model.visual.blocks.{0...26}.mlp.linear_fc1.weight | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597018929,"data":"model.visual.merger.norm.weight                    | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597021148,"data":"model.visual.patch_embed.proj.weight               | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597023361,"data":"model.visual.merger.linear_fc2.bias                | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597025566,"data":"model.visual.merger.linear_fc1.weight              | MISSING | \n"}
+,{"stream_name":"stderr","time":427.59703955,"data":"model.visual.merger.norm.bias                      | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597041918,"data":"model.visual.pos_embed.weight                      | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597044145,"data":"model.visual.merger.linear_fc2.weight              | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597046441,"data":"model.visual.merger.linear_fc1.bias                | MISSING | \n"}
+,{"stream_name":"stderr","time":427.59704875,"data":"model.visual.patch_embed.proj.bias                 | MISSING | \n"}
+,{"stream_name":"stderr","time":427.597051001,"data":"\n"}
+,{"stream_name":"stderr","time":427.597053107,"data":"Notes:\n"}
+,{"stream_name":"stderr","time":427.597055582,"data":"- MISSING:\tthose params were newly initialized because missing from the checkpoint. Consider training on your downstream task.\n"}
+,{"stream_name":"stdout","time":427.752736523,"data":"[    427s] full-attn [3, 7, 11, 15, 19, 23, 27, 31] looped [7, 11, 15, 19, 23, 27] pairs [(7, 11), (15, 19), (23, 27)] G 4 HD 256 H 4096 ROT 64 rank 512 RK 256\n"}
+,{"stream_name":"stdout","time":427.752876996,"data":"[    427s] slots (owners) [(3, 0), (7, 0), (11, 0), (15, 0), (19, 0), (23, 0), (27, 0), (31, 0)] users [(7, 1), (11, 1), (15, 1), (19, 1), (23, 1), (27, 1)]\n"}
+,{"stream_name":"stderr","time":433.273174555,"data":"\rGenerating test split:   0%|          | 0/4358 [00:00\u003c?, ? examples/s]\rGenerating test split: 100%|██████████| 4358/4358 [00:00\u003c00:00, 52985.03 examples/s]\n"}
+,{"stream_name":"stderr","time":433.321899704,"data":"\rGenerating train split:   0%|          | 0/36718 [00:00\u003c?, ? examples/s]\rGenerating train split: 100%|██████████| 36718/36718 [00:00\u003c00:00, 762479.91 examples/s]\n"}
+,{"stream_name":"stderr","time":433.328779302,"data":"\rGenerating validation split:   0%|          | 0/3760 [00:00\u003c?, ? examples/s]\rGenerating validation split: 100%|██████████| 3760/3760 [00:00\u003c00:00, 588103.48 examples/s]\n"}
+,{"stream_name":"stderr","time":434.456483204,"data":"[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (297054 \u003e 262144). Running this sequence through the model will result in indexing errors\n"}
+,{"stream_name":"stderr","time":444.973000333,"data":"\rGenerating test split:   0%|          | 0/14042 [00:00\u003c?, ? examples/s]\rGenerating test split: 100%|██████████| 14042/14042 [00:00\u003c00:00, 388616.71 examples/s]\n"}
+,{"stream_name":"stderr","time":444.980328519,"data":"\rGenerating validation split:   0%|          | 0/1531 [00:00\u003c?, ? examples/s]\rGenerating validation split: 100%|██████████| 1531/1531 [00:00\u003c00:00, 243662.42 examples/s]\n"}
+,{"stream_name":"stderr","time":444.984420608,"data":"\rGenerating dev split:   0%|          | 0/285 [00:00\u003c?, ? examples/s]\rGenerating dev split: 100%|██████████| 285/285 [00:00\u003c00:00, 80708.71 examples/s]\n"}
+,{"stream_name":"stderr","time":445.37124842,"data":"\rGenerating auxiliary_train split:   0%|          | 0/99842 [00:00\u003c?, ? examples/s]\rGenerating auxiliary_train split:  20%|██        | 20000/99842 [00:00\u003c00:00, 189161.40 examples/s]\rGenerating auxiliary_train split:  45%|████▌     | 45000/99842 [00:00\u003c00:00, 220617.35 examples/s]\rGenerating auxiliary_train split:  88%|████████▊ | 88000/99842 [00:00\u003c00:00, 251350.63 examples/s]\rGenerating auxiliary_train split: 100%|██████████| 99842/99842 [00:00\u003c00:00, 258667.19 examples/s]\n"}
+,{"stream_name":"stdout","time":445.39868983,"data":"[    444s] data: calib 64, wiki 32, fineweb eval 32 x 2048, mmlu 300\n"}
+,{"stream_name":"stdout","time":445.409861995,"data":"[    444s] student params 38.0M, trainable tensors 44\n"}
+,{"stream_name":"stderr","time":447.014482286,"data":"[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.\n"}
+,{"stream_name":"stderr","time":450.585530394,"data":"[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.\n"}
+,{"stream_name":"stdout","time":948.865892866,"data":"[    948s] calibration: 64 seqs, 131072 tokens, 502s\n"}
+,{"stream_name":"stdout","time":1080.230149618,"data":"[   1079s] init done in 131s\n"}
+,{"stream_name":"stdout","time":1080.23019618,"data":"[   1079s] kv bytes/token (real dims): 4416.0 slots 8\n"}
+,{"stream_name":"stdout","time":1090.327175794,"data":"[   1089s] init per-layer relative output error: {\"3.0\": 0.10996663570404053, \"7.0\": 0.2994059920310974, \"7.1\": 0.688109815120697, \"11.0\": 0.29452186822891235, \"11.1\": 0.6314178705215454, \"15.0\": 0.31990131735801697, \"15.1\": 0.5932454466819763, \"19.0\": 0.3411514163017273, \"19.1\": 0.4901880919933319, \"23.0\": 0.19950313866138458, \"23.1\": 0.48683962225914, \"27.0\": 0.09836272150278091, \"27.1\": 0.4727729558944702, \"31.0\": 0.1963055282831192}\n"}
+,{"stream_name":"stdout","time":1200.342652016,"data":"[   1199s] train step 20 tokens 40960 loss(sum over visits) 2.4210 lr 8.00e-04\n"}
+,{"stream_name":"stdout","time":1307.975709335,"data":"[   1307s] train step 40 tokens 81920 loss(sum over visits) 2.2883 lr 1.60e-03\n"}
+,{"stream_name":"stdout","time":1415.858663952,"data":"[   1415s] train step 60 tokens 122880 loss(sum over visits) 2.2235 lr 2.00e-03\n"}
+,{"stream_name":"stdout","time":1523.102221505,"data":"[   1522s] train step 80 tokens 163840 loss(sum over visits) 2.1733 lr 1.99e-03\n"}
+,{"stream_name":"stdout","time":1630.536999703,"data":"[   1630s] train step 100 tokens 204800 loss(sum over visits) 2.0971 lr 1.99e-03\n"}
+,{"stream_name":"stdout","time":1737.97067444,"data":"[   1737s] train step 120 tokens 245760 loss(sum over visits) 2.1137 lr 1.98e-03\n"}
+,{"stream_name":"stdout","time":1845.462675229,"data":"[   1845s] train step 140 tokens 286720 loss(sum over visits) 2.0953 lr 1.98e-03\n"}
+,{"stream_name":"stdout","time":1953.050620267,"data":"[   1952s] train step 160 tokens 327680 loss(sum over visits) 2.0543 lr 1.97e-03\n"}
+,{"stream_name":"stdout","time":2060.644031595,"data":"[   2060s] train step 180 tokens 368640 loss(sum over visits) 2.1181 lr 1.96e-03\n"}
+,{"stream_name":"stdout","time":2168.232299265,"data":"[   2167s] train step 200 tokens 409600 loss(sum over visits) 2.0596 lr 1.96e-03\n"}
+,{"stream_name":"stdout","time":2275.679170117,"data":"[   2275s] train step 220 tokens 450560 loss(sum over visits) 1.9451 lr 1.95e-03\n"}
+,{"stream_name":"stdout","time":2383.221555224,"data":"[   2382s] train step 240 tokens 491520 loss(sum over visits) 2.0294 lr 1.94e-03\n"}
+,{"stream_name":"stdout","time":2490.599279932,"data":"[   2490s] train step 260 tokens 532480 loss(sum over visits) 2.1534 lr 1.93e-03\n"}
+,{"stream_name":"stdout","time":2598.039809313,"data":"[   2597s] train step 280 tokens 573440 loss(sum over visits) 2.0219 lr 1.92e-03\n"}
+,{"stream_name":"stdout","time":2705.407257337,"data":"[   2704s] train step 300 tokens 614400 loss(sum over visits) 1.9787 lr 1.90e-03\n"}
+,{"stream_name":"stdout","time":2812.778858096,"data":"[   2812s] train step 320 tokens 655360 loss(sum over visits) 1.9835 lr 1.89e-03\n"}
+,{"stream_name":"stdout","time":2920.221885728,"data":"[   2919s] train step 340 tokens 696320 loss(sum over visits) 1.9485 lr 1.88e-03\n"}
+,{"stream_name":"stdout","time":3027.719194624,"data":"[   3027s] train step 360 tokens 737280 loss(sum over visits) 1.9351 lr 1.86e-03\n"}
+,{"stream_name":"stdout","time":3135.277765429,"data":"[   3134s] train step 380 tokens 778240 loss(sum over visits) 1.9832 lr 1.85e-03\n"}
+,{"stream_name":"stdout","time":3242.692411967,"data":"[   3242s] train step 400 tokens 819200 loss(sum over visits) 2.0361 lr 1.83e-03\n"}
+,{"stream_name":"stdout","time":3350.174382197,"data":"[   3349s] train step 420 tokens 860160 loss(sum over visits) 1.9452 lr 1.81e-03\n"}
+,{"stream_name":"stdout","time":3457.560549823,"data":"[   3457s] train step 440 tokens 901120 loss(sum over visits) 1.9691 lr 1.80e-03\n"}
+,{"stream_name":"stdout","time":3565.043101463,"data":"[   3564s] train step 460 tokens 942080 loss(sum over visits) 2.0105 lr 1.78e-03\n"}
+,{"stream_name":"stdout","time":3672.407034616,"data":"[   3671s] train step 480 tokens 983040 loss(sum over visits) 1.9523 lr 1.76e-03\n"}
+,{"stream_name":"stdout","time":3779.924606149,"data":"[   3779s] train step 500 tokens 1024000 loss(sum over visits) 2.0321 lr 1.74e-03\n"}
+,{"stream_name":"stdout","time":3887.362279784,"data":"[   3886s] train step 520 tokens 1064960 loss(sum over visits) 1.9524 lr 1.72e-03\n"}
+,{"stream_name":"stdout","time":3994.829921304,"data":"[   3994s] train step 540 tokens 1105920 loss(sum over visits) 1.9350 lr 1.70e-03\n"}
+,{"stream_name":"stdout","time":4102.358813181,"data":"[   4101s] train step 560 tokens 1146880 loss(sum over visits) 1.9857 lr 1.68e-03\n"}
+,{"stream_name":"stdout","time":4209.822341928,"data":"[   4209s] train step 580 tokens 1187840 loss(sum over visits) 1.9679 lr 1.66e-03\n"}
+,{"stream_name":"stdout","time":4317.147832806,"data":"[   4316s] train step 600 tokens 1228800 loss(sum over visits) 1.9457 lr 1.63e-03\n"}
+,{"stream_name":"stdout","time":4424.724396568,"data":"[   4424s] train step 620 tokens 1269760 loss(sum over visits) 1.9458 lr 1.61e-03\n"}
+,{"stream_name":"stdout","time":4532.094714737,"data":"[   4531s] train step 640 tokens 1310720 loss(sum over visits) 1.9327 lr 1.59e-03\n"}
+,{"stream_name":"stdout","time":4639.531528732,"data":"[   4639s] train step 660 tokens 1351680 loss(sum over visits) 1.9287 lr 1.56e-03\n"}
+,{"stream_name":"stdout","time":4746.931751363,"data":"[   4746s] train step 680 tokens 1392640 loss(sum over visits) 1.9038 lr 1.54e-03\n"}
+,{"stream_name":"stdout","time":4854.337724988,"data":"[   4853s] train step 700 tokens 1433600 loss(sum over visits) 1.9384 lr 1.51e-03\n"}
+,{"stream_name":"stdout","time":4961.789215027,"data":"[   4961s] train step 720 tokens 1474560 loss(sum over visits) 1.8517 lr 1.49e-03\n"}
+,{"stream_name":"stdout","time":5069.350847226,"data":"[   5068s] train step 740 tokens 1515520 loss(sum over visits) 1.8453 lr 1.46e-03\n"}
+,{"stream_name":"stdout","time":5176.858971041,"data":"[   5176s] train step 760 tokens 1556480 loss(sum over visits) 1.8787 lr 1.44e-03\n"}
+,{"stream_name":"stdout","time":5284.465941069,"data":"[   5284s] train step 780 tokens 1597440 loss(sum over visits) 1.9267 lr 1.41e-03\n"}
+,{"stream_name":"stdout","time":5391.963965685,"data":"[   5391s] train step 800 tokens 1638400 loss(sum over visits) 2.0260 lr 1.38e-03\n"}
+,{"stream_name":"stdout","time":5499.444090621,"data":"[   5499s] train step 820 tokens 1679360 loss(sum over visits) 1.9385 lr 1.36e-03\n"}
+,{"stream_name":"stdout","time":5607.005779484,"data":"[   5606s] train step 840 tokens 1720320 loss(sum over visits) 1.8903 lr 1.33e-03\n"}
+,{"stream_name":"stdout","time":5714.318086881,"data":"[   5713s] train step 860 tokens 1761280 loss(sum over visits) 1.9328 lr 1.30e-03\n"}
+,{"stream_name":"stdout","time":5821.857229349,"data":"[   5821s] train step 880 tokens 1802240 loss(sum over visits) 1.9275 lr 1.28e-03\n"}
+,{"stream_name":"stdout","time":5929.421105859,"data":"[   5928s] train step 900 tokens 1843200 loss(sum over visits) 1.9494 lr 1.25e-03\n"}
+,{"stream_name":"stdout","time":6036.825824355,"data":"[   6036s] train step 920 tokens 1884160 loss(sum over visits) 1.9135 lr 1.22e-03\n"}
+,{"stream_name":"stdout","time":6144.390099571,"data":"[   6143s] train step 940 tokens 1925120 loss(sum over visits) 1.9520 lr 1.19e-03\n"}
+,{"stream_name":"stdout","time":6251.943692766,"data":"[   6251s] train step 960 tokens 1966080 loss(sum over visits) 1.8798 lr 1.16e-03\n"}
+,{"stream_name":"stdout","time":6359.360624361,"data":"[   6358s] train step 980 tokens 2007040 loss(sum over visits) 1.8475 lr 1.14e-03\n"}
+,{"stream_name":"stdout","time":6466.912598415,"data":"[   6466s] train step 1000 tokens 2048000 loss(sum over visits) 1.8750 lr 1.11e-03\n"}
+,{"stream_name":"stdout","time":6574.387910175,"data":"[   6573s] train step 1020 tokens 2088960 loss(sum over visits) 1.8356 lr 1.08e-03\n"}
+,{"stream_name":"stdout","time":6681.736274507,"data":"[   6681s] train step 1040 tokens 2129920 loss(sum over visits) 1.8667 lr 1.05e-03\n"}
+,{"stream_name":"stdout","time":6789.121575986,"data":"[   6788s] train step 1060 tokens 2170880 loss(sum over visits) 1.8399 lr 1.02e-03\n"}
+,{"stream_name":"stdout","time":6896.460314054,"data":"[   6896s] train step 1080 tokens 2211840 loss(sum over visits) 1.8645 lr 9.95e-04\n"}
+,{"stream_name":"stdout","time":7003.914548179,"data":"[   7003s] train step 1100 tokens 2252800 loss(sum over visits) 1.8477 lr 9.67e-04\n"}
+,{"stream_name":"stdout","time":7111.50885716,"data":"[   7111s] train step 1120 tokens 2293760 loss(sum over visits) 1.8510 lr 9.40e-04\n"}
+,{"stream_name":"stdout","time":7218.942181108,"data":"[   7218s] train step 1140 tokens 2334720 loss(sum over visits) 1.8725 lr 9.12e-04\n"}
+,{"stream_name":"stdout","time":7326.309263133,"data":"[   7325s] train step 1160 tokens 2375680 loss(sum over visits) 1.9831 lr 8.85e-04\n"}
+,{"stream_name":"stdout","time":7433.843570521,"data":"[   7433s] train step 1180 tokens 2416640 loss(sum over visits) 1.9221 lr 8.57e-04\n"}
+,{"stream_name":"stdout","time":7541.370405945,"data":"[   7540s] train step 1200 tokens 2457600 loss(sum over visits) 1.9616 lr 8.30e-04\n"}
+,{"stream_name":"stdout","time":7648.900348703,"data":"[   7648s] train step 1220 tokens 2498560 loss(sum over visits) 2.0598 lr 8.04e-04\n"}
+,{"stream_name":"stdout","time":7756.276397236,"data":"[   7755s] train step 1240 tokens 2539520 loss(sum over visits) 1.9270 lr 7.77e-04\n"}
+,{"stream_name":"stdout","time":7863.81611646,"data":"[   7863s] train step 1260 tokens 2580480 loss(sum over visits) 1.8616 lr 7.51e-04\n"}
+,{"stream_name":"stdout","time":7971.449161351,"data":"[   7971s] train step 1280 tokens 2621440 loss(sum over visits) 1.8619 lr 7.25e-04\n"}
+,{"stream_name":"stdout","time":8079.013673843,"data":"[   8078s] train step 1300 tokens 2662400 loss(sum over visits) 1.8853 lr 7.00e-04\n"}
+,{"stream_name":"stdout","time":8186.82485104,"data":"[   8186s] train step 1320 tokens 2703360 loss(sum over visits) 1.9032 lr 6.75e-04\n"}
+,{"stream_name":"stdout","time":8294.634201553,"data":"[   8294s] train step 1340 tokens 2744320 loss(sum over visits) 1.8825 lr 6.50e-04\n"}
+,{"stream_name":"stdout","time":8402.143216062,"data":"[   8401s] train step 1360 tokens 2785280 loss(sum over visits) 1.8582 lr 6.26e-04\n"}
+,{"stream_name":"stdout","time":8509.624391936,"data":"[   8509s] train step 1380 tokens 2826240 loss(sum over visits) 1.7790 lr 6.02e-04\n"}
+,{"stream_name":"stdout","time":8617.294409892,"data":"[   8616s] train step 1400 tokens 2867200 loss(sum over visits) 1.8664 lr 5.79e-04\n"}
+,{"stream_name":"stdout","time":8724.970204159,"data":"[   8724s] train step 1420 tokens 2908160 loss(sum over visits) 1.9171 lr 5.56e-04\n"}
+,{"stream_name":"stdout","time":8832.529724401,"data":"[   8832s] train step 1440 tokens 2949120 loss(sum over visits) 1.8359 lr 5.34e-04\n"}
+,{"stream_name":"stdout","time":8940.206641167,"data":"[   8939s] train step 1460 tokens 2990080 loss(sum over visits) 1.8193 lr 5.13e-04\n"}
+,{"stream_name":"stdout","time":9047.794962079,"data":"[   9047s] train step 1480 tokens 3031040 loss(sum over visits) 1.8643 lr 4.92e-04\n"}
+,{"stream_name":"stdout","time":9155.39449535,"data":"[   9154s] train step 1500 tokens 3072000 loss(sum over visits) 1.8916 lr 4.71e-04\n"}
+,{"stream_name":"stdout","time":9263.053526023,"data":"[   9262s] train step 1520 tokens 3112960 loss(sum over visits) 1.9005 lr 4.51e-04\n"}
+,{"stream_name":"stdout","time":9370.643339147,"data":"[   9370s] train step 1540 tokens 3153920 loss(sum over visits) 1.7796 lr 4.32e-04\n"}
+,{"stream_name":"stdout","time":9478.347069095,"data":"[   9477s] train step 1560 tokens 3194880 loss(sum over visits) 1.9341 lr 4.13e-04\n"}
+,{"stream_name":"stdout","time":9586.104856566,"data":"[   9585s] train step 1580 tokens 3235840 loss(sum over visits) 1.8124 lr 3.96e-04\n"}
+,{"stream_name":"stdout","time":9693.764650463,"data":"[   9693s] train step 1600 tokens 3276800 loss(sum over visits) 1.8293 lr 3.78e-04\n"}
+,{"stream_name":"stdout","time":9801.396043269,"data":"[   9800s] train step 1620 tokens 3317760 loss(sum over visits) 1.7764 lr 3.62e-04\n"}
+,{"stream_name":"stdout","time":9909.16742429,"data":"[   9908s] train step 1640 tokens 3358720 loss(sum over visits) 1.8712 lr 3.46e-04\n"}
+,{"stream_name":"stdout","time":10016.960100827,"data":"[  10016s] train step 1660 tokens 3399680 loss(sum over visits) 1.8927 lr 3.31e-04\n"}
+,{"stream_name":"stdout","time":10124.659387832,"data":"[  10124s] train step 1680 tokens 3440640 loss(sum over visits) 1.8429 lr 3.17e-04\n"}
+,{"stream_name":"stdout","time":10232.425775728,"data":"[  10232s] train step 1700 tokens 3481600 loss(sum over visits) 1.8363 lr 3.03e-04\n"}
+,{"stream_name":"stdout","time":10340.141409254,"data":"[  10339s] train step 1720 tokens 3522560 loss(sum over visits) 1.8133 lr 2.91e-04\n"}
+,{"stream_name":"stdout","time":10447.702715705,"data":"[  10447s] train step 1740 tokens 3563520 loss(sum over visits) 1.8135 lr 2.79e-04\n"}
+,{"stream_name":"stdout","time":10555.372434643,"data":"[  10554s] train step 1760 tokens 3604480 loss(sum over visits) 1.9015 lr 2.68e-04\n"}
+,{"stream_name":"stdout","time":10663.339419371,"data":"[  10662s] train step 1780 tokens 3645440 loss(sum over visits) 1.7759 lr 2.57e-04\n"}
+,{"stream_name":"stdout","time":10771.116802087,"data":"[  10770s] train step 1800 tokens 3686400 loss(sum over visits) 1.8503 lr 2.48e-04\n"}
+,{"stream_name":"stdout","time":10878.922950407,"data":"[  10878s] train step 1820 tokens 3727360 loss(sum over visits) 1.7583 lr 2.39e-04\n"}
+,{"stream_name":"stdout","time":10986.675481173,"data":"[  10986s] train step 1840 tokens 3768320 loss(sum over visits) 1.8378 lr 2.31e-04\n"}
+,{"stream_name":"stdout","time":11094.492235476,"data":"[  11094s] train step 1860 tokens 3809280 loss(sum over visits) 1.9085 lr 2.24e-04\n"}
+,{"stream_name":"stdout","time":11202.313340419,"data":"[  11201s] train step 1880 tokens 3850240 loss(sum over visits) 1.7928 lr 2.18e-04\n"}
+,{"stream_name":"stdout","time":11310.073225783,"data":"[  11309s] train step 1900 tokens 3891200 loss(sum over visits) 1.8223 lr 2.13e-04\n"}
+,{"stream_name":"stdout","time":11417.777507201,"data":"[  11417s] train step 1920 tokens 3932160 loss(sum over visits) 1.7989 lr 2.09e-04\n"}
+,{"stream_name":"stdout","time":11525.576987449,"data":"[  11525s] train step 1940 tokens 3973120 loss(sum over visits) 1.8401 lr 2.05e-04\n"}
+,{"stream_name":"stdout","time":11633.321215068,"data":"[  11632s] train step 1960 tokens 4014080 loss(sum over visits) 1.8144 lr 2.03e-04\n"}
+,{"stream_name":"stdout","time":11740.943048245,"data":"[  11740s] train step 1980 tokens 4055040 loss(sum over visits) 1.8514 lr 2.01e-04\n"}
+,{"stream_name":"stdout","time":11848.508976256,"data":"[  11848s] train step 2000 tokens 4096000 loss(sum over visits) 1.9374 lr 2.00e-04\n"}
+,{"stream_name":"stdout","time":11891.722242423,"data":"[  11891s] training: 2008 steps, 4112384 tokens, 10801s\n"}
+,{"stream_name":"stdout","time":11901.747849002,"data":"[  11901s] final per-layer relative output error: {\"3.0\": 0.09479991346597672, \"7.0\": 0.2784757614135742, \"7.1\": 0.5648859739303589, \"11.0\": 0.2770271599292755, \"11.1\": 0.5363404750823975, \"15.0\": 0.3037128150463104, \"15.1\": 0.5015435814857483, \"19.0\": 0.3176916241645813, \"19.1\": 0.4288286566734314, \"23.0\": 0.18888582289218903, \"23.1\": 0.43400007486343384, \"27.0\": 0.09785229712724686, \"27.1\": 0.41219964623451233, \"31.0\": 0.1665610522031784}\n"}
+,{"stream_name":"stdout","time":12229.599162397,"data":"[  12229s] teacher ppl {\"wiki_nll\": 2.9858625423168634, \"wiki_ppl\": 19.803576294342115, \"fineweb_nll\": 2.699516441278127, \"fineweb_ppl\": 14.872538240194439}\n"}
+,{"stream_name":"stdout","time":12531.224330114,"data":"[  12530s] student ppl {\"wiki_nll\": 3.019857560359506, \"wiki_ppl\": 20.488373119836748, \"fineweb_nll\": 2.749931754283225, \"fineweb_ppl\": 15.641564377989763}\n"}
+,{"stream_name":"stdout","time":12717.784085031,"data":"[  12717s] mmlu teacher {'n': 300, 'acc': 0.7233333333333334}\n"}
+,{"stream_name":"stdout","time":12904.786849486,"data":"[  12904s] mmlu student {'n': 300, 'acc': 0.6866666666666666}\n"}
+,{"stream_name":"stdout","time":12941.946272802,"data":"[  12941s] gen teacher 'The capital of France is' -\u003e ' Paris.\\nParis is the largest city in France.\\nParis has a population of about 2.2 million.\\nParis is known for the Eiffel Tower.\\nParis is known for the Louvre Museum.\\nParis is known for the Arc de\n"}
+,{"stream_name":"stdout","time":12978.714130689,"data":"[  12978s] gen teacher 'def fibonacci(n):' -\u003e '\\n    \"\"\"Return the n-th Fibonacci number (1-indexed).\"\"\"\\n    if n \u003c= 0:\\n        raise ValueError(\"n must be a positive integer\")\\n    if n == 1:\\n        return 1\\n    a, b = 1, 1\\n    for _ in'\n"}
+,{"stream_name":"stdout","time":13015.456299942,"data":"[  13015s] gen teacher 'Photosynthesis is the process by which' -\u003e ' plants convert light energy into chemical energy. Which of the following is NOT a component of the light-dependent reactions of photosynthesis?\\n\\nA. Chlorophyll\\nB. ATP synthase\\nC. Photolysis of w\n"}
+,{"stream_name":"stdout","time":13052.697128312,"data":"[  13052s] gen student 'The capital of France is' -\u003e ' Paris.\\nParis is a city in France.\\nParis is the capital of France.\\nParis is a city in France.\\nParis is a city in France.\\nParis is a city in France.\\nParis is a city in a country.\\nParis is a cit\n"}
+,{"stream_name":"stdout","time":13090.092159407,"data":"[  13089s] gen student 'def fibonacci(n):' -\u003e '\\n    \"\"\"Return a list of the first n Fibonacci numbers.\"\"\"\\n    if n \u003c= 0:\\n        return []\\n    a, b = 0, 1\\n    fibs = []\\n    for _ in range(n):\\n        fibs.append(a)\\n        a, b = b'\n"}
+,{"stream_name":"stdout","time":13127.298340252,"data":"[  13126s] gen student 'Photosynthesis is the process by which' -\u003e ' plants convert light energy into chemical energy. Which of the following is NOT a component of the light-dependent reactions of photosynthesis?\\n\\nA. Chlorophyll\\nB. Photolysis of water\\nC. Producti\n"}
+,{"stream_name":"stdout","time":13127.300401515,"data":"[  13126s] done\n"}
+,{"stream_name":"stderr","time":13127.997285003,"data":"Exception ignored in: \u003cgenerator object Parquet._generate_tables at 0x7e22e497c640\u003e\n"}
+,{"stream_name":"stderr","time":13127.99738114,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":13127.997391,"data":"  File \"/usr/local/lib/python3.13/dist-packages/datasets/packaged_modules/parquet/parquet.py\", line 210, in _generate_tables\n"}
+,{"stream_name":"stderr","time":13127.997396323,"data":"AttributeError: 'NoneType' object has no attribute 'ArrowInvalid'\n"}
+]

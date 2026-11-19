@@ -80,6 +80,16 @@ low-rank: rank 256 keeps 70–89% of the variance, 512 keeps 84–97%. (3) Loop 
 from visit 1's latent (linear R² 0.58–0.78) → the DeepSeek-class sizes need training. (Negative wiki deltas at 512 are
 unexplained; fineweb is the more reliable column.)
 
+## 4b. Loop-convergence diagnostic (arXiv 2611.08977's stopping signal) — results/loop_conv_v1/results.json
+Preview weights, 16 WikiText-2 + 16 fineweb-edu × 2,048 tokens; per-token approximation (see caveat in the file).
+- Skipping the second loop pass for every token: PPL 18.8 → 88.9 (+372%), top-1 agreement 45%. The second pass does
+  substantial work; there is no free early exit.
+- Convergence signal r = ||h2 − h1|| / ||h1|| at the loop output: median 2.1 (the state is not converging).
+- r barely predicts the cost of skipping: Spearman 0.11 vs KL, −0.03 vs ΔNLL. The 25% most-converged tokens cost as much
+  to skip as the rest (ΔNLL 1.75 vs 1.49).
+Conclusion: the paper's energy/convergence idea gives no usable training-free exit for this model (an exit would have
+to be trained in), and it is consistent with config A: the second pass's KV carries information the first pass's does not.
+
 ## 5. Distillation (layer-local, Kaggle 2×T4) — kaggle/distill/SPEC.md
 Student = latent K/V path per full-attention layer (activation-aware SVD init, per-visit up-projections, FP4 latent +
 FP8 RoPE key with QAT), trained to match each teacher attention output; teacher q/o/gate/norms and all FFN/DeltaNet
