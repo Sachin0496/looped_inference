@@ -1,0 +1,161 @@
+[      0s] == stage install start
+[      0s] $ /usr/bin/python3 -m pip install -q 'transformers==5.18.0' 'accelerate>=1.11,<2' 'safetensors>=0.8' datasets gguf huggingface_hub 2>&1 | tail -2
+[     15s] $ /usr/bin/python3 -m pip install -q --no-deps git+https://github.com/OpenSenseNova/SenseNova-Loop.git 2>&1 | tail -2
+[     24s] torch 2.11.0+cu130 gpus ['Tesla T4', 'Tesla T4']
+[     24s] == stage install ok (24s)
+[     24s] == stage weights start
+[    113s] gguf at /tmp/release_src/SenseNova-Loop-9B-BF16.gguf 18.42 GB
+[    120s] $ /usr/bin/python3 -u /tmp/gguf_to_hf.py --gguf /tmp/release_src/SenseNova-Loop-9B-BF16.gguf --config /tmp/preview_meta/config.json --preview-index /tmp/preview_meta/model.safetensors.index.json --check
+[    131s] $ /usr/bin/python3 -u /tmp/gguf_to_hf.py --gguf /tmp/release_src/SenseNova-Loop-9B-BF16.gguf --config /tmp/preview_meta/config.json --preview-index /tmp/preview_meta/model.safetensors.index.json --text-only --out /tmp/release_hf
+[    323s] == stage weights ok (299s)
+[    323s] == stage hf_load start
+[    418s] HF loaded; device map sample: {'model.visual': '0', 'model.language_model.embed_tokens': '0', 'model.language_model.layers.0': '0', 'model.language_model.layers.1': '0'}
+[    418s] == stage hf_load ok (95s)
+[    418s] == stage hf_validation_0 start
+[    458s] == stage hf_validation_0 ok (41s)
+[    458s] == stage hf_validation_1 start
+[    495s] == stage hf_validation_1 ok (36s)
+[    495s] == stage hf_validation_2 start
+[    531s] == stage hf_validation_2 ok (37s)
+[    531s] == stage hf_bench_1024 start
+[    618s] == stage hf_bench_1024 ok (87s)
+[    618s] == stage hf_bench_8192 start
+[    619s] == stage hf_bench_8192 FAILED
+Traceback (most recent call last):
+  File "/kaggle/src/script.py", line 2610, in stage
+    r = fn(*args, **kwargs)
+  File "/kaggle/src/script.py", line 2758, in hf_bench
+    gen(4)
+    ~~~^^^
+  File "/kaggle/src/script.py", line 2753, in gen
+    model.generate(input_ids=ids.to(dev), attention_mask=attn.to(dev), max_new_tokens=n, min_new_tokens=n,
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                   do_sample=False, pad_token_id=0, use_cache=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py", line 2976, in generate
+    result = decoding_method(
+        self,
+    ...<5 lines>...
+        **model_kwargs,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py", line 3176, in _sample
+    outputs = self._prefill(
+        input_ids,
+    ...<2 lines>...
+        is_first_iteration=not generation_config.is_assistant,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py", line 4287, in _prefill
+    return self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/accelerate/hooks.py", line 192, in new_forward
+    output = module._old_forward(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/transformers/utils/generic.py", line 939, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 1860, in forward
+    outputs = self.model(
+        input_ids=input_ids,
+    ...<10 lines>...
+        **kwargs,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/transformers/utils/generic.py", line 939, in wrapper
+    output = func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 1654, in forward
+    outputs = self.language_model(
+        input_ids=None,
+    ...<5 lines>...
+        **kwargs,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/sensenova_loop/models/modeling_sensenova_loop.py", line 333, in forward
+    hidden = self.layers[physical_index](
+        hidden, position_embeddings=position_embeddings,
+    ...<2 lines>...
+        use_cache=use_cache, **kwargs,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/transformers/modeling_layers.py", line 110, in __call__
+    return super().__call__(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/accelerate/hooks.py", line 192, in new_forward
+    output = module._old_forward(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 896, in forward
+    hidden_states, _ = self.self_attn(
+                       ~~~~~~~~~~~~~~^
+        hidden_states=hidden_states,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/accelerate/hooks.py", line 192, in new_forward
+    output = module._old_forward(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py", line 805, in forward
+    attn_output, attn_weights = attention_interface(
+                                ~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/usr/local/lib/python3.13/dist-packages/transformers/integrations/sdpa_attention.py", line 158, in sdpa_attention_forward
+    attn_output = torch.nn.functional.scaled_dot_product_attention(
+        query,
+    ...<6 lines>...
+        **sdpa_kwargs,
+    )
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 4.00 GiB. GPU 0 has a total capacity of 14.56 GiB of which 3.63 GiB is free. Including non-PyTorch memory, this process has 10.93 GiB memory in use. Of the allocated memory 10.49 GiB is allocated by PyTorch, and 313.39 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+
+[    619s] == stage pack start
+[    626s] == stage pack ok (7s)
+[    627s] == stage free_hf start
+[    627s] == stage free_hf ok (0s)
+[    627s] == stage engine_build start
+[    839s] kernels compiled in 212s
+[    840s] engine weights on cuda:0: 4.70 GiB
+[    840s] == stage engine_build ok (213s)
+[    840s] == stage engine_validation start
+[    844s] prompt 0: top1 0.922, step1 max|dlogit| 2.0596, mean KL 0.03955
+[    848s] prompt 1: top1 0.844, step1 max|dlogit| 1.9395, mean KL 0.03437
+[    852s] prompt 2: top1 0.844, step1 max|dlogit| 1.5410, mean KL 0.07069
+[    852s] == stage engine_validation ok (12s)
+[    852s] == stage engine_bench start
+[    857s] engine ctx 1024: 15.54 tok/s (64.36 ms/tok), peak 14.21 GiB
+[    857s] == stage engine_bench FAILED
+Traceback (most recent call last):
+  File "/kaggle/src/script.py", line 2610, in stage
+    r = fn(*args, **kwargs)
+  File "/kaggle/src/script.py", line 2836, in engine_bench
+    eng = E.Engine(st, ops, max_len=ctx + BENCH_STEPS + 8, policy=E.CUDA_POLICY, device="cuda:0")
+  File "/kaggle/working/build/snkv_engine.py", line 336, in __init__
+    self.K[v] = torch.zeros(1, d["Hkv"], self.max_len, d["Dh"], dtype=act, device=self.dev)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 18.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 16.81 MiB is free. Including non-PyTorch memory, this process has 14.54 GiB memory in use. Of the allocated memory 14.30 GiB is allocated by PyTorch, with 11.88 MiB allocated in private pools (e.g., CUDA Graphs), and 96.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+
+[    857s] finished; outputs in /kaggle/working ['build', 'engine_e2e.log', 'results.json']

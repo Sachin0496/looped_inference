@@ -58,7 +58,7 @@ Read PLAN.md for the design. This file is the work queue + rules for each check-
 | distill-a v1 | T4x2 | 19.11 01:10 | 3.6 h work + hang to 12 h cap | results/distill_A_v1/live_log.txt |
 | distill-e v1 | T4x2 | 19.11 10:56 | ? | results/distill_E_v1 |
 | loop-conv v1 | T4x2 | 19.11 12:49 | ~8 min | results/loop_conv_v1 |
-| engine-e2e v1 | T4x2 | 19.11 13:00 | ? | results/engine_e2e_v1 |
+| engine-e2e v1 | T4x2 | 19.11 13:00 | 14 min | results/engine_e2e_v1 |
 | kv-release v1 | T4x2 | 18.11 22:16 | pending | results/kv_release_v1 |
 | distill-b v1 | T4x2 | 18.11 22:52 | running (known bug, see W4) | results/distill_B_v1 |
 | distill-a v1 | T4x2 | pending (session limit, watcher retries) | - | results/distill_A_v1 |
@@ -100,3 +100,4 @@ Opus burns ~1%/min of the 5-hour window and ~0.2%/min weekly during heavy work. 
 - 12:13 IST: distill-e RUNNING (~1h15m in), distill-a still hung (cap ~13:10). No change.
 - ~12:50 IST: distill-a session ended; outputs fetched (results.json confirms live-log numbers; student_A.pt 152 MB kept local, gitignored). Freed slot → queue pushes loop_conv next.
 - 13:13 IST: loop_conv v1 COMPLETE (7.6 min): skipping pass 2 → PPL 18.8→88.9 (+372%), top-1 45%; r median 2.1, Spearman(r, KL)=0.11, (r, dNLL)=−0.03 → no training-free early exit. engine_e2e pushed 13:00 RUNNING; distill-e RUNNING.
+- 14:15 IST: engine-e2e v1 COMPLETE: 15.5 tok/s @1K vs HF 1.8; 87% top-1, KL 0.048; weights 5.05 GB but peak 14.2 GiB (HF still in process) → 8K OOM. Haiku building v2 (fresh-process engine, 1K/8K/32K memory). distill-e RUNNING.

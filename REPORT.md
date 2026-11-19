@@ -62,6 +62,15 @@ Correct: ≤2.3e-6 (v1), ≤5.8e-4 (v2, fp16 tensor cores) relative vs the refer
 v2 reaches only 14–34% of bandwidth (suspect: FP4→fp16 dequant into shared memory; not profiled). v2's fp16 query
 rounding exceeds the 5e-3 gate only at logits ±20–30 (CPU emulation) — check on real-model logits.
 
+## 3f. End-to-end decode engine (v1) — results/engine_e2e_v1/results.json
+Release weights; all linear layers 4-bit (our format), fused mHC + DeltaNet kernels, CUDA graph; one T4.
+- Speed at 1K context: **15.5 tok/s (64 ms/token)** vs Hugging Face fp16 generate 1.8 tok/s (8.6x). Rough floor from
+  weight reads ≈ 33 ms/token (**estimate**), so ~50% of it.
+- Quality vs HF fp16 over 192 greedy steps: 87% top-1 agreement, mean KL 0.048 (includes 4-bit rounding error).
+- Memory: 4-bit weights 5.05 GB, KV 63 MB (1K), DeltaNet state 91 MB — but measured peak was 14.2 GiB because the HF
+  model was still in the same process; 8K benchmarks ran out of memory. The under-8 GB claim is NOT yet measured;
+  v2 (fresh process with only packed weights, 1K/8K/32K) is queued.
+
 ## 4. KV compression without training — results/kv_analysis_v4/results.json
 Preview weights; 64 WikiText-2 + 64 fineweb-edu sequences × 2,048 tokens per variant. `pv` = latent per visit,
 `share` = loop visit 2 rebuilt from visit 1's latent (least-squares map), `pair` = layer pairs share a latent,

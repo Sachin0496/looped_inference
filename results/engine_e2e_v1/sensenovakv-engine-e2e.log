@@ -1,0 +1,245 @@
+[{"stream_name":"stdout","time":7.109866147,"data":"[      0s] == stage install start\n"}
+,{"stream_name":"stdout","time":7.109926629,"data":"[      0s] $ /usr/bin/python3 -m pip install -q 'transformers==5.18.0' 'accelerate\u003e=1.11,\u003c2' 'safetensors\u003e=0.8' datasets gguf huggingface_hub 2\u003e\u00261 | tail -2\n"}
+,{"stream_name":"stdout","time":21.699300657,"data":"[     15s] $ /usr/bin/python3 -m pip install -q --no-deps git+https://github.com/OpenSenseNova/SenseNova-Loop.git 2\u003e\u00261 | tail -2\n"}
+,{"stream_name":"stdout","time":31.235767883,"data":"[     24s] torch 2.11.0+cu130 gpus ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stdout","time":31.235803187,"data":"[     24s] == stage install ok (24s)\n"}
+,{"stream_name":"stdout","time":31.236138618,"data":"[     24s] == stage weights start\n"}
+,{"stream_name":"stderr","time":32.287791481,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":120.003167257,"data":"[    113s] gguf at /tmp/release_src/SenseNova-Loop-9B-BF16.gguf 18.42 GB\n"}
+,{"stream_name":"stdout","time":126.66336389,"data":"[    120s] $ /usr/bin/python3 -u /tmp/gguf_to_hf.py --gguf /tmp/release_src/SenseNova-Loop-9B-BF16.gguf --config /tmp/preview_meta/config.json --preview-index /tmp/preview_meta/model.safetensors.index.json --check\n"}
+,{"stream_name":"stderr","time":127.165033369,"data":"GGUF v3: 490 tensors, data starts at byte 10972576\n"}
+,{"stream_name":"stdout","time":137.956587119,"data":"config vs GGUF metadata:\n"}
+,{"stream_name":"stdout","time":137.956632749,"data":"  OK   loop.start: GGUF=4 config=4\n"}
+,{"stream_name":"stdout","time":137.956653185,"data":"  OK   loop.end: GGUF=28 config=28\n"}
+,{"stream_name":"stdout","time":137.956658149,"data":"  OK   loop.count: GGUF=2 config=2\n"}
+,{"stream_name":"stdout","time":137.956662305,"data":"  OK   mhc.start: GGUF=4 config=4\n"}
+,{"stream_name":"stdout","time":137.956667149,"data":"  OK   mhc.end: GGUF=28 config=28\n"}
+,{"stream_name":"stdout","time":137.956672064,"data":"  OK   mhc.streams: GGUF=2 config=2\n"}
+,{"stream_name":"stdout","time":137.956676816,"data":"  OK   mhc.iterations: GGUF=20 config=20\n"}
+,{"stream_name":"stdout","time":137.956681356,"data":"  OK   mhc.fixed_identity: GGUF=False config=False\n"}
+,{"stream_name":"stdout","time":137.956686046,"data":"  OK   mhc.pre_scale: GGUF=1.0 config=1.0\n"}
+,{"stream_name":"stdout","time":137.956690221,"data":"  OK   block_count (phys+mtp): GGUF=57 config=57\n"}
+,{"stream_name":"stdout","time":137.956694521,"data":"  OK   ssm.conv_kernel: GGUF=4 config=4\n"}
+,{"stream_name":"stdout","time":137.956710371,"data":"  OK   ssm.state_size: GGUF=128 config=128\n"}
+,{"stream_name":"stdout","time":137.956720394,"data":"  OK   ssm.group_count: GGUF=16 config=16\n"}
+,{"stream_name":"stdout","time":137.9567234,"data":"  OK   ssm.time_step_rank: GGUF=32 config=32\n"}
+,{"stream_name":"stdout","time":137.956726233,"data":"  OK   embedding_length: GGUF=4096 config=4096\n"}
+,{"stream_name":"stdout","time":137.956729033,"data":"  OK   feed_forward_length: GGUF=12288 config=12288\n"}
+,{"stream_name":"stdout","time":137.956731956,"data":"  OK   attention.head_count: GGUF=16 config=16\n"}
+,{"stream_name":"stdout","time":137.956757759,"data":"  OK   attention.head_count_kv: GGUF=4 config=4\n"}
+,{"stream_name":"stdout","time":137.956763538,"data":"  OK   attention.key_length: GGUF=256 config=256\n"}
+,{"stream_name":"stdout","time":137.956768391,"data":"  OK   rope.freq_base: GGUF=10000000.0 config=10000000\n"}
+,{"stream_name":"stdout","time":137.956773065,"data":"  OK   rope.dimension_count: GGUF=64 config=64\n"}
+,{"stream_name":"stdout","time":137.95679287,"data":"  DIFF rope.scaling.type: GGUF=yarn config=None\n"}
+,{"stream_name":"stdout","time":137.956796495,"data":"  DIFF context_length: GGUF=524288 config=262144\n"}
+,{"stream_name":"stdout","time":137.956799698,"data":"  OK   recurrent_layers (per slot): GGUF=True config=True\n"}
+,{"stream_name":"stdout","time":137.956803058,"data":"GGUF tensors consumed: 490/490\n"}
+,{"stream_name":"stdout","time":137.9568147,"data":"HF outputs derived: 538 (distinct names 538), Preview index names: 871\n"}
+,{"stream_name":"stdout","time":137.956818276,"data":"HF names with no GGUF source (vision, expected): 333\n"}
+,{"stream_name":"stdout","time":137.956821542,"data":"HF names with no GGUF source (UNEXPECTED): 0\n"}
+,{"stream_name":"stdout","time":137.956826899,"data":"problems: 0\n"}
+,{"stream_name":"stdout","time":137.956833445,"data":"CHECK PASS\n"}
+,{"stream_name":"stdout","time":137.993029792,"data":"[    131s] $ /usr/bin/python3 -u /tmp/gguf_to_hf.py --gguf /tmp/release_src/SenseNova-Loop-9B-BF16.gguf --config /tmp/preview_meta/config.json --preview-index /tmp/preview_meta/model.safetensors.index.json --text-only --out /tmp/release_hf\n"}
+,{"stream_name":"stderr","time":138.422436883,"data":"GGUF v3: 490 tensors, data starts at byte 10972576\n"}
+,{"stream_name":"stderr","time":144.892236513,"data":"WARNING: 333 vision tensors not written (not in the GGUF). Pass --visual-src DIR, or --text-only; the output will not load into the full model without them.\n"}
+,{"stream_name":"stderr","time":144.892428851,"data":"config: rope: GGUF declares YaRN (factor 2.0, original 262144); written into text_config.rope_parameters. Preview config has none. Pass --keep-config-rope to keep the config unchanged.\n"}
+,{"stream_name":"stderr","time":144.892441146,"data":"config: --text-only: mtp_num_hidden_layers set to 0\n"}
+,{"stream_name":"stderr","time":158.380244636,"data":"wrote model-00001-of-00006.safetensors: 1 tensors, 2.03 GB\n"}
+,{"stream_name":"stderr","time":192.169565702,"data":"wrote model-00002-of-00006.safetensors: 68 tensors, 3.90 GB\n"}
+,{"stream_name":"stderr","time":238.581602284,"data":"wrote model-00003-of-00006.safetensors: 156 tensors, 3.90 GB\n"}
+,{"stream_name":"stderr","time":285.297805319,"data":"wrote model-00004-of-00006.safetensors: 156 tensors, 3.90 GB\n"}
+,{"stream_name":"stderr","time":328.665071798,"data":"wrote model-00005-of-00006.safetensors: 133 tensors, 3.97 GB\n"}
+,{"stream_name":"stderr","time":329.531644004,"data":"wrote model-00006-of-00006.safetensors: 9 tensors, 0.22 GB\n"}
+,{"stream_name":"stderr","time":329.616593062,"data":"done: /tmp/release_hf\n"}
+,{"stream_name":"stdout","time":329.920159838,"data":"[    323s] == stage weights ok (299s)\n"}
+,{"stream_name":"stdout","time":329.931210307,"data":"[    323s] == stage hf_load start\n"}
+,{"stream_name":"stderr","time":355.010398682,"data":"[transformers] The tokenizer you are loading from '/tmp/release_hf' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.\n"}
+,{"stream_name":"stderr","time":424.192305764,"data":"\rLoading weights:   0%|          | 0/523 [00:00\u003c?, ?it/s]\rLoading weights:   0%|          | 1/523 [00:47\u003c6:54:48, 47.68s/it]\rLoading weights:  62%|██████▏   | 322/523 [00:49\u003c00:21,  9.21it/s]\rLoading weights:  66%|██████▌   | 343/523 [00:50\u003c00:18,  9.61it/s]\rLoading weights:  67%|██████▋   | 353/523 [00:51\u003c00:17,  9.62it/s]\rLoading weights:  69%|██████▊   | 359/523 [00:51\u003c00:16,  9.70it/s]\rLoading weights:  70%|██████▉   | 364/523 [00:53\u003c00:17,  9.14it/s]\rLoading weights:  72%|███████▏  | 375/523 [00:53\u003c00:14, 10.15it/s]\rLoading weights:  72%|███████▏  | 378/523 [00:53\u003c00:13, 10.42it/s]\rLoading weights:  73%|███████▎  | 382/523 [00:54\u003c00:16,  8.76it/s]\rLoading weights:  73%|███████▎  | 384/523 [00:54\u003c00:15,  8.85it/s]\rLoading weights:  75%|███████▍  | 391/523 [00:55\u003c00:12, 10.71it/s]\rLoading weights:  75%|███████▌  | 394/523 [00:56\u003c00:16,  7.70it/s]\rLoading weights:  78%|███████▊  | 407/523 [00:56\u003c00:10, 11.01it/s]\rLoading weights:  79%|███████▉  | 415/523 [00:57\u003c00:11,  9.59it/s]\rLoading weights:  80%|███████▉  | 417/523 [00:58\u003c00:12,  8.62it/s]\rLoading weights:  83%|████████▎ | 433/523 [00:59\u003c00:09,  9.52it/s]\rLoading weights:  85%|████████▌ | 446/523 [01:00\u003c00:06, 12.72it/s]\rLoading weights:  86%|████████▌ | 451/523 [01:01\u003c00:07, 10.09it/s]\rLoading weights:  88%|████████▊ | 461/523 [01:01\u003c00:04, 12.90it/s]\rLoading weights:  89%|████████▉ | 468/523 [01:02\u003c00:04, 13.51it/s]\rLoading weights:  91%|█████████ | 476/523 [01:02\u003c00:03, 14.27it/s]\rLoading weights:  92%|█████████▏| 480/523 [01:03\u003c00:04,  9.49it/s]\rLoading weights:  94%|█████████▍| 491/523 [01:04\u003c00:02, 12.54it/s]\rLoading weights:  94%|█████████▍| 494/523 [01:05\u003c00:03,  8.08it/s]\rLoading weights:  95%|█████████▍| 496/523 [01:05\u003c00:03,  7.93it/s]\rLoading weights:  97%|█████████▋| 505/523 [01:05\u003c00:01, 12.64it/s]\rLoading weights:  97%|█████████▋| 508/523 [01:06\u003c00:01,  7.84it/s]\rLoading weights:  98%|█████████▊| 511/523 [01:07\u003c00:01,  8.38it/s]\rLoading weights:  98%|█████████▊| 514/523 [01:08\u003c00:01,  6.15it/s]\rLoading weights: 100%|██████████| 523/523 [01:08\u003c00:00,  7.66it/s]\n"}
+,{"stream_name":"stderr","time":424.489836851,"data":"[transformers] \u001b[1mSenseNovaLoopForConditionalGeneration LOAD REPORT\u001b[0m from: /tmp/release_hf\n"}
+,{"stream_name":"stderr","time":424.489880325,"data":"Key                                                | Status  | \n"}
+,{"stream_name":"stderr","time":424.489885847,"data":"---------------------------------------------------+---------+-\n"}
+,{"stream_name":"stderr","time":424.4898898,"data":"model.visual.blocks.{0...26}.attn.qkv.weight       | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489893879,"data":"model.visual.blocks.{0...26}.norm1.weight          | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489897722,"data":"model.visual.blocks.{0...26}.norm1.bias            | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489901169,"data":"model.visual.blocks.{0...26}.attn.proj.weight      | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489904625,"data":"model.visual.blocks.{0...26}.norm2.weight          | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489908026,"data":"model.visual.blocks.{0...26}.mlp.linear_fc1.bias   | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489911318,"data":"model.visual.blocks.{0...26}.attn.proj.bias        | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489914703,"data":"model.visual.blocks.{0...26}.mlp.linear_fc1.weight | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489917934,"data":"model.visual.blocks.{0...26}.norm2.bias            | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489921366,"data":"model.visual.blocks.{0...26}.attn.qkv.bias         | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489929034,"data":"model.visual.blocks.{0...26}.mlp.linear_fc2.bias   | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489942382,"data":"model.visual.blocks.{0...26}.mlp.linear_fc2.weight | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489944831,"data":"model.visual.patch_embed.proj.bias                 | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489947243,"data":"model.visual.merger.norm.weight                    | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489949473,"data":"model.visual.merger.linear_fc1.bias                | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489951709,"data":"model.visual.merger.linear_fc2.bias                | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489954012,"data":"model.visual.merger.norm.bias                      | MISSING | \n"}
+,{"stream_name":"stderr","time":424.48995624,"data":"model.visual.merger.linear_fc2.weight              | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489958577,"data":"model.visual.merger.linear_fc1.weight              | MISSING | \n"}
+,{"stream_name":"stderr","time":424.4899608,"data":"model.visual.pos_embed.weight                      | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489963755,"data":"model.visual.patch_embed.proj.weight               | MISSING | \n"}
+,{"stream_name":"stderr","time":424.489977227,"data":"\n"}
+,{"stream_name":"stderr","time":424.48998104,"data":"Notes:\n"}
+,{"stream_name":"stderr","time":424.489984617,"data":"- MISSING:\tthose params were newly initialized because missing from the checkpoint. Consider training on your downstream task.\n"}
+,{"stream_name":"stdout","time":424.645805629,"data":"[    418s] HF loaded; device map sample: {'model.visual': '0', 'model.language_model.embed_tokens': '0', 'model.language_model.layers.0': '0', 'model.language_model.layers.1': '0'}\n"}
+,{"stream_name":"stdout","time":424.645831694,"data":"[    418s] == stage hf_load ok (95s)\n"}
+,{"stream_name":"stdout","time":424.661390131,"data":"[    418s] == stage hf_validation_0 start\n"}
+,{"stream_name":"stderr","time":425.107542024,"data":"[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.\n"}
+,{"stream_name":"stderr","time":428.063188798,"data":"[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.\n"}
+,{"stream_name":"stderr","time":429.723659404,"data":"[transformers] `causal_conv1d_update` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.\n"}
+,{"stream_name":"stderr","time":429.953412798,"data":"[transformers] `fused_recurrent_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.\n"}
+,{"stream_name":"stdout","time":465.458243028,"data":"[    458s] == stage hf_validation_0 ok (41s)\n"}
+,{"stream_name":"stdout","time":465.458965622,"data":"[    458s] == stage hf_validation_1 start\n"}
+,{"stream_name":"stdout","time":501.621648087,"data":"[    495s] == stage hf_validation_1 ok (36s)\n"}
+,{"stream_name":"stdout","time":501.622476275,"data":"[    495s] == stage hf_validation_2 start\n"}
+,{"stream_name":"stdout","time":538.233460135,"data":"[    531s] == stage hf_validation_2 ok (37s)\n"}
+,{"stream_name":"stdout","time":538.234230468,"data":"[    531s] == stage hf_bench_1024 start\n"}
+,{"stream_name":"stdout","time":625.19689881,"data":"[    618s] == stage hf_bench_1024 ok (87s)\n"}
+,{"stream_name":"stdout","time":625.197902959,"data":"[    618s] == stage hf_bench_8192 start\n"}
+,{"stream_name":"stdout","time":626.485527797,"data":"[    619s] == stage hf_bench_8192 FAILED\n"}
+,{"stream_name":"stdout","time":626.48556999,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":626.485573773,"data":"  File \"/kaggle/src/script.py\", line 2610, in stage\n"}
+,{"stream_name":"stdout","time":626.485577221,"data":"    r = fn(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485580142,"data":"  File \"/kaggle/src/script.py\", line 2758, in hf_bench\n"}
+,{"stream_name":"stdout","time":626.485583065,"data":"    gen(4)\n"}
+,{"stream_name":"stdout","time":626.485585797,"data":"    ~~~^^^\n"}
+,{"stream_name":"stdout","time":626.485588498,"data":"  File \"/kaggle/src/script.py\", line 2753, in gen\n"}
+,{"stream_name":"stdout","time":626.485591379,"data":"    model.generate(input_ids=ids.to(dev), attention_mask=attn.to(dev), max_new_tokens=n, min_new_tokens=n,\n"}
+,{"stream_name":"stdout","time":626.485594382,"data":"    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":626.485597258,"data":"                   do_sample=False, pad_token_id=0, use_cache=True)\n"}
+,{"stream_name":"stdout","time":626.485600046,"data":"                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":626.485602899,"data":"  File \"/usr/local/lib/python3.13/dist-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n"}
+,{"stream_name":"stdout","time":626.485606097,"data":"    return func(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485608852,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py\", line 2976, in generate\n"}
+,{"stream_name":"stdout","time":626.485611778,"data":"    result = decoding_method(\n"}
+,{"stream_name":"stdout","time":626.485614508,"data":"        self,\n"}
+,{"stream_name":"stdout","time":626.485617286,"data":"    ...\u003c5 lines\u003e...\n"}
+,{"stream_name":"stdout","time":626.485620382,"data":"        **model_kwargs,\n"}
+,{"stream_name":"stdout","time":626.485623107,"data":"    )\n"}
+,{"stream_name":"stdout","time":626.485625815,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py\", line 3176, in _sample\n"}
+,{"stream_name":"stdout","time":626.485628717,"data":"    outputs = self._prefill(\n"}
+,{"stream_name":"stdout","time":626.485631439,"data":"        input_ids,\n"}
+,{"stream_name":"stdout","time":626.485634117,"data":"    ...\u003c2 lines\u003e...\n"}
+,{"stream_name":"stdout","time":626.485636922,"data":"        is_first_iteration=not generation_config.is_assistant,\n"}
+,{"stream_name":"stdout","time":626.485639774,"data":"    )\n"}
+,{"stream_name":"stdout","time":626.485642436,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py\", line 4287, in _prefill\n"}
+,{"stream_name":"stdout","time":626.485645355,"data":"    return self(**model_inputs, return_dict=True)\n"}
+,{"stream_name":"stdout","time":626.485648143,"data":"  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n"}
+,{"stream_name":"stdout","time":626.485651088,"data":"    return self._call_impl(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485653846,"data":"           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":626.485656585,"data":"  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n"}
+,{"stream_name":"stdout","time":626.485668896,"data":"    return forward_call(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.48567138,"data":"  File \"/usr/local/lib/python3.13/dist-packages/accelerate/hooks.py\", line 192, in new_forward\n"}
+,{"stream_name":"stdout","time":626.485673827,"data":"    output = module._old_forward(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485676081,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/utils/generic.py\", line 939, in wrapper\n"}
+,{"stream_name":"stdout","time":626.485678571,"data":"    output = func(self, *args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485681958,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 1860, in forward\n"}
+,{"stream_name":"stdout","time":626.485684438,"data":"    outputs = self.model(\n"}
+,{"stream_name":"stdout","time":626.485686626,"data":"        input_ids=input_ids,\n"}
+,{"stream_name":"stdout","time":626.485688824,"data":"    ...\u003c10 lines\u003e...\n"}
+,{"stream_name":"stdout","time":626.485691129,"data":"        **kwargs,\n"}
+,{"stream_name":"stdout","time":626.485693316,"data":"    )\n"}
+,{"stream_name":"stdout","time":626.485695467,"data":"  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n"}
+,{"stream_name":"stdout","time":626.485697899,"data":"    return self._call_impl(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485700128,"data":"           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":626.485702351,"data":"  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n"}
+,{"stream_name":"stdout","time":626.485704708,"data":"    return forward_call(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485706911,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/utils/generic.py\", line 939, in wrapper\n"}
+,{"stream_name":"stdout","time":626.485714931,"data":"    output = func(self, *args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485717569,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 1654, in forward\n"}
+,{"stream_name":"stdout","time":626.485719982,"data":"    outputs = self.language_model(\n"}
+,{"stream_name":"stdout","time":626.485722172,"data":"        input_ids=None,\n"}
+,{"stream_name":"stdout","time":626.485724337,"data":"    ...\u003c5 lines\u003e...\n"}
+,{"stream_name":"stdout","time":626.485726577,"data":"        **kwargs,\n"}
+,{"stream_name":"stdout","time":626.485728795,"data":"    )\n"}
+,{"stream_name":"stdout","time":626.485730964,"data":"  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n"}
+,{"stream_name":"stdout","time":626.485733332,"data":"    return self._call_impl(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485735544,"data":"           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":626.485737808,"data":"  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n"}
+,{"stream_name":"stdout","time":626.485740143,"data":"    return forward_call(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485742323,"data":"  File \"/usr/local/lib/python3.13/dist-packages/sensenova_loop/models/modeling_sensenova_loop.py\", line 333, in forward\n"}
+,{"stream_name":"stdout","time":626.485744698,"data":"    hidden = self.layers[physical_index](\n"}
+,{"stream_name":"stdout","time":626.485749505,"data":"        hidden, position_embeddings=position_embeddings,\n"}
+,{"stream_name":"stdout","time":626.485751879,"data":"    ...\u003c2 lines\u003e...\n"}
+,{"stream_name":"stdout","time":626.485754103,"data":"        use_cache=use_cache, **kwargs,\n"}
+,{"stream_name":"stdout","time":626.485756301,"data":"    )\n"}
+,{"stream_name":"stdout","time":626.4857585,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/modeling_layers.py\", line 110, in __call__\n"}
+,{"stream_name":"stdout","time":626.485760842,"data":"    return super().__call__(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485763077,"data":"           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":626.485765282,"data":"  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n"}
+,{"stream_name":"stdout","time":626.485767705,"data":"    return self._call_impl(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485769891,"data":"           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":626.485772095,"data":"  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n"}
+,{"stream_name":"stdout","time":626.485774457,"data":"    return forward_call(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485777067,"data":"  File \"/usr/local/lib/python3.13/dist-packages/accelerate/hooks.py\", line 192, in new_forward\n"}
+,{"stream_name":"stdout","time":626.485779467,"data":"    output = module._old_forward(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485781685,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 896, in forward\n"}
+,{"stream_name":"stdout","time":626.485784053,"data":"    hidden_states, _ = self.self_attn(\n"}
+,{"stream_name":"stdout","time":626.485786231,"data":"                       ~~~~~~~~~~~~~~^\n"}
+,{"stream_name":"stdout","time":626.485788405,"data":"        hidden_states=hidden_states,\n"}
+,{"stream_name":"stdout","time":626.485790582,"data":"        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":626.485792767,"data":"    ...\u003c4 lines\u003e...\n"}
+,{"stream_name":"stdout","time":626.485794982,"data":"        **kwargs,\n"}
+,{"stream_name":"stdout","time":626.48579713,"data":"        ^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":626.485799298,"data":"    )\n"}
+,{"stream_name":"stdout","time":626.485801424,"data":"    ^\n"}
+,{"stream_name":"stdout","time":626.485803557,"data":"  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n"}
+,{"stream_name":"stdout","time":626.485805904,"data":"    return self._call_impl(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.4858081,"data":"           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":626.485810323,"data":"  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n"}
+,{"stream_name":"stdout","time":626.485812654,"data":"    return forward_call(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485814869,"data":"  File \"/usr/local/lib/python3.13/dist-packages/accelerate/hooks.py\", line 192, in new_forward\n"}
+,{"stream_name":"stdout","time":626.485817169,"data":"    output = module._old_forward(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":626.485819392,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 805, in forward\n"}
+,{"stream_name":"stdout","time":626.48582173,"data":"    attn_output, attn_weights = attention_interface(\n"}
+,{"stream_name":"stdout","time":626.485826396,"data":"                                ~~~~~~~~~~~~~~~~~~~^\n"}
+,{"stream_name":"stdout","time":626.485828733,"data":"        self,\n"}
+,{"stream_name":"stdout","time":626.485830864,"data":"        ^^^^^\n"}
+,{"stream_name":"stdout","time":626.485832996,"data":"    ...\u003c6 lines\u003e...\n"}
+,{"stream_name":"stdout","time":626.485835215,"data":"        **kwargs,\n"}
+,{"stream_name":"stdout","time":626.485837354,"data":"        ^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":626.485839483,"data":"    )\n"}
+,{"stream_name":"stdout","time":626.485841585,"data":"    ^\n"}
+,{"stream_name":"stdout","time":626.485843745,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/integrations/sdpa_attention.py\", line 158, in sdpa_attention_forward\n"}
+,{"stream_name":"stdout","time":626.485846215,"data":"    attn_output = torch.nn.functional.scaled_dot_product_attention(\n"}
+,{"stream_name":"stdout","time":626.485848495,"data":"        query,\n"}
+,{"stream_name":"stdout","time":626.485850644,"data":"    ...\u003c6 lines\u003e...\n"}
+,{"stream_name":"stdout","time":626.48585285,"data":"        **sdpa_kwargs,\n"}
+,{"stream_name":"stdout","time":626.48585502,"data":"    )\n"}
+,{"stream_name":"stdout","time":626.485859478,"data":"torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 4.00 GiB. GPU 0 has a total capacity of 14.56 GiB of which 3.63 GiB is free. Including non-PyTorch memory, this process has 10.93 GiB memory in use. Of the allocated memory 10.49 GiB is allocated by PyTorch, and 313.39 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)\n"}
+,{"stream_name":"stdout","time":626.485865229,"data":"\n"}
+,{"stream_name":"stdout","time":626.486311857,"data":"[    619s] == stage pack start\n"}
+,{"stream_name":"stdout","time":633.493794595,"data":"[    626s] == stage pack ok (7s)\n"}
+,{"stream_name":"stdout","time":633.798201486,"data":"[    627s] == stage free_hf start\n"}
+,{"stream_name":"stdout","time":633.798232787,"data":"[    627s] == stage free_hf ok (0s)\n"}
+,{"stream_name":"stdout","time":633.799076542,"data":"[    627s] == stage engine_build start\n"}
+,{"stream_name":"stdout","time":845.888887611,"data":"[    839s] kernels compiled in 212s\n"}
+,{"stream_name":"stdout","time":847.257586906,"data":"[    840s] engine weights on cuda:0: 4.70 GiB\n"}
+,{"stream_name":"stdout","time":847.257629357,"data":"[    840s] == stage engine_build ok (213s)\n"}
+,{"stream_name":"stdout","time":847.25837147,"data":"[    840s] == stage engine_validation start\n"}
+,{"stream_name":"stdout","time":851.312823297,"data":"[    844s] prompt 0: top1 0.922, step1 max|dlogit| 2.0596, mean KL 0.03955\n"}
+,{"stream_name":"stdout","time":855.336826626,"data":"[    848s] prompt 1: top1 0.844, step1 max|dlogit| 1.9395, mean KL 0.03437\n"}
+,{"stream_name":"stdout","time":859.472206072,"data":"[    852s] prompt 2: top1 0.844, step1 max|dlogit| 1.5410, mean KL 0.07069\n"}
+,{"stream_name":"stdout","time":859.487635462,"data":"[    852s] == stage engine_validation ok (12s)\n"}
+,{"stream_name":"stdout","time":859.490193762,"data":"[    852s] == stage engine_bench start\n"}
+,{"stream_name":"stdout","time":864.034206835,"data":"[    857s] engine ctx 1024: 15.54 tok/s (64.36 ms/tok), peak 14.21 GiB\n"}
+,{"stream_name":"stdout","time":864.073471073,"data":"[    857s] == stage engine_bench FAILED\n"}
+,{"stream_name":"stdout","time":864.073508334,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":864.073515661,"data":"  File \"/kaggle/src/script.py\", line 2610, in stage\n"}
+,{"stream_name":"stdout","time":864.073525287,"data":"    r = fn(*args, **kwargs)\n"}
+,{"stream_name":"stdout","time":864.073542798,"data":"  File \"/kaggle/src/script.py\", line 2836, in engine_bench\n"}
+,{"stream_name":"stdout","time":864.073545681,"data":"    eng = E.Engine(st, ops, max_len=ctx + BENCH_STEPS + 8, policy=E.CUDA_POLICY, device=\"cuda:0\")\n"}
+,{"stream_name":"stdout","time":864.073548472,"data":"  File \"/kaggle/working/build/snkv_engine.py\", line 336, in __init__\n"}
+,{"stream_name":"stdout","time":864.073551097,"data":"    self.K[v] = torch.zeros(1, d[\"Hkv\"], self.max_len, d[\"Dh\"], dtype=act, device=self.dev)\n"}
+,{"stream_name":"stdout","time":864.073553869,"data":"                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":864.073558904,"data":"torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 18.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 16.81 MiB is free. Including non-PyTorch memory, this process has 14.54 GiB memory in use. Of the allocated memory 14.30 GiB is allocated by PyTorch, with 11.88 MiB allocated in private pools (e.g., CUDA Graphs), and 96.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)\n"}
+,{"stream_name":"stdout","time":864.073565638,"data":"\n"}
+,{"stream_name":"stdout","time":864.271635426,"data":"[    857s] finished; outputs in /kaggle/working ['build', 'engine_e2e.log', 'results.json']\n"}
+,{"stream_name":"stderr","time":867.163079968,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":867.163109764,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":867.37443436,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":867.37445784,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":868.245702743,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":869.248951027,"data":"[NbConvertApp] Writing 547291 bytes to __results__.html\n"}
+]

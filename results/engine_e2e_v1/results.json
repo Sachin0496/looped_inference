@@ -1,0 +1,1375 @@
+{
+ "version": "engine_e2e v1",
+ "status": "done (see stages/errors)",
+ "weights": "release-gguf-converted",
+ "stages": {
+  "install": {
+   "ok": true,
+   "wall_s": 24.1
+  },
+  "weights": {
+   "ok": true,
+   "wall_s": 298.7
+  },
+  "hf_load": {
+   "ok": true,
+   "wall_s": 94.7
+  },
+  "hf_validation_0": {
+   "ok": true,
+   "wall_s": 40.8
+  },
+  "hf_validation_1": {
+   "ok": true,
+   "wall_s": 36.2
+  },
+  "hf_validation_2": {
+   "ok": true,
+   "wall_s": 36.6
+  },
+  "hf_bench_1024": {
+   "ok": true,
+   "wall_s": 87.0
+  },
+  "hf_bench_8192": {
+   "ok": false,
+   "wall_s": 1.3
+  },
+  "pack": {
+   "ok": true,
+   "wall_s": 7.0
+  },
+  "free_hf": {
+   "ok": true,
+   "wall_s": 0.0
+  },
+  "engine_build": {
+   "ok": true,
+   "wall_s": 213.5
+  },
+  "engine_validation": {
+   "ok": true,
+   "wall_s": 12.2
+  },
+  "engine_bench": {
+   "ok": false,
+   "wall_s": 4.6
+  }
+ },
+ "errors": {
+  "hf_bench_8192": "Traceback (most recent call last):\n  File \"/kaggle/src/script.py\", line 2610, in stage\n    r = fn(*args, **kwargs)\n  File \"/kaggle/src/script.py\", line 2758, in hf_bench\n    gen(4)\n    ~~~^^^\n  File \"/kaggle/src/script.py\", line 2753, in gen\n    model.generate(input_ids=ids.to(dev), attention_mask=attn.to(dev), max_new_tokens=n, min_new_tokens=n,\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                   do_sample=False, pad_token_id=0, use_cache=True)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py\", line 2976, in generate\n    result = decoding_method(\n        self,\n    ...<5 lines>...\n        **model_kwargs,\n    )\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py\", line 3176, in _sample\n    outputs = self._prefill(\n        input_ids,\n    ...<2 lines>...\n        is_first_iteration=not generation_config.is_assistant,\n    )\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py\", line 4287, in _prefill\n    return self(**model_inputs, return_dict=True)\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/accelerate/hooks.py\", line 192, in new_forward\n    output = module._old_forward(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/utils/generic.py\", line 939, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 1860, in forward\n    outputs = self.model(\n        input_ids=input_ids,\n    ...<10 lines>...\n        **kwargs,\n    )\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/utils/generic.py\", line 939, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 1654, in forward\n    outputs = self.language_model(\n        input_ids=None,\n    ...<5 lines>...\n        **kwargs,\n    )\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/sensenova_loop/models/modeling_sensenova_loop.py\", line 333, in forward\n    hidden = self.layers[physical_index](\n        hidden, position_embeddings=position_embeddings,\n    ...<2 lines>...\n        use_cache=use_cache, **kwargs,\n    )\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/modeling_layers.py\", line 110, in __call__\n    return super().__call__(*args, **kwargs)\n           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/accelerate/hooks.py\", line 192, in new_forward\n    output = module._old_forward(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 896, in forward\n    hidden_states, _ = self.self_attn(\n                       ~~~~~~~~~~~~~~^\n        hidden_states=hidden_states,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n        **kwargs,\n        ^^^^^^^^^\n    )\n    ^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/accelerate/hooks.py\", line 192, in new_forward\n    output = module._old_forward(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 805, in forward\n    attn_output, attn_weights = attention_interface(\n                                ~~~~~~~~~~~~~~~~~~~^\n        self,\n        ^^^^^\n    ...<6 lines>...\n        **kwargs,\n        ^^^^^^^^^\n    )\n    ^\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/integrations/sdpa_attention.py\", line 158, in sdpa_attention_forward\n    attn_output = torch.nn.functional.scaled_dot_product_attention(\n        query,\n    ...<6 lines>...\n        **sdpa_kwargs,\n    )\ntorch.OutOfMemoryError: CUDA out of memory. Tried to allocate 4.00 GiB. GPU 0 has a total capacity of 14.56 GiB of which 3.63 GiB is free. Including non-PyTorch memory, this process has 10.93 GiB memory in use. Of the allocated memory 10.49 GiB is allocated by PyTorch, and 313.39 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)\n",
+  "engine_bench": "Traceback (most recent call last):\n  File \"/kaggle/src/script.py\", line 2610, in stage\n    r = fn(*args, **kwargs)\n  File \"/kaggle/src/script.py\", line 2836, in engine_bench\n    eng = E.Engine(st, ops, max_len=ctx + BENCH_STEPS + 8, policy=E.CUDA_POLICY, device=\"cuda:0\")\n  File \"/kaggle/working/build/snkv_engine.py\", line 336, in __init__\n    self.K[v] = torch.zeros(1, d[\"Hkv\"], self.max_len, d[\"Dh\"], dtype=act, device=self.dev)\n                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntorch.OutOfMemoryError: CUDA out of memory. Tried to allocate 18.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 16.81 MiB is free. Including non-PyTorch memory, this process has 14.54 GiB memory in use. Of the allocated memory 14.30 GiB is allocated by PyTorch, with 11.88 MiB allocated in private pools (e.g., CUDA Graphs), and 96.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)\n"
+ },
+ "hf": {
+  "validation": [
+   {
+    "prompt": 0,
+    "S": 253,
+    "fed_tokens": [
+     16,
+     13,
+     3437,
+     369,
+     279,
+     1822,
+     8282,
+     314,
+     "..."
+    ],
+    "n_steps": 64
+   },
+   {
+    "prompt": 1,
+    "S": 249,
+    "fed_tokens": [
+     16,
+     13,
+     3437,
+     369,
+     279,
+     1118,
+     2923,
+     303,
+     "..."
+    ],
+    "n_steps": 64
+   },
+   {
+    "prompt": 2,
+    "S": 237,
+    "fed_tokens": [
+     16,
+     13,
+     25962,
+     286,
+     13,
+     561,
+     51470,
+     41224,
+     "..."
+    ],
+    "n_steps": 64
+   }
+  ],
+  "bench": {
+   "1024": {
+    "ctx": 1024,
+    "prefill_plus_1_s": 2.271843452999974,
+    "prefill_plus_65_s": 37.68344041900002,
+    "decode_tok_per_s": 1.8073175310746,
+    "method": "generate(65) - generate(1)"
+   }
+  }
+ },
+ "engine": {
+  "build": {
+   "compile_s": 212.1,
+   "weights_bytes": 5051160192,
+   "policy": "Policy(act=torch.float16, mhc=torch.bfloat16)"
+  },
+  "validation": [
+   {
+    "prompt": 0,
+    "S": 253,
+    "steps": [
+     {
+      "step": 1,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.0595703125,
+      "kl_hf_engine": 0.014968355186283588
+     },
+     {
+      "step": 2,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.592041015625,
+      "kl_hf_engine": 0.05185878276824951
+     },
+     {
+      "step": 3,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.66162109375,
+      "kl_hf_engine": 0.02540723606944084
+     },
+     {
+      "step": 4,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.888671875,
+      "kl_hf_engine": 0.012340988032519817
+     },
+     {
+      "step": 5,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.79736328125,
+      "kl_hf_engine": 0.04348022863268852
+     },
+     {
+      "step": 6,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.845703125,
+      "kl_hf_engine": 0.04763764888048172
+     },
+     {
+      "step": 7,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.095703125,
+      "kl_hf_engine": 0.0012017014669254422
+     },
+     {
+      "step": 8,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.076171875,
+      "kl_hf_engine": 0.05862016975879669
+     },
+     {
+      "step": 9,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.7578125,
+      "kl_hf_engine": 0.009713534265756607
+     },
+     {
+      "step": 10,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.7724609375,
+      "kl_hf_engine": 0.004230748862028122
+     },
+     {
+      "step": 11,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.421875,
+      "kl_hf_engine": 0.02053733356297016
+     },
+     {
+      "step": 12,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.423828125,
+      "kl_hf_engine": 0.024905124679207802
+     },
+     {
+      "step": 13,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.33203125,
+      "kl_hf_engine": 0.010665737092494965
+     },
+     {
+      "step": 14,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.13037109375,
+      "kl_hf_engine": 0.020952126011252403
+     },
+     {
+      "step": 15,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.1875,
+      "kl_hf_engine": 0.06005639582872391
+     },
+     {
+      "step": 16,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.90478515625,
+      "kl_hf_engine": 0.00020065154240000993
+     },
+     {
+      "step": 17,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.6708984375,
+      "kl_hf_engine": 0.004822432529181242
+     },
+     {
+      "step": 18,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.234375,
+      "kl_hf_engine": 0.002059138612821698
+     },
+     {
+      "step": 19,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.9375,
+      "kl_hf_engine": 2.447248152748216e-05
+     },
+     {
+      "step": 20,
+      "top1_agree": true,
+      "max_abs_dlogit": 5.9892578125,
+      "kl_hf_engine": 0.06688015162944794
+     },
+     {
+      "step": 21,
+      "top1_agree": false,
+      "max_abs_dlogit": 2.4296875,
+      "kl_hf_engine": 0.316470205783844
+     },
+     {
+      "step": 22,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.02734375,
+      "kl_hf_engine": 0.002962779952213168
+     },
+     {
+      "step": 23,
+      "top1_agree": true,
+      "max_abs_dlogit": 3.333984375,
+      "kl_hf_engine": 0.0005096532986499369
+     },
+     {
+      "step": 24,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.912109375,
+      "kl_hf_engine": 2.5691420887596905e-05
+     },
+     {
+      "step": 25,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.59765625,
+      "kl_hf_engine": 0.03649751842021942
+     },
+     {
+      "step": 26,
+      "top1_agree": false,
+      "max_abs_dlogit": 1.85693359375,
+      "kl_hf_engine": 0.07838180661201477
+     },
+     {
+      "step": 27,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.07861328125,
+      "kl_hf_engine": 0.004052325617522001
+     },
+     {
+      "step": 28,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.224609375,
+      "kl_hf_engine": 0.002714957110583782
+     },
+     {
+      "step": 29,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.109375,
+      "kl_hf_engine": 3.362683855812065e-05
+     },
+     {
+      "step": 30,
+      "top1_agree": true,
+      "max_abs_dlogit": 6.11572265625,
+      "kl_hf_engine": 0.3184683620929718
+     },
+     {
+      "step": 31,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.7197265625,
+      "kl_hf_engine": 0.03214026615023613
+     },
+     {
+      "step": 32,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.421875,
+      "kl_hf_engine": 0.012370102107524872
+     },
+     {
+      "step": 33,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.861328125,
+      "kl_hf_engine": 0.2944428622722626
+     },
+     {
+      "step": 34,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.9609375,
+      "kl_hf_engine": 0.00020360195776447654
+     },
+     {
+      "step": 35,
+      "top1_agree": true,
+      "max_abs_dlogit": 6.705078125,
+      "kl_hf_engine": 0.23323649168014526
+     },
+     {
+      "step": 36,
+      "top1_agree": false,
+      "max_abs_dlogit": 2.204833984375,
+      "kl_hf_engine": 0.08070234209299088
+     },
+     {
+      "step": 37,
+      "top1_agree": false,
+      "max_abs_dlogit": 1.57421875,
+      "kl_hf_engine": 0.018658604472875595
+     },
+     {
+      "step": 38,
+      "top1_agree": true,
+      "max_abs_dlogit": 6.31103515625,
+      "kl_hf_engine": 0.039010219275951385
+     },
+     {
+      "step": 39,
+      "top1_agree": true,
+      "max_abs_dlogit": 4.5234375,
+      "kl_hf_engine": 0.016149764880537987
+     },
+     {
+      "step": 40,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.005859375,
+      "kl_hf_engine": 0.008454501628875732
+     },
+     {
+      "step": 41,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.73095703125,
+      "kl_hf_engine": 0.02375577948987484
+     },
+     {
+      "step": 42,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.833740234375,
+      "kl_hf_engine": 0.06551244854927063
+     },
+     {
+      "step": 43,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.541015625,
+      "kl_hf_engine": 0.03412864729762077
+     },
+     {
+      "step": 44,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.810546875,
+      "kl_hf_engine": 0.00058786227600649
+     },
+     {
+      "step": 45,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.287109375,
+      "kl_hf_engine": 0.0004060163046233356
+     },
+     {
+      "step": 46,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.9296875,
+      "kl_hf_engine": 0.001783221261575818
+     },
+     {
+      "step": 47,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.7578125,
+      "kl_hf_engine": 6.129928806331009e-05
+     },
+     {
+      "step": 48,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.2783203125,
+      "kl_hf_engine": 0.0001438216131646186
+     },
+     {
+      "step": 49,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.2314453125,
+      "kl_hf_engine": 0.01151325460523367
+     },
+     {
+      "step": 50,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.453125,
+      "kl_hf_engine": 0.0026344398502260447
+     },
+     {
+      "step": 51,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.145263671875,
+      "kl_hf_engine": 3.674887921079062e-05
+     },
+     {
+      "step": 52,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.9033203125,
+      "kl_hf_engine": 0.0011041512480005622
+     },
+     {
+      "step": 53,
+      "top1_agree": false,
+      "max_abs_dlogit": 2.00677490234375,
+      "kl_hf_engine": 0.14507710933685303
+     },
+     {
+      "step": 54,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.9593505859375,
+      "kl_hf_engine": 0.11619299650192261
+     },
+     {
+      "step": 55,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.3515625,
+      "kl_hf_engine": 0.09293267875909805
+     },
+     {
+      "step": 56,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.6201171875,
+      "kl_hf_engine": 0.025277312844991684
+     },
+     {
+      "step": 57,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.7705078125,
+      "kl_hf_engine": 0.0008944955188781023
+     },
+     {
+      "step": 58,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.86865234375,
+      "kl_hf_engine": 1.3102716366120148e-05
+     },
+     {
+      "step": 59,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.2470703125,
+      "kl_hf_engine": 0.02584400773048401
+     },
+     {
+      "step": 60,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.546875,
+      "kl_hf_engine": 0.004537459462881088
+     },
+     {
+      "step": 61,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.91796875,
+      "kl_hf_engine": 4.530940714175813e-05
+     },
+     {
+      "step": 62,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.283203125,
+      "kl_hf_engine": 0.00098165322560817
+     },
+     {
+      "step": 63,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.41796875,
+      "kl_hf_engine": 0.0009183714864775538
+     },
+     {
+      "step": 64,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.732421875,
+      "kl_hf_engine": 0.001044623670168221
+     }
+    ],
+    "top1_agree_frac": 0.921875,
+    "step1_max_abs_dlogit": 2.0595703125,
+    "mean_kl_hf_engine": 0.03955430395130577
+   },
+   {
+    "prompt": 1,
+    "S": 249,
+    "steps": [
+     {
+      "step": 1,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.939453125,
+      "kl_hf_engine": 0.020113466307520866
+     },
+     {
+      "step": 2,
+      "top1_agree": false,
+      "max_abs_dlogit": 1.88623046875,
+      "kl_hf_engine": 0.08876480162143707
+     },
+     {
+      "step": 3,
+      "top1_agree": false,
+      "max_abs_dlogit": 2.14990234375,
+      "kl_hf_engine": 0.09467245638370514
+     },
+     {
+      "step": 4,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.818359375,
+      "kl_hf_engine": 0.012124616652727127
+     },
+     {
+      "step": 5,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.732421875,
+      "kl_hf_engine": 0.03789879381656647
+     },
+     {
+      "step": 6,
+      "top1_agree": false,
+      "max_abs_dlogit": 1.62109375,
+      "kl_hf_engine": 0.04107581451535225
+     },
+     {
+      "step": 7,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.765625,
+      "kl_hf_engine": 0.003724500071257353
+     },
+     {
+      "step": 8,
+      "top1_agree": false,
+      "max_abs_dlogit": 1.974609375,
+      "kl_hf_engine": 0.07681898772716522
+     },
+     {
+      "step": 9,
+      "top1_agree": false,
+      "max_abs_dlogit": 1.5633544921875,
+      "kl_hf_engine": 0.03297394514083862
+     },
+     {
+      "step": 10,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.677734375,
+      "kl_hf_engine": 0.06452919542789459
+     },
+     {
+      "step": 11,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.04296875,
+      "kl_hf_engine": 0.0004388203378766775
+     },
+     {
+      "step": 12,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.890625,
+      "kl_hf_engine": 0.05326400324702263
+     },
+     {
+      "step": 13,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.7255859375,
+      "kl_hf_engine": 0.0003597743343561888
+     },
+     {
+      "step": 14,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.15576171875,
+      "kl_hf_engine": 1.8722239474300295e-05
+     },
+     {
+      "step": 15,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.7236328125,
+      "kl_hf_engine": 0.06648257374763489
+     },
+     {
+      "step": 16,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.225830078125,
+      "kl_hf_engine": 0.02986670285463333
+     },
+     {
+      "step": 17,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.92626953125,
+      "kl_hf_engine": 0.027630288153886795
+     },
+     {
+      "step": 18,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.36328125,
+      "kl_hf_engine": 0.04482875019311905
+     },
+     {
+      "step": 19,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.1484375,
+      "kl_hf_engine": 0.05476885288953781
+     },
+     {
+      "step": 20,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.056640625,
+      "kl_hf_engine": 0.05973629280924797
+     },
+     {
+      "step": 21,
+      "top1_agree": true,
+      "max_abs_dlogit": 3.0703125,
+      "kl_hf_engine": 0.013811495155096054
+     },
+     {
+      "step": 22,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.994140625,
+      "kl_hf_engine": 0.003780492814257741
+     },
+     {
+      "step": 23,
+      "top1_agree": false,
+      "max_abs_dlogit": 2.65966796875,
+      "kl_hf_engine": 0.0653252825140953
+     },
+     {
+      "step": 24,
+      "top1_agree": true,
+      "max_abs_dlogit": 3.19921875,
+      "kl_hf_engine": 0.00745541974902153
+     },
+     {
+      "step": 25,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.890869140625,
+      "kl_hf_engine": 2.6041612727567554e-05
+     },
+     {
+      "step": 26,
+      "top1_agree": true,
+      "max_abs_dlogit": 8.70703125,
+      "kl_hf_engine": 0.1655954271554947
+     },
+     {
+      "step": 27,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.166015625,
+      "kl_hf_engine": 0.032045938074588776
+     },
+     {
+      "step": 28,
+      "top1_agree": false,
+      "max_abs_dlogit": 2.166015625,
+      "kl_hf_engine": 0.06956779956817627
+     },
+     {
+      "step": 29,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.01953125,
+      "kl_hf_engine": 0.0030126944184303284
+     },
+     {
+      "step": 30,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.724609375,
+      "kl_hf_engine": 4.024285590276122e-05
+     },
+     {
+      "step": 31,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.48828125,
+      "kl_hf_engine": 6.313402991509065e-05
+     },
+     {
+      "step": 32,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.3515625,
+      "kl_hf_engine": 0.0015679963398724794
+     },
+     {
+      "step": 33,
+      "top1_agree": true,
+      "max_abs_dlogit": 3.080615997314453,
+      "kl_hf_engine": 0.03807314485311508
+     },
+     {
+      "step": 34,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.75390625,
+      "kl_hf_engine": 0.2445102035999298
+     },
+     {
+      "step": 35,
+      "top1_agree": true,
+      "max_abs_dlogit": 5.1015625,
+      "kl_hf_engine": 0.005823228973895311
+     },
+     {
+      "step": 36,
+      "top1_agree": true,
+      "max_abs_dlogit": 4.2265625,
+      "kl_hf_engine": 0.11394650489091873
+     },
+     {
+      "step": 37,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.89306640625,
+      "kl_hf_engine": 0.002495693741366267
+     },
+     {
+      "step": 38,
+      "top1_agree": true,
+      "max_abs_dlogit": 3.01171875,
+      "kl_hf_engine": 0.025770556181669235
+     },
+     {
+      "step": 39,
+      "top1_agree": false,
+      "max_abs_dlogit": 2.89453125,
+      "kl_hf_engine": 0.022946419194340706
+     },
+     {
+      "step": 40,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.19580078125,
+      "kl_hf_engine": 0.0025848373770713806
+     },
+     {
+      "step": 41,
+      "top1_agree": false,
+      "max_abs_dlogit": 2.28125,
+      "kl_hf_engine": 0.04656142368912697
+     },
+     {
+      "step": 42,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.9375,
+      "kl_hf_engine": 0.0005507082678377628
+     },
+     {
+      "step": 43,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.590087890625,
+      "kl_hf_engine": 7.86550299380906e-06
+     },
+     {
+      "step": 44,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.0693359375,
+      "kl_hf_engine": 0.0007772922981530428
+     },
+     {
+      "step": 45,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.9658203125,
+      "kl_hf_engine": 0.0650702640414238
+     },
+     {
+      "step": 46,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.29296875,
+      "kl_hf_engine": 0.02705470100045204
+     },
+     {
+      "step": 47,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.7958984375,
+      "kl_hf_engine": 0.01677386462688446
+     },
+     {
+      "step": 48,
+      "top1_agree": true,
+      "max_abs_dlogit": 4.23828125,
+      "kl_hf_engine": 0.01404687948524952
+     },
+     {
+      "step": 49,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.953125,
+      "kl_hf_engine": 0.15296471118927002
+     },
+     {
+      "step": 50,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.40625,
+      "kl_hf_engine": 0.09435118734836578
+     },
+     {
+      "step": 51,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.51123046875,
+      "kl_hf_engine": 0.0006422917358577251
+     },
+     {
+      "step": 52,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.28515625,
+      "kl_hf_engine": 0.00044903578236699104
+     },
+     {
+      "step": 53,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.703125,
+      "kl_hf_engine": 3.7404374779725913e-06
+     },
+     {
+      "step": 54,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.0859375,
+      "kl_hf_engine": 5.992197884552297e-07
+     },
+     {
+      "step": 55,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.234375,
+      "kl_hf_engine": 0.043417662382125854
+     },
+     {
+      "step": 56,
+      "top1_agree": false,
+      "max_abs_dlogit": 2.2265625,
+      "kl_hf_engine": 0.02577671781182289
+     },
+     {
+      "step": 57,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.642578125,
+      "kl_hf_engine": 0.029584748670458794
+     },
+     {
+      "step": 58,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.7890625,
+      "kl_hf_engine": 0.010137024335563183
+     },
+     {
+      "step": 59,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.78125,
+      "kl_hf_engine": 0.0037146201357245445
+     },
+     {
+      "step": 60,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.734375,
+      "kl_hf_engine": 0.012319609522819519
+     },
+     {
+      "step": 61,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.9453125,
+      "kl_hf_engine": 0.005318196024745703
+     },
+     {
+      "step": 62,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.9453125,
+      "kl_hf_engine": 6.293072146945633e-06
+     },
+     {
+      "step": 63,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.54296875,
+      "kl_hf_engine": 0.0023017036728560925
+     },
+     {
+      "step": 64,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.849609375,
+      "kl_hf_engine": 0.019108176231384277
+     }
+    ],
+    "top1_agree_frac": 0.84375,
+    "step1_max_abs_dlogit": 1.939453125,
+    "mean_kl_hf_engine": 0.03436676918837556
+   },
+   {
+    "prompt": 2,
+    "S": 237,
+    "steps": [
+     {
+      "step": 1,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.541015625,
+      "kl_hf_engine": 0.01589086651802063
+     },
+     {
+      "step": 2,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.56298828125,
+      "kl_hf_engine": 0.05475212633609772
+     },
+     {
+      "step": 3,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.93359375,
+      "kl_hf_engine": 0.0012194992741569877
+     },
+     {
+      "step": 4,
+      "top1_agree": false,
+      "max_abs_dlogit": 2.03564453125,
+      "kl_hf_engine": 0.05176839977502823
+     },
+     {
+      "step": 5,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.841796875,
+      "kl_hf_engine": 0.017576586455106735
+     },
+     {
+      "step": 6,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.796875,
+      "kl_hf_engine": 0.02236306667327881
+     },
+     {
+      "step": 7,
+      "top1_agree": false,
+      "max_abs_dlogit": 1.83203125,
+      "kl_hf_engine": 0.08403956890106201
+     },
+     {
+      "step": 8,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.7960205078125,
+      "kl_hf_engine": 0.005634382367134094
+     },
+     {
+      "step": 9,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.8828125,
+      "kl_hf_engine": 0.016420748084783554
+     },
+     {
+      "step": 10,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.8740234375,
+      "kl_hf_engine": 0.025195233523845673
+     },
+     {
+      "step": 11,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.725830078125,
+      "kl_hf_engine": 0.026219964027404785
+     },
+     {
+      "step": 12,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.734375,
+      "kl_hf_engine": 0.05761786177754402
+     },
+     {
+      "step": 13,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.265625,
+      "kl_hf_engine": 0.00864943116903305
+     },
+     {
+      "step": 14,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.89453125,
+      "kl_hf_engine": 0.00010161655518459156
+     },
+     {
+      "step": 15,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.147369384765625,
+      "kl_hf_engine": 0.023255836218595505
+     },
+     {
+      "step": 16,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.3046875,
+      "kl_hf_engine": 0.019636282697319984
+     },
+     {
+      "step": 17,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.94921875,
+      "kl_hf_engine": 8.127284672809765e-05
+     },
+     {
+      "step": 18,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.626953125,
+      "kl_hf_engine": 0.005027581937611103
+     },
+     {
+      "step": 19,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.1640625,
+      "kl_hf_engine": 0.02932547777891159
+     },
+     {
+      "step": 20,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.796630859375,
+      "kl_hf_engine": 0.1009778380393982
+     },
+     {
+      "step": 21,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.097412109375,
+      "kl_hf_engine": 0.03522627800703049
+     },
+     {
+      "step": 22,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.26171875,
+      "kl_hf_engine": 0.13051265478134155
+     },
+     {
+      "step": 23,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.5673828125,
+      "kl_hf_engine": 0.09977439045906067
+     },
+     {
+      "step": 24,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.79248046875,
+      "kl_hf_engine": 0.010016937740147114
+     },
+     {
+      "step": 25,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.759765625,
+      "kl_hf_engine": 0.0005439817905426025
+     },
+     {
+      "step": 26,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.12451171875,
+      "kl_hf_engine": 0.06221248209476471
+     },
+     {
+      "step": 27,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.91796875,
+      "kl_hf_engine": 0.13893868029117584
+     },
+     {
+      "step": 28,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.673828125,
+      "kl_hf_engine": 0.008411012589931488
+     },
+     {
+      "step": 29,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.9228515625,
+      "kl_hf_engine": 0.012923896312713623
+     },
+     {
+      "step": 30,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.982421875,
+      "kl_hf_engine": 0.010715905576944351
+     },
+     {
+      "step": 31,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.18212890625,
+      "kl_hf_engine": 0.032431233674287796
+     },
+     {
+      "step": 32,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.3046875,
+      "kl_hf_engine": 0.020972464233636856
+     },
+     {
+      "step": 33,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.970703125,
+      "kl_hf_engine": 0.00652905972674489
+     },
+     {
+      "step": 34,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.263671875,
+      "kl_hf_engine": 0.01751750148832798
+     },
+     {
+      "step": 35,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.806640625,
+      "kl_hf_engine": 0.0003977213054895401
+     },
+     {
+      "step": 36,
+      "top1_agree": false,
+      "max_abs_dlogit": 3.2265625,
+      "kl_hf_engine": 0.23735404014587402
+     },
+     {
+      "step": 37,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.18359375,
+      "kl_hf_engine": 0.031257182359695435
+     },
+     {
+      "step": 38,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.561279296875,
+      "kl_hf_engine": 0.015235552564263344
+     },
+     {
+      "step": 39,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.119140625,
+      "kl_hf_engine": 0.0058958036825060844
+     },
+     {
+      "step": 40,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.140625,
+      "kl_hf_engine": 0.043089862912893295
+     },
+     {
+      "step": 41,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.20703125,
+      "kl_hf_engine": 0.01054699718952179
+     },
+     {
+      "step": 42,
+      "top1_agree": true,
+      "max_abs_dlogit": 3.361328125,
+      "kl_hf_engine": 0.146039217710495
+     },
+     {
+      "step": 43,
+      "top1_agree": true,
+      "max_abs_dlogit": 1.974609375,
+      "kl_hf_engine": 0.029602160677313805
+     },
+     {
+      "step": 44,
+      "top1_agree": false,
+      "max_abs_dlogit": 2.837890625,
+      "kl_hf_engine": 0.15574334561824799
+     },
+     {
+      "step": 45,
+      "top1_agree": false,
+      "max_abs_dlogit": 3.59375,
+      "kl_hf_engine": 0.5019188523292542
+     },
+     {
+      "step": 46,
+      "top1_agree": false,
+      "max_abs_dlogit": 4.1484375,
+      "kl_hf_engine": 0.2820388674736023
+     },
+     {
+      "step": 47,
+      "top1_agree": false,
+      "max_abs_dlogit": 7.359375,
+      "kl_hf_engine": 0.5968120098114014
+     },
+     {
+      "step": 48,
+      "top1_agree": false,
+      "max_abs_dlogit": 3.408203125,
+      "kl_hf_engine": 0.26360365748405457
+     },
+     {
+      "step": 49,
+      "top1_agree": true,
+      "max_abs_dlogit": 3.11328125,
+      "kl_hf_engine": 0.08676793426275253
+     },
+     {
+      "step": 50,
+      "top1_agree": true,
+      "max_abs_dlogit": 3.0703125,
+      "kl_hf_engine": 0.011524577625095844
+     },
+     {
+      "step": 51,
+      "top1_agree": false,
+      "max_abs_dlogit": 3.30712890625,
+      "kl_hf_engine": 0.23120558261871338
+     },
+     {
+      "step": 52,
+      "top1_agree": true,
+      "max_abs_dlogit": 3.001953125,
+      "kl_hf_engine": 0.003578298259526491
+     },
+     {
+      "step": 53,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.8717041015625,
+      "kl_hf_engine": 0.0006475109839811921
+     },
+     {
+      "step": 54,
+      "top1_agree": true,
+      "max_abs_dlogit": 3.0498046875,
+      "kl_hf_engine": 0.010370194911956787
+     },
+     {
+      "step": 55,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.880859375,
+      "kl_hf_engine": 0.004556505009531975
+     },
+     {
+      "step": 56,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.470703125,
+      "kl_hf_engine": 0.002151717431843281
+     },
+     {
+      "step": 57,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.59765625,
+      "kl_hf_engine": 0.02415524050593376
+     },
+     {
+      "step": 58,
+      "top1_agree": true,
+      "max_abs_dlogit": 3.111328125,
+      "kl_hf_engine": 0.017352929338812828
+     },
+     {
+      "step": 59,
+      "top1_agree": true,
+      "max_abs_dlogit": 3.2109375,
+      "kl_hf_engine": 0.15781882405281067
+     },
+     {
+      "step": 60,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.9296875,
+      "kl_hf_engine": 0.12287867069244385
+     },
+     {
+      "step": 61,
+      "top1_agree": false,
+      "max_abs_dlogit": 2.224609375,
+      "kl_hf_engine": 0.2629951536655426
+     },
+     {
+      "step": 62,
+      "top1_agree": true,
+      "max_abs_dlogit": 5.642578125,
+      "kl_hf_engine": 0.03437010943889618
+     },
+     {
+      "step": 63,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.578369140625,
+      "kl_hf_engine": 0.06053440645337105
+     },
+     {
+      "step": 64,
+      "top1_agree": true,
+      "max_abs_dlogit": 2.8359375,
+      "kl_hf_engine": 0.021498166024684906
+     }
+    ],
+    "top1_agree_frac": 0.84375,
+    "step1_max_abs_dlogit": 1.541015625,
+    "mean_kl_hf_engine": 0.07069408144161571
+   }
+  ],
+  "bench": {
+   "1024": {
+    "ctx": 1024,
+    "decode_tok_per_s": 15.536594716402961,
+    "ms_per_token": 64.36416848437432,
+    "kv_allocated_bytes": 62849024,
+    "state_bytes": 90832896,
+    "peak_allocated_bytes_cuda0": 15256408576,
+    "peak_allocated_GiB": 14.208637714385986
+   }
+  },
+  "validation_summary": {
+   "top1_agree_frac": 0.8697916666666666,
+   "step1_max_abs_dlogit": 2.0595703125,
+   "mean_kl_hf_engine": 0.04820505152709901
+  }
+ },
+ "log": [
+  "[      0s] == stage install start",
+  "[      0s] $ /usr/bin/python3 -m pip install -q 'transformers==5.18.0' 'accelerate>=1.11,<2' 'safetensors>=0.8' datasets gguf huggingface_hub 2>&1 | tail -2",
+  "[     15s] $ /usr/bin/python3 -m pip install -q --no-deps git+https://github.com/OpenSenseNova/SenseNova-Loop.git 2>&1 | tail -2",
+  "[     24s] torch 2.11.0+cu130 gpus ['Tesla T4', 'Tesla T4']",
+  "[     24s] == stage install ok (24s)",
+  "[     24s] == stage weights start",
+  "[    113s] gguf at /tmp/release_src/SenseNova-Loop-9B-BF16.gguf 18.42 GB",
+  "[    120s] $ /usr/bin/python3 -u /tmp/gguf_to_hf.py --gguf /tmp/release_src/SenseNova-Loop-9B-BF16.gguf --config /tmp/preview_meta/config.json --preview-index /tmp/preview_meta/model.safetensors.index.json --check",
+  "[    131s] $ /usr/bin/python3 -u /tmp/gguf_to_hf.py --gguf /tmp/release_src/SenseNova-Loop-9B-BF16.gguf --config /tmp/preview_meta/config.json --preview-index /tmp/preview_meta/model.safetensors.index.json --text-only --out /tmp/release_hf",
+  "[    323s] == stage weights ok (299s)",
+  "[    323s] == stage hf_load start",
+  "[    418s] HF loaded; device map sample: {'model.visual': '0', 'model.language_model.embed_tokens': '0', 'model.language_model.layers.0': '0', 'model.language_model.layers.1': '0'}",
+  "[    418s] == stage hf_load ok (95s)",
+  "[    418s] == stage hf_validation_0 start",
+  "[    458s] == stage hf_validation_0 ok (41s)",
+  "[    458s] == stage hf_validation_1 start",
+  "[    495s] == stage hf_validation_1 ok (36s)",
+  "[    495s] == stage hf_validation_2 start",
+  "[    531s] == stage hf_validation_2 ok (37s)",
+  "[    531s] == stage hf_bench_1024 start",
+  "[    618s] == stage hf_bench_1024 ok (87s)",
+  "[    618s] == stage hf_bench_8192 start",
+  "[    619s] == stage hf_bench_8192 FAILED\nTraceback (most recent call last):\n  File \"/kaggle/src/script.py\", line 2610, in stage\n    r = fn(*args, **kwargs)\n  File \"/kaggle/src/script.py\", line 2758, in hf_bench\n    gen(4)\n    ~~~^^^\n  File \"/kaggle/src/script.py\", line 2753, in gen\n    model.generate(input_ids=ids.to(dev), attention_mask=attn.to(dev), max_new_tokens=n, min_new_tokens=n,\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                   do_sample=False, pad_token_id=0, use_cache=True)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/utils/_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py\", line 2976, in generate\n    result = decoding_method(\n        self,\n    ...<5 lines>...\n        **model_kwargs,\n    )\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py\", line 3176, in _sample\n    outputs = self._prefill(\n        input_ids,\n    ...<2 lines>...\n        is_first_iteration=not generation_config.is_assistant,\n    )\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/generation/utils.py\", line 4287, in _prefill\n    return self(**model_inputs, return_dict=True)\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/accelerate/hooks.py\", line 192, in new_forward\n    output = module._old_forward(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/utils/generic.py\", line 939, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 1860, in forward\n    outputs = self.model(\n        input_ids=input_ids,\n    ...<10 lines>...\n        **kwargs,\n    )\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/utils/generic.py\", line 939, in wrapper\n    output = func(self, *args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 1654, in forward\n    outputs = self.language_model(\n        input_ids=None,\n    ...<5 lines>...\n        **kwargs,\n    )\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/sensenova_loop/models/modeling_sensenova_loop.py\", line 333, in forward\n    hidden = self.layers[physical_index](\n        hidden, position_embeddings=position_embeddings,\n    ...<2 lines>...\n        use_cache=use_cache, **kwargs,\n    )\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/modeling_layers.py\", line 110, in __call__\n    return super().__call__(*args, **kwargs)\n           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/accelerate/hooks.py\", line 192, in new_forward\n    output = module._old_forward(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 896, in forward\n    hidden_states, _ = self.self_attn(\n                       ~~~~~~~~~~~~~~^\n        hidden_states=hidden_states,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n        **kwargs,\n        ^^^^^^^^^\n    )\n    ^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1779, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.13/dist-packages/torch/nn/modules/module.py\", line 1790, in _call_impl\n    return forward_call(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/accelerate/hooks.py\", line 192, in new_forward\n    output = module._old_forward(*args, **kwargs)\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/qwen3_5/modeling_qwen3_5.py\", line 805, in forward\n    attn_output, attn_weights = attention_interface(\n                                ~~~~~~~~~~~~~~~~~~~^\n        self,\n        ^^^^^\n    ...<6 lines>...\n        **kwargs,\n        ^^^^^^^^^\n    )\n    ^\n  File \"/usr/local/lib/python3.13/dist-packages/transformers/integrations/sdpa_attention.py\", line 158, in sdpa_attention_forward\n    attn_output = torch.nn.functional.scaled_dot_product_attention(\n        query,\n    ...<6 lines>...\n        **sdpa_kwargs,\n    )\ntorch.OutOfMemoryError: CUDA out of memory. Tried to allocate 4.00 GiB. GPU 0 has a total capacity of 14.56 GiB of which 3.63 GiB is free. Including non-PyTorch memory, this process has 10.93 GiB memory in use. Of the allocated memory 10.49 GiB is allocated by PyTorch, and 313.39 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)\n",
+  "[    619s] == stage pack start",
+  "[    626s] == stage pack ok (7s)",
+  "[    627s] == stage free_hf start",
+  "[    627s] == stage free_hf ok (0s)",
+  "[    627s] == stage engine_build start",
+  "[    839s] kernels compiled in 212s",
+  "[    840s] engine weights on cuda:0: 4.70 GiB",
+  "[    840s] == stage engine_build ok (213s)",
+  "[    840s] == stage engine_validation start",
+  "[    844s] prompt 0: top1 0.922, step1 max|dlogit| 2.0596, mean KL 0.03955",
+  "[    848s] prompt 1: top1 0.844, step1 max|dlogit| 1.9395, mean KL 0.03437",
+  "[    852s] prompt 2: top1 0.844, step1 max|dlogit| 1.5410, mean KL 0.07069",
+  "[    852s] == stage engine_validation ok (12s)",
+  "[    852s] == stage engine_bench start",
+  "[    857s] engine ctx 1024: 15.54 tok/s (64.36 ms/tok), peak 14.21 GiB",
+  "[    857s] == stage engine_bench FAILED\nTraceback (most recent call last):\n  File \"/kaggle/src/script.py\", line 2610, in stage\n    r = fn(*args, **kwargs)\n  File \"/kaggle/src/script.py\", line 2836, in engine_bench\n    eng = E.Engine(st, ops, max_len=ctx + BENCH_STEPS + 8, policy=E.CUDA_POLICY, device=\"cuda:0\")\n  File \"/kaggle/working/build/snkv_engine.py\", line 336, in __init__\n    self.K[v] = torch.zeros(1, d[\"Hkv\"], self.max_len, d[\"Dh\"], dtype=act, device=self.dev)\n                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntorch.OutOfMemoryError: CUDA out of memory. Tried to allocate 18.00 MiB. GPU 0 has a total capacity of 14.56 GiB of which 16.81 MiB is free. Including non-PyTorch memory, this process has 14.54 GiB memory in use. Of the allocated memory 14.30 GiB is allocated by PyTorch, with 11.88 MiB allocated in private pools (e.g., CUDA Graphs), and 96.50 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)\n"
+ ],
+ "torch": "2.11.0+cu130",
+ "gpus": [
+  "Tesla T4",
+  "Tesla T4"
+ ],
+ "wall_s": 857.2
+}
