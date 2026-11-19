@@ -1,0 +1,194 @@
+[{"stream_name":"stdout","time":0.885056948,"data":"[      0s] disk (start):\n"}
+,{"stream_name":"stdout","time":0.88509982,"data":"[      0s] $ df -h /tmp /kaggle/working\n"}
+,{"stream_name":"stdout","time":0.900042343,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":0.900078348,"data":"overlay         8.0T  7.1T  967G  89% /\n"}
+,{"stream_name":"stdout","time":0.900083628,"data":"/dev/loop2       20G  240K   20G   1% /kaggle/working\n"}
+,{"stream_name":"stdout","time":0.900412861,"data":"[      0s] exit 0\n"}
+,{"stream_name":"stdout","time":0.90159561,"data":"[      0s] $ /usr/bin/python3 -m pip install -q gguf huggingface_hub\n"}
+,{"stream_name":"stdout","time":6.501720732,"data":"[      6s] exit 0\n"}
+,{"stream_name":"stdout","time":7.353720519,"data":"[      6s] downloading sensenova/SenseNova-Loop-9B-GGUF SenseNova-Loop-9B-BF16.gguf (18.4 GB)\n"}
+,{"stream_name":"stderr","time":7.589405192,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":97.606723215,"data":"[     97s] gguf at /tmp/release_src/SenseNova-Loop-9B-BF16.gguf 18.42 GB\n"}
+,{"stream_name":"stdout","time":100.054403862,"data":"[     99s] preview config/tokenizer files: ['chat_template.jinja', 'config.json', 'generation_config.json', 'model.safetensors.index.json', 'preprocessor_config.json', 'processor_config.json', 'tokenizer.json', 'tokenizer_config.json', 'video_preprocessor_config.json']\n"}
+,{"stream_name":"stdout","time":100.054618252,"data":"[     99s] $ /usr/bin/python3 -u /tmp/gguf_to_hf.py --gguf /tmp/release_src/SenseNova-Loop-9B-BF16.gguf --config /tmp/preview_meta/config.json --preview-index /tmp/preview_meta/model.safetensors.index.json --check\n"}
+,{"stream_name":"stdout","time":100.635223731,"data":"GGUF v3: 490 tensors, data starts at byte 10972576\n"}
+,{"stream_name":"stdout","time":109.059610582,"data":"config vs GGUF metadata:\n"}
+,{"stream_name":"stdout","time":109.059637602,"data":"  OK   loop.start: GGUF=4 config=4\n"}
+,{"stream_name":"stdout","time":109.059642869,"data":"  OK   loop.end: GGUF=28 config=28\n"}
+,{"stream_name":"stdout","time":109.059647651,"data":"  OK   loop.count: GGUF=2 config=2\n"}
+,{"stream_name":"stdout","time":109.059651939,"data":"  OK   mhc.start: GGUF=4 config=4\n"}
+,{"stream_name":"stdout","time":109.059656697,"data":"  OK   mhc.end: GGUF=28 config=28\n"}
+,{"stream_name":"stdout","time":109.059661104,"data":"  OK   mhc.streams: GGUF=2 config=2\n"}
+,{"stream_name":"stdout","time":109.059675128,"data":"  OK   mhc.iterations: GGUF=20 config=20\n"}
+,{"stream_name":"stdout","time":109.059679779,"data":"  OK   mhc.fixed_identity: GGUF=False config=False\n"}
+,{"stream_name":"stdout","time":109.059684297,"data":"  OK   mhc.pre_scale: GGUF=1.0 config=1.0\n"}
+,{"stream_name":"stdout","time":109.059688735,"data":"  OK   block_count (phys+mtp): GGUF=57 config=57\n"}
+,{"stream_name":"stdout","time":109.059693088,"data":"  OK   ssm.conv_kernel: GGUF=4 config=4\n"}
+,{"stream_name":"stdout","time":109.059697625,"data":"  OK   ssm.state_size: GGUF=128 config=128\n"}
+,{"stream_name":"stdout","time":109.059701979,"data":"  OK   ssm.group_count: GGUF=16 config=16\n"}
+,{"stream_name":"stdout","time":109.059715212,"data":"  OK   ssm.time_step_rank: GGUF=32 config=32\n"}
+,{"stream_name":"stdout","time":109.059719426,"data":"  OK   embedding_length: GGUF=4096 config=4096\n"}
+,{"stream_name":"stdout","time":109.059729576,"data":"  OK   feed_forward_length: GGUF=12288 config=12288\n"}
+,{"stream_name":"stdout","time":109.059742468,"data":"  OK   attention.head_count: GGUF=16 config=16\n"}
+,{"stream_name":"stdout","time":109.059769728,"data":"  OK   attention.head_count_kv: GGUF=4 config=4\n"}
+,{"stream_name":"stdout","time":109.059773489,"data":"  OK   attention.key_length: GGUF=256 config=256\n"}
+,{"stream_name":"stdout","time":109.059782843,"data":"  OK   rope.freq_base: GGUF=10000000.0 config=10000000\n"}
+,{"stream_name":"stdout","time":109.05984105,"data":"  OK   rope.dimension_count: GGUF=64 config=64\n"}
+,{"stream_name":"stdout","time":109.059846531,"data":"  DIFF rope.scaling.type: GGUF=yarn config=None\n"}
+,{"stream_name":"stdout","time":109.059849996,"data":"  DIFF context_length: GGUF=524288 config=262144\n"}
+,{"stream_name":"stdout","time":109.059853403,"data":"  OK   recurrent_layers (per slot): GGUF=True config=True\n"}
+,{"stream_name":"stdout","time":109.059856748,"data":"GGUF tensors consumed: 490/490\n"}
+,{"stream_name":"stdout","time":109.059868431,"data":"HF outputs derived: 538 (distinct names 538), Preview index names: 871\n"}
+,{"stream_name":"stdout","time":109.059905177,"data":"HF names with no GGUF source (vision, expected): 333\n"}
+,{"stream_name":"stdout","time":109.059913038,"data":"HF names with no GGUF source (UNEXPECTED): 0\n"}
+,{"stream_name":"stdout","time":109.059958263,"data":"problems: 0\n"}
+,{"stream_name":"stdout","time":109.05996858,"data":"CHECK PASS\n"}
+,{"stream_name":"stdout","time":109.08979371,"data":"[    108s] exit 0\n"}
+,{"stream_name":"stdout","time":109.089860602,"data":"[    108s] $ /usr/bin/python3 -u /tmp/gguf_to_hf.py --gguf /tmp/release_src/SenseNova-Loop-9B-BF16.gguf --config /tmp/preview_meta/config.json --preview-index /tmp/preview_meta/model.safetensors.index.json --text-only --out /tmp/release_hf\n"}
+,{"stream_name":"stdout","time":109.480071576,"data":"GGUF v3: 490 tensors, data starts at byte 10972576\n"}
+,{"stream_name":"stdout","time":116.516479037,"data":"WARNING: 333 vision tensors not written (not in the GGUF). Pass --visual-src DIR, or --text-only; the output will not load into the full model without them.\n"}
+,{"stream_name":"stdout","time":116.516509337,"data":"config: rope: GGUF declares YaRN (factor 2.0, original 262144); written into text_config.rope_parameters. Preview config has none. Pass --keep-config-rope to keep the config unchanged.\n"}
+,{"stream_name":"stdout","time":116.516512661,"data":"config: --text-only: mtp_num_hidden_layers set to 0\n"}
+,{"stream_name":"stdout","time":120.010265799,"data":"wrote model-00001-of-00006.safetensors: 1 tensors, 2.03 GB\n"}
+,{"stream_name":"stdout","time":161.39737793,"data":"wrote model-00002-of-00006.safetensors: 68 tensors, 3.90 GB\n"}
+,{"stream_name":"stdout","time":207.044298782,"data":"wrote model-00003-of-00006.safetensors: 156 tensors, 3.90 GB\n"}
+,{"stream_name":"stdout","time":253.006239168,"data":"wrote model-00004-of-00006.safetensors: 156 tensors, 3.90 GB\n"}
+,{"stream_name":"stdout","time":296.542856788,"data":"wrote model-00005-of-00006.safetensors: 133 tensors, 3.97 GB\n"}
+,{"stream_name":"stdout","time":297.412307173,"data":"wrote model-00006-of-00006.safetensors: 9 tensors, 0.22 GB\n"}
+,{"stream_name":"stdout","time":297.494684386,"data":"done: /tmp/release_hf\n"}
+,{"stream_name":"stdout","time":297.53532393,"data":"[    297s] exit 0\n"}
+,{"stream_name":"stdout","time":297.604617634,"data":"[    297s] converted dir: ['chat_template.jinja', 'config.json', 'generation_config.json', 'model-00001-of-00006.safetensors', 'model-00002-of-00006.safetensors', 'model-00003-of-00006.safetensors', 'model-00004-of-00006.safetensors', 'model-00005-of-00006.safetensors', 'model-00006-of-00006.safetensors', 'model.safetensors.index.json', 'preprocessor_config.json', 'processor_config.json', 'tokenizer.json', 'tokenizer_config.json', 'video_preprocessor_config.json']\n"}
+,{"stream_name":"stdout","time":297.801609307,"data":"[    297s] deleted GGUF to free disk\n"}
+,{"stream_name":"stdout","time":297.80163334,"data":"[    297s] disk (after conversion):\n"}
+,{"stream_name":"stdout","time":297.801638814,"data":"[    297s] $ df -h /tmp /kaggle/working\n"}
+,{"stream_name":"stdout","time":297.812070931,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":297.812092215,"data":"overlay         8.0T  7.1T  951G  89% /\n"}
+,{"stream_name":"stdout","time":297.812097341,"data":"/dev/loop2       20G  240K   20G   1% /kaggle/working\n"}
+,{"stream_name":"stdout","time":297.812441314,"data":"[    297s] exit 0\n"}
+,{"stream_name":"stdout","time":297.812862007,"data":"[    297s] $ /usr/bin/python3 -u /tmp/kv_analysis.py\n"}
+,{"stream_name":"stdout","time":297.895058402,"data":"[      0s] $ pip install -q 'transformers==5.18.0' 'accelerate\u003e=1.11,\u003c2' 'safetensors\u003e=0.8' datasets 2\u003e\u00261 | tail -2\n"}
+,{"stream_name":"stdout","time":316.439182339,"data":"[     19s] $ pip install -q --no-deps git+https://github.com/OpenSenseNova/SenseNova-Loop.git 2\u003e\u00261 | tail -2\n"}
+,{"stream_name":"stdout","time":332.566244984,"data":"[     35s] torch 2.11.0+cu130 gpus 2 ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stdout","time":332.566276462,"data":"[     35s] weights at /tmp/release_hf\n"}
+,{"stream_name":"stdout","time":358.729977772,"data":"[transformers] The tokenizer you are loading from '/tmp/release_hf' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.\n"}
+,{"stream_name":"stdout","time":359.718746048,"data":"\n"}
+,{"stream_name":"stdout","time":387.878409244,"data":"Loading weights:   0%|          | 0/523 [00:00\u003c?, ?it/s]\n"}
+,{"stream_name":"stdout","time":390.840284509,"data":"Loading weights:   0%|          | 1/523 [00:28\u003c4:04:59, 28.16s/it]\n"}
+,{"stream_name":"stdout","time":393.891368056,"data":"Loading weights:   0%|          | 2/523 [00:31\u003c1:55:48, 13.34s/it]\n"}
+,{"stream_name":"stdout","time":393.891407392,"data":"Loading weights:  27%|██▋       | 140/523 [00:31\u003c00:44,  8.56it/s]\n"}
+,{"stream_name":"stdout","time":393.891413278,"data":"Loading weights:  31%|███       | 161/523 [00:33\u003c00:40,  8.86it/s]\n"}
+,{"stream_name":"stdout","time":394.945527782,"data":"Loading weights:  33%|███▎      | 173/523 [00:33\u003c00:35,  9.96it/s]\n"}
+,{"stream_name":"stdout","time":396.259142077,"data":"Loading weights:  35%|███▍      | 183/523 [00:35\u003c00:36,  9.29it/s]\n"}
+,{"stream_name":"stdout","time":396.573806606,"data":"Loading weights:  36%|███▋      | 190/523 [00:36\u003c00:38,  8.55it/s]\n"}
+,{"stream_name":"stdout","time":397.825934936,"data":"Loading weights:  38%|███▊      | 200/523 [00:36\u003c00:32,  9.94it/s]\n"}
+,{"stream_name":"stdout","time":397.988006093,"data":"Loading weights:  40%|███▉      | 208/523 [00:38\u003c00:34,  9.04it/s]\n"}
+,{"stream_name":"stdout","time":398.252948515,"data":"Loading weights:  40%|████      | 211/523 [00:38\u003c00:32,  9.46it/s]\n"}
+,{"stream_name":"stdout","time":399.474732623,"data":"Loading weights:  42%|████▏     | 221/523 [00:38\u003c00:24, 12.14it/s]\n"}
+,{"stream_name":"stdout","time":399.647708109,"data":"Loading weights:  43%|████▎     | 226/523 [00:39\u003c00:32,  9.05it/s]\n"}
+,{"stream_name":"stdout","time":400.01132661,"data":"Loading weights:  45%|████▌     | 237/523 [00:39\u003c00:22, 12.98it/s]\n"}
+,{"stream_name":"stdout","time":400.987150566,"data":"Loading weights:  46%|████▌     | 241/523 [00:40\u003c00:22, 12.63it/s]\n"}
+,{"stream_name":"stdout","time":401.116090589,"data":"Loading weights:  47%|████▋     | 244/523 [00:41\u003c00:31,  8.75it/s]\n"}
+,{"stream_name":"stdout","time":401.529171695,"data":"Loading weights:  47%|████▋     | 247/523 [00:41\u003c00:28,  9.79it/s]\n"}
+,{"stream_name":"stdout","time":402.492167324,"data":"Loading weights:  48%|████▊     | 253/523 [00:41\u003c00:24, 10.95it/s]\n"}
+,{"stream_name":"stdout","time":402.891198723,"data":"Loading weights:  49%|████▉     | 255/523 [00:42\u003c00:38,  6.96it/s]\n"}
+,{"stream_name":"stdout","time":402.991705484,"data":"Loading weights:  51%|█████▏    | 269/523 [00:43\u003c00:19, 12.87it/s]\n"}
+,{"stream_name":"stdout","time":404.152887663,"data":"Loading weights:  52%|█████▏    | 272/523 [00:43\u003c00:17, 14.07it/s]\n"}
+,{"stream_name":"stdout","time":404.384391868,"data":"Loading weights:  53%|█████▎    | 277/523 [00:44\u003c00:27,  8.82it/s]\n"}
+,{"stream_name":"stdout","time":404.626344318,"data":"Loading weights:  53%|█████▎    | 279/523 [00:44\u003c00:27,  8.80it/s]\n"}
+,{"stream_name":"stdout","time":405.772323847,"data":"Loading weights:  55%|█████▌    | 290/523 [00:44\u003c00:15, 14.86it/s]\n"}
+,{"stream_name":"stdout","time":405.966504229,"data":"Loading weights:  56%|█████▋    | 295/523 [00:46\u003c00:24,  9.32it/s]\n"}
+,{"stream_name":"stdout","time":406.143026704,"data":"Loading weights:  59%|█████▊    | 306/523 [00:46\u003c00:14, 14.68it/s]\n"}
+,{"stream_name":"stdout","time":407.239956092,"data":"Loading weights:  59%|█████▉    | 309/523 [00:46\u003c00:14, 14.99it/s]\n"}
+,{"stream_name":"stdout","time":407.590959568,"data":"Loading weights:  60%|█████▉    | 313/523 [00:47\u003c00:23,  8.94it/s]\n"}
+,{"stream_name":"stdout","time":408.541379847,"data":"Loading weights:  62%|██████▏   | 322/523 [00:47\u003c00:16, 12.21it/s]\n"}
+,{"stream_name":"stdout","time":408.760587955,"data":"Loading weights:  62%|██████▏   | 325/523 [00:48\u003c00:23,  8.31it/s]\n"}
+,{"stream_name":"stdout","time":409.24209831,"data":"Loading weights:  65%|██████▍   | 338/523 [00:49\u003c00:12, 14.65it/s]\n"}
+,{"stream_name":"stdout","time":409.658882352,"data":"Loading weights:  66%|██████▌   | 346/523 [00:49\u003c00:11, 15.20it/s]\n"}
+,{"stream_name":"stdout","time":410.233378688,"data":"Loading weights:  70%|██████▉   | 364/523 [00:49\u003c00:07, 22.42it/s]\n"}
+,{"stream_name":"stdout","time":410.482404071,"data":"Loading weights:  73%|███████▎  | 382/523 [00:50\u003c00:05, 25.41it/s]\n"}
+,{"stream_name":"stdout","time":410.722532031,"data":"Loading weights:  75%|███████▍  | 392/523 [00:50\u003c00:04, 27.95it/s]\n"}
+,{"stream_name":"stdout","time":410.943070264,"data":"Loading weights:  78%|███████▊  | 407/523 [00:51\u003c00:03, 34.62it/s]\n"}
+,{"stream_name":"stdout","time":411.050284777,"data":"Loading weights:  81%|████████▏ | 425/523 [00:51\u003c00:02, 44.03it/s]\n"}
+,{"stream_name":"stdout","time":411.163102798,"data":"Loading weights:  83%|████████▎ | 433/523 [00:51\u003c00:01, 47.88it/s]\n"}
+,{"stream_name":"stdout","time":411.499184213,"data":"Loading weights:  85%|████████▌ | 446/523 [00:51\u003c00:01, 58.22it/s]\n"}
+,{"stream_name":"stdout","time":411.616588973,"data":"Loading weights:  87%|████████▋ | 454/523 [00:51\u003c00:01, 44.52it/s]\n"}
+,{"stream_name":"stdout","time":411.717807024,"data":"Loading weights:  88%|████████▊ | 462/523 [00:51\u003c00:01, 48.43it/s]\n"}
+,{"stream_name":"stdout","time":411.936209638,"data":"Loading weights:  92%|█████████▏| 479/523 [00:51\u003c00:00, 68.69it/s]\n"}
+,{"stream_name":"stdout","time":413.455151988,"data":"Loading weights:  93%|█████████▎| 489/523 [00:52\u003c00:00, 60.83it/s]\n"}
+,{"stream_name":"stdout","time":413.720711425,"data":"Loading weights:  95%|█████████▌| 497/523 [00:53\u003c00:01, 17.87it/s]\n"}
+,{"stream_name":"stdout","time":415.286255551,"data":"Loading weights:  97%|█████████▋| 505/523 [00:54\u003c00:00, 19.85it/s]\n"}
+,{"stream_name":"stdout","time":416.347310461,"data":"Loading weights:  98%|█████████▊| 510/523 [00:55\u003c00:01, 10.24it/s]\n"}
+,{"stream_name":"stdout","time":416.50836229,"data":"Loading weights:  98%|█████████▊| 514/523 [00:56\u003c00:01,  7.92it/s]\n"}
+,{"stream_name":"stdout","time":416.50907182,"data":"Loading weights:  99%|█████████▉| 517/523 [00:56\u003c00:00,  8.69it/s]\n"}
+,{"stream_name":"stdout","time":416.509083255,"data":"Loading weights: 100%|██████████| 523/523 [00:56\u003c00:00,  9.21it/s]\n"}
+,{"stream_name":"stdout","time":416.860314148,"data":"[transformers] \u001b[1mSenseNovaLoopForConditionalGeneration LOAD REPORT\u001b[0m from: /tmp/release_hf\n"}
+,{"stream_name":"stdout","time":416.860344562,"data":"Key                                                | Status  | \n"}
+,{"stream_name":"stdout","time":416.860349513,"data":"---------------------------------------------------+---------+-\n"}
+,{"stream_name":"stdout","time":416.860353656,"data":"model.visual.blocks.{0...26}.norm2.bias            | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860357783,"data":"model.visual.blocks.{0...26}.attn.qkv.weight       | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860362627,"data":"model.visual.blocks.{0...26}.norm1.bias            | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860499291,"data":"model.visual.blocks.{0...26}.mlp.linear_fc2.bias   | MISSING | \n"}
+,{"stream_name":"stdout","time":416.86050658,"data":"model.visual.blocks.{0...26}.attn.proj.bias        | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860510655,"data":"model.visual.blocks.{0...26}.norm2.weight          | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860514562,"data":"model.visual.blocks.{0...26}.mlp.linear_fc1.weight | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860518522,"data":"model.visual.blocks.{0...26}.attn.proj.weight      | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860522516,"data":"model.visual.blocks.{0...26}.mlp.linear_fc1.bias   | MISSING | \n"}
+,{"stream_name":"stdout","time":416.86052601,"data":"model.visual.blocks.{0...26}.norm1.weight          | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860529759,"data":"model.visual.blocks.{0...26}.mlp.linear_fc2.weight | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860550323,"data":"model.visual.blocks.{0...26}.attn.qkv.bias         | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860554516,"data":"model.visual.patch_embed.proj.bias                 | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860558404,"data":"model.visual.merger.linear_fc2.bias                | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860562396,"data":"model.visual.merger.linear_fc1.weight              | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860566333,"data":"model.visual.merger.norm.bias                      | MISSING | \n"}
+,{"stream_name":"stdout","time":416.86057018,"data":"model.visual.merger.linear_fc2.weight              | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860588084,"data":"model.visual.pos_embed.weight                      | MISSING | \n"}
+,{"stream_name":"stdout","time":416.86059219,"data":"model.visual.merger.norm.weight                    | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860596245,"data":"model.visual.merger.linear_fc1.bias                | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860600075,"data":"model.visual.patch_embed.proj.weight               | MISSING | \n"}
+,{"stream_name":"stdout","time":416.860603968,"data":"\n"}
+,{"stream_name":"stdout","time":416.860607613,"data":"Notes:\n"}
+,{"stream_name":"stdout","time":416.860611439,"data":"- MISSING:\tthose params were newly initialized because missing from the checkpoint. Consider training on your downstream task.\n"}
+,{"stream_name":"stdout","time":417.013943826,"data":"[    119s] loaded; device map sample: {'model.visual': '0', 'model.language_model.embed_tokens': '0', 'model.language_model.layers.0': '0', 'model.language_model.layers.1': '0', 'model.language_model.layers.2': '0', 'model.language_model.layers.3': '0'}\n"}
+,{"stream_name":"stdout","time":417.013985199,"data":"[    119s] full-attn layers [3, 7, 11, 15, 19, 23, 27, 31] looped [7, 11, 15, 19, 23, 27] pairs [(7, 11), (15, 19), (23, 27)] kv dim 2048\n"}
+,{"stream_name":"stdout","time":419.123852214,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":422.588694595,"data":"\n"}
+,{"stream_name":"stdout","time":422.700036779,"data":"Generating test split:   0%|          | 0/4358 [00:00\u003c?, ? examples/s]\n"}
+,{"stream_name":"stdout","time":422.704180021,"data":"Generating test split:  23%|██▎       | 1000/4358 [00:00\u003c00:00, 8994.32 examples/s]\n"}
+,{"stream_name":"stdout","time":422.704200881,"data":"Generating test split: 100%|██████████| 4358/4358 [00:00\u003c00:00, 37775.59 examples/s]\n"}
+,{"stream_name":"stdout","time":422.704535485,"data":"\n"}
+,{"stream_name":"stdout","time":422.753525258,"data":"Generating train split:   0%|          | 0/36718 [00:00\u003c?, ? examples/s]\n"}
+,{"stream_name":"stdout","time":422.753542108,"data":"Generating train split: 100%|██████████| 36718/36718 [00:00\u003c00:00, 752230.73 examples/s]\n"}
+,{"stream_name":"stdout","time":422.753896297,"data":"\n"}
+,{"stream_name":"stdout","time":422.75994164,"data":"Generating validation split:   0%|          | 0/3760 [00:00\u003c?, ? examples/s]\n"}
+,{"stream_name":"stdout","time":422.759956347,"data":"Generating validation split: 100%|██████████| 3760/3760 [00:00\u003c00:00, 635628.67 examples/s]\n"}
+,{"stream_name":"stdout","time":423.933602418,"data":"[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (297054 \u003e 262144). Running this sequence through the model will result in indexing errors\n"}
+,{"stream_name":"stdout","time":429.223208509,"data":"[    131s] data: calib 32, wiki eval 64, fineweb eval 64 x 2048\n"}
+,{"stream_name":"stdout","time":429.812721232,"data":"[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.\n"}
+,{"stream_name":"stdout","time":434.536331258,"data":"[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.\n"}
+,{"stream_name":"stdout","time":443.986231761,"data":"[    146s] fp16 warm-up: wiki nll 2.8110 on 4094 tokens, 277 tok/s\n"}
+,{"stream_name":"stdout","time":443.986281437,"data":"[    146s] eval: 64 wiki + 64 fineweb sequences per variant\n"}
+,{"stream_name":"stdout","time":673.235808312,"data":"[    375s] calibration done on 65536 tokens\n"}
+,{"stream_name":"stdout","time":678.93919602,"data":"[    381s] PCA energy (layer.visit): {\"3.0\": {\"energy@64\": 0.4265825507062295, \"energy@128\": 0.5523609103526014, \"energy@256\": 0.6922891432889269, \"energy@512\": 0.8336828754579331, \"energy@1024\": 0.9510415114381664}, \"7.0\": {\"energy@64\": 0.5072363121835644, \"energy@128\": 0.6422208510068056, \"energy@256\": 0.7787818884899785, \"energy@512\": 0.8955128285450514, \"energy@1024\": 0.9725596884620767}, \"7.1\": {\"energy@64\": 0.5679717745267474, \"energy@128\": 0.6968234652604813, \"energy@256\": 0.8210211410663512, \"energy@512\": 0.920020833134287, \"energy@1024\": 0.9799296358692133}, \"11.0\": {\"energy@64\": 0.5657953807713028, \"energy@128\": 0.6977068939080971, \"energy@256\": 0.8255979469020426, \"energy@512\": 0.9251369679903475, \"energy@1024\": 0.9816105067265868}, \"11.1\": {\"energy@64\": 0.6229687834340869, \"energy@128\": 0.7448964121680565, \"energy@256\": 0.8582958261973079, \"energy@512\": 0.9424070207369514, \"energy@1024\": 0.9866329457855112}, \"15.0\": {\"energy@64\": 0.5367292593109396, \"energy@128\": 0.6769567569454048, \"energy@256\": 0.8123502478726925, \"energy@512\": 0.9211689968862772, \"energy@1024\": 0.9823066582586679}, \"15.1\": {\"energy@64\": 0.5989896697076115, \"energy@128\": 0.7315695851840962, \"energy@256\": 0.8495811725229917, \"energy@512\": 0.9390112075938674, \"energy@1024\": 0.9867286019381585}, \"19.0\": {\"energy@64\": 0.4826834606230093, \"energy@128\": 0.6191281293131061, \"energy@256\": 0.7645076450149826, \"energy@512\": 0.8979835389402003, \"energy@1024\": 0.9800340109598582}, \"19.1\": {\"energy@64\": 0.5379544306756044, \"energy@128\": 0.6724029015875859, \"energy@256\": 0.8071095612423109, \"energy@512\": 0.922563490266795, \"energy@1024\": 0.9857448929607516}, \"23.0\": {\"energy@64\": 0.4904270282633702, \"energy@128\": 0.640068852620609, \"energy@256\": 0.7936310867025235, \"energy@512\": 0.9235916031304906, \"energy@1024\": 0.9855461614095241}, \"23.1\": {\"energy@64\": 0.4840981171199293, \"energy@128\": 0.6356253023077807, \"energy@256\": 0.7954230291206508, \"energy@512\": 0.9335827906335409, \"energy@1024\": 0.9883906060190041}, \"27.0\": {\"energy@64\": 0.481334665185014, \"energy@128\": 0.6762868027049836, \"energy@256\": 0.8594661866087248, \"energy@512\": 0.9700933990188223, \"energy@1024\": 0.9947836466220322}, \"27.1\": {\"energy@64\": 0.44916781224960584, \"energy@128\": 0.6440607537151449, \"energy@256\": 0.8480704801431821, \"energy@512\": 0.968399097095457, \"energy@1024\": 0.9942876220718775}, \"31.0\": {\"energy@64\": 0.4630494731917428, \"energy@128\": 0.6219621561192865, \"energy@256\": 0.7891944988939491, \"energy@512\": 0.9202315436202924, \"energy@1024\": 0.9850350169625433}}\n"}
+,{"stream_name":"stdout","time":679.323484384,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":679.323902987,"data":"  File \"/tmp/kv_analysis.py\", line 356, in \u003cmodule\u003e\n"}
+,{"stream_name":"stdout","time":679.323926784,"data":"    B = (Cba @ Pr) / lam\n"}
+,{"stream_name":"stdout","time":679.323933172,"data":"         ~~~~^~~~\n"}
+,{"stream_name":"stdout","time":679.323938383,"data":"RuntimeError: Expected all tensors to be on the same device, but got mat2 is on cuda:0, different from other tensors on cuda:1 (when checking argument in method wrapper_CUDA_mm)\n"}
+,{"stream_name":"stdout","time":686.463366495,"data":"[    686s] exit 1\n"}
+,{"stream_name":"stderr","time":686.464049164,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":686.464557609,"data":"  File \"/kaggle/src/script.py\", line 1478, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":686.464594992,"data":"    main()\n"}
+,{"stream_name":"stderr","time":686.464598178,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":686.464600393,"data":"  File \"/kaggle/src/script.py\", line 1472, in main\n"}
+,{"stream_name":"stderr","time":686.464602826,"data":"    raise RuntimeError(f\"kv_analysis failed (rc={rc}); see the log above\")\n"}
+,{"stream_name":"stderr","time":686.464606186,"data":"RuntimeError: kv_analysis failed (rc=1); see the log above\n"}
+,{"stream_name":"stdout","time":686.464738054,"data":"[    686s] FAILED; key diff of the converted directory against the Preview checkpoint follows\n"}
+,{"stream_name":"stdout","time":694.847201701,"data":"[    694s] converted shards: ['model-00001-of-00006.safetensors', 'model-00002-of-00006.safetensors', 'model-00003-of-00006.safetensors', 'model-00004-of-00006.safetensors', 'model-00005-of-00006.safetensors', 'model-00006-of-00006.safetensors']\n"}
+,{"stream_name":"stdout","time":694.854075966,"data":"[    694s] KEY DIFF: converted 523 / preview 871 tensors; missing 0, unexpected 0, shape/dtype mismatch 0, index files absent []\n"}
+,{"stream_name":"stderr","time":697.046246846,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":697.046282127,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":697.356984781,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":697.35700816,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":698.149812077,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":699.229000124,"data":"[NbConvertApp] Writing 403540 bytes to __results__.html\n"}
+]

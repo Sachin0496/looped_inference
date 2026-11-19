@@ -1,0 +1,39 @@
+[{"stream_name":"stdout","time":0.862240422,"data":"[      0s] $ pip install -q 'transformers==5.18.0' 'accelerate\u003e=1.11,\u003c2' 'safetensors\u003e=0.8' datasets 2\u003e\u00261 | tail -2\n"}
+,{"stream_name":"stdout","time":18.32146988,"data":"[     17s] $ pip install -q --no-deps git+https://github.com/OpenSenseNova/SenseNova-Loop.git 2\u003e\u00261 | tail -2\n"}
+,{"stream_name":"stdout","time":34.882376988,"data":"[     34s] torch 2.11.0+cu130 gpus 2 ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stderr","time":35.325003794,"data":"\rFetching 17 files:   0%|          | 0/17 [00:00\u003c?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":114.537927446,"data":"\rFetching 17 files:   6%|▌         | 1/17 [00:00\u003c00:02,  6.54it/s]\rFetching 17 files:  18%|█▊        | 3/17 [00:00\u003c00:01, 12.83it/s]\rFetching 17 files:  18%|█▊        | 3/17 [00:20\u003c00:01, 12.83it/s]\rFetching 17 files:  24%|██▎       | 4/17 [00:54\u003c04:04, 18.78s/it]\rFetching 17 files:  29%|██▉       | 5/17 [00:54\u003c02:31, 12.64s/it]\rFetching 17 files:  35%|███▌      | 6/17 [00:54\u003c01:34,  8.63s/it]\rFetching 17 files:  41%|████      | 7/17 [00:54\u003c00:59,  5.96s/it]\rFetching 17 files:  47%|████▋     | 8/17 [01:04\u003c01:04,  7.19s/it]\rFetching 17 files:  53%|█████▎    | 9/17 [01:05\u003c00:40,  5.05s/it]\rFetching 17 files:  59%|█████▉    | 10/17 [01:05\u003c00:24,  3.57s/it]\rFetching 17 files:  76%|███████▋  | 13/17 [01:05\u003c00:06,  1.59s/it]\rFetching 17 files:  88%|████████▊ | 15/17 [01:19\u003c00:06,  3.45s/it]\rFetching 17 files: 100%|██████████| 17/17 [01:19\u003c00:00,  4.67s/it]\n"}
+,{"stream_name":"stdout","time":114.538078132,"data":"[    114s] weights at /tmp/weights\n"}
+,{"stream_name":"stderr","time":146.882819839,"data":"[transformers] The tokenizer you are loading from '/tmp/weights' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.\n"}
+,{"stream_name":"stderr","time":147.331967359,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":147.333237416,"data":"  File \"/kaggle/src/script.py\", line 93, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":147.333259352,"data":"    model = AutoModelForCausalLM.from_pretrained(\n"}
+,{"stream_name":"stderr","time":147.333264617,"data":"        path, config=cfg, dtype=DTYPE, attn_implementation=\"sdpa\", device_map=\"auto\",\n"}
+,{"stream_name":"stderr","time":147.333269691,"data":"        max_memory={0: \"13GiB\", 1: \"14GiB\", \"cpu\": \"24GiB\"})\n"}
+,{"stream_name":"stderr","time":147.333274925,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/auto/auto_factory.py\", line 409, in from_pretrained\n"}
+,{"stream_name":"stderr","time":147.33327992,"data":"    return model_class.from_pretrained(\n"}
+,{"stream_name":"stderr","time":147.333284438,"data":"           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n"}
+,{"stream_name":"stderr","time":147.333289232,"data":"        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs\n"}
+,{"stream_name":"stderr","time":147.333293872,"data":"        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":147.333298712,"data":"    )\n"}
+,{"stream_name":"stderr","time":147.333303138,"data":"    ^\n"}
+,{"stream_name":"stderr","time":147.333307607,"data":"  File \"/usr/local/lib/python3.13/dist-packages/sensenova_loop/models/modeling_sensenova_loop.py\", line 429, in from_pretrained\n"}
+,{"stream_name":"stderr","time":147.333327253,"data":"    model, info = super().from_pretrained(*args, output_loading_info=True, **kwargs)\n"}
+,{"stream_name":"stderr","time":147.333331137,"data":"                  ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":147.333334672,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/modeling_utils.py\", line 4339, in from_pretrained\n"}
+,{"stream_name":"stderr","time":147.333338471,"data":"    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)\n"}
+,{"stream_name":"stderr","time":147.333342083,"data":"                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":147.333345812,"data":"  File \"/usr/local/lib/python3.13/dist-packages/sensenova_loop/models/modeling_sensenova_loop.py\", line 438, in _load_pretrained_model\n"}
+,{"stream_name":"stderr","time":147.333349704,"data":"    checkpoint_files, load_config = include_mtp_companion(checkpoint_files, load_config)\n"}
+,{"stream_name":"stderr","time":147.333353349,"data":"                                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":147.33335684,"data":"  File \"/usr/local/lib/python3.13/dist-packages/sensenova_loop/models/mtp_loading.py\", line 21, in include_mtp_companion\n"}
+,{"stream_name":"stderr","time":147.33336062,"data":"    with safe_open(filename, framework=\"pt\", device=\"cpu\") as saved:\n"}
+,{"stream_name":"stderr","time":147.333364348,"data":"         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":147.333367809,"data":"FileNotFoundError: No such file or directory: /tmp/weights/mtp.safetensors\n"}
+,{"stream_name":"stderr","time":153.58257436,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":153.582603339,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":153.876161813,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":153.876210899,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":154.696045627,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":155.799859532,"data":"[NbConvertApp] Writing 386809 bytes to __results__.html\n"}
+]

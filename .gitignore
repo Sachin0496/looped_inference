@@ -1,0 +1,32 @@
+# Model weights and binaries
+*.pt
+*.pth
+*.safetensors
+*.gguf
+*.so
+*.o
+*.ninja
+build.ninja
+.ninja_*
+
+# Build outputs (nvcc/ninja copies, kaggle push staging), anywhere in the tree
+build/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+ENV/
+
+# OS and HTML artifacts
+.DS_Store
+*.html
+
+# Files over 5 MB (explicit)
+results/kv_analysis_v4/pca_bases.pt
+results/gemv_bench_v1/build/w4_gemv.cuda.o
+results/gemv_bench_v1/build/w4_gemv.so
+results/gemv_bench_v2/build/w4_gemv.cuda.o
+results/gemv_bench_v2/build/w4_gemv.so

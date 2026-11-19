@@ -1,0 +1,42 @@
+[{"stream_name":"stdout","time":0.910896934,"data":"[      0s] $ pip install -q 'transformers==5.18.0' 'accelerate\u003e=1.11,\u003c2' 'safetensors\u003e=0.8' datasets 2\u003e\u00261 | tail -2\n"}
+,{"stream_name":"stdout","time":17.773491363,"data":"[     17s] $ pip install -q --no-deps git+https://github.com/OpenSenseNova/SenseNova-Loop.git 2\u003e\u00261 | tail -2\n"}
+,{"stream_name":"stdout","time":34.846065306,"data":"[     34s] torch 2.11.0+cu130 gpus 2 ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stderr","time":35.118228329,"data":"\rFetching 17 files:   0%|          | 0/17 [00:00\u003c?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":112.966359013,"data":"\rFetching 17 files:   6%|▌         | 1/17 [00:00\u003c00:02,  6.86it/s]\rFetching 17 files:  24%|██▎       | 4/17 [01:09\u003c04:05, 18.86s/it]\rFetching 17 files:  41%|████      | 7/17 [01:17\u003c01:40, 10.08s/it]\rFetching 17 files:  71%|███████   | 12/17 [01:17\u003c00:22,  4.44s/it]\rFetching 17 files:  94%|█████████▍| 16/17 [01:17\u003c00:02,  2.72s/it]\rFetching 17 files: 100%|██████████| 17/17 [01:17\u003c00:00,  4.58s/it]\n"}
+,{"stream_name":"stdout","time":112.966525926,"data":"[    112s] weights at /tmp/weights\n"}
+,{"stream_name":"stderr","time":148.39644782,"data":"[transformers] The tokenizer you are loading from '/tmp/weights' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.\n"}
+,{"stream_name":"stderr","time":149.271326026,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":149.272733524,"data":"  File \"/kaggle/src/script.py\", line 94, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":149.272749364,"data":"    model = AutoModelForCausalLM.from_pretrained(\n"}
+,{"stream_name":"stderr","time":149.272758184,"data":"        path, config=cfg, dtype=DTYPE, attn_implementation=\"sdpa\", device_map=\"auto\",\n"}
+,{"stream_name":"stderr","time":149.272762648,"data":"        max_memory={0: \"13GiB\", 1: \"14GiB\", \"cpu\": \"24GiB\"})\n"}
+,{"stream_name":"stderr","time":149.272780288,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/models/auto/auto_factory.py\", line 409, in from_pretrained\n"}
+,{"stream_name":"stderr","time":149.272785623,"data":"    return model_class.from_pretrained(\n"}
+,{"stream_name":"stderr","time":149.2727909,"data":"           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n"}
+,{"stream_name":"stderr","time":149.272795408,"data":"        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs\n"}
+,{"stream_name":"stderr","time":149.272800712,"data":"        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":149.272805528,"data":"    )\n"}
+,{"stream_name":"stderr","time":149.272810039,"data":"    ^\n"}
+,{"stream_name":"stderr","time":149.27281439,"data":"  File \"/usr/local/lib/python3.13/dist-packages/sensenova_loop/models/modeling_sensenova_loop.py\", line 429, in from_pretrained\n"}
+,{"stream_name":"stderr","time":149.27281963,"data":"    model, info = super().from_pretrained(*args, output_loading_info=True, **kwargs)\n"}
+,{"stream_name":"stderr","time":149.272824114,"data":"                  ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":149.272834304,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/modeling_utils.py\", line 4339, in from_pretrained\n"}
+,{"stream_name":"stderr","time":149.27284818,"data":"    loading_info, disk_offload_index = cls._load_pretrained_model(model, state_dict, checkpoint_files, load_config)\n"}
+,{"stream_name":"stderr","time":149.272851047,"data":"                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":149.27285368,"data":"  File \"/usr/local/lib/python3.13/dist-packages/sensenova_loop/models/modeling_sensenova_loop.py\", line 439, in _load_pretrained_model\n"}
+,{"stream_name":"stderr","time":149.272856238,"data":"    return hf.Qwen3_5ForConditionalGeneration._load_pretrained_model(\n"}
+,{"stream_name":"stderr","time":149.27285863,"data":"           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n"}
+,{"stream_name":"stderr","time":149.272861052,"data":"        model, state_dict, checkpoint_files, load_config, expected_keys,\n"}
+,{"stream_name":"stderr","time":149.272863432,"data":"        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":149.272865894,"data":"    )\n"}
+,{"stream_name":"stderr","time":149.272868151,"data":"    ^\n"}
+,{"stream_name":"stderr","time":149.27287432,"data":"  File \"/usr/local/lib/python3.13/dist-packages/transformers/modeling_utils.py\", line 4470, in _load_pretrained_model\n"}
+,{"stream_name":"stderr","time":149.272877003,"data":"    file_pointer = safe_open(file, framework=\"pt\", device=device, backend=backend)\n"}
+,{"stream_name":"stderr","time":149.272880736,"data":"FileNotFoundError: No such file or directory: /tmp/weights/mtp.safetensors\n"}
+,{"stream_name":"stderr","time":155.801187755,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":155.801221707,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":156.119448399,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":156.119478415,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":156.93477705,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":158.116598133,"data":"[NbConvertApp] Writing 387112 bytes to __results__.html\n"}
+]

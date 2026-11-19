@@ -1,0 +1,192 @@
+{
+ "device": "Tesla T4",
+ "torch": "2.11.0+cu130",
+ "correctness": [
+  {
+   "T": 1,
+   "steps": 64,
+   "max_abs_over_outmax": 5.3879310144111514e-05,
+   "rel_l2": 1.0656212907633744e-05,
+   "max_ulp": 3,
+   "min_frac_ulp_le1": 0.999755859375,
+   "outmax": 19.5,
+   "final_state_max_abs_over_max": 3.380029767185988e-08,
+   "final_state_rel_l2": 6.300739840980896e-08,
+   "final_state_max_abs": 5.960464477539063e-08,
+   "conv_state_max_abs_diff": 0.0,
+   "trace": [
+    {
+     "step": 0,
+     "max_abs": 0.0,
+     "max_ulp": 0
+    },
+    {
+     "step": 1,
+     "max_abs": 3.0517578125e-05,
+     "max_ulp": 2
+    },
+    {
+     "step": 7,
+     "max_abs": 0.0,
+     "max_ulp": 0
+    },
+    {
+     "step": 31,
+     "max_abs": 0.0,
+     "max_ulp": 0
+    },
+    {
+     "step": 63,
+     "max_abs": 0.0,
+     "max_ulp": 0
+    }
+   ],
+   "ok": true,
+   "bf16_ulp_at_outmax": 0.15234375
+  },
+  {
+   "T": 4,
+   "steps": 64,
+   "max_abs_over_outmax": 0.0006281406967900693,
+   "rel_l2": 0.0001622643758310005,
+   "max_ulp": 40,
+   "min_frac_ulp_le1": 0.999755859375,
+   "outmax": 17.625,
+   "final_state_max_abs_over_max": 1.23800617757297e-07,
+   "final_state_rel_l2": 7.185108330531875e-08,
+   "final_state_max_abs": 1.1920928955078125e-07,
+   "conv_state_max_abs_diff": 0.0,
+   "trace": [
+    {
+     "step": 0,
+     "max_abs": 9.5367431640625e-07,
+     "max_ulp": 1
+    },
+    {
+     "step": 1,
+     "max_abs": 2.9802322387695312e-08,
+     "max_ulp": 1
+    },
+    {
+     "step": 7,
+     "max_abs": 0.0,
+     "max_ulp": 0
+    },
+    {
+     "step": 31,
+     "max_abs": 1.52587890625e-05,
+     "max_ulp": 2
+    },
+    {
+     "step": 63,
+     "max_abs": 0.00048828125,
+     "max_ulp": 2
+    }
+   ],
+   "ok": true,
+   "bf16_ulp_at_outmax": 0.1376953125
+  },
+  {
+   "T": 16,
+   "steps": 64,
+   "max_abs_over_outmax": 0.0006983240018598735,
+   "rel_l2": 0.00010970500443363562,
+   "max_ulp": 45,
+   "min_frac_ulp_le1": 0.9999237060546875,
+   "outmax": 22.375,
+   "final_state_max_abs_over_max": 1.5340228287641366e-07,
+   "final_state_rel_l2": 6.570530075578063e-08,
+   "final_state_max_abs": 1.7881393432617188e-07,
+   "conv_state_max_abs_diff": 0.0,
+   "trace": [
+    {
+     "step": 0,
+     "max_abs": 0.0009765625,
+     "max_ulp": 4
+    },
+    {
+     "step": 1,
+     "max_abs": 0.0001220703125,
+     "max_ulp": 2
+    },
+    {
+     "step": 7,
+     "max_abs": 7.62939453125e-06,
+     "max_ulp": 1
+    },
+    {
+     "step": 31,
+     "max_abs": 0.000244140625,
+     "max_ulp": 12
+    },
+    {
+     "step": 63,
+     "max_abs": 0.00048828125,
+     "max_ulp": 2
+    }
+   ],
+   "ok": true,
+   "bf16_ulp_at_outmax": 0.1748046875
+  }
+ ],
+ "speed": [
+  {
+   "T": 1,
+   "clocks_before": "855 MHz, 1590 MHz, 5000 MHz, 43, 28.23 W, 0x0000000000000000\n300 MHz, 1590 MHz, 405 MHz, 48, 13.73 W, 0x0000000000000001",
+   "ref_eager_us": 1083.5417938232422,
+   "ref_graph_us": 331.4271926879883,
+   "kern_eager_us": 21.279680728912354,
+   "kern_graph_us": 14.611455917358398,
+   "state_bytes_per_call": 4194304,
+   "state_bw_gbs": 287.05585697433276,
+   "state_bw_frac_of_copy": 1.1829168228226183,
+   "all_bw_gbs": 298.2777366369341,
+   "kern_us_per_seq_step": 14.611455917358398,
+   "ref_graph_us_per_seq_step": 331.4271926879883,
+   "speedup_vs_ref_graph": 22.682694631015725,
+   "speedup_vs_ref_eager": 74.15700392566598,
+   "clocks_after": "1590 MHz, 1590 MHz, 5000 MHz, 44, 45.47 W, 0x0000000000000000\n300 MHz, 1590 MHz, 405 MHz, 48, 10.26 W, 0x0000000000000001"
+  },
+  {
+   "T": 4,
+   "clocks_before": "1590 MHz, 1590 MHz, 5000 MHz, 44, 33.53 W, 0x0000000000000000\n300 MHz, 1590 MHz, 405 MHz, 48, 10.06 W, 0x0000000000000001",
+   "ref_eager_us": 1032.8787231445312,
+   "ref_graph_us": 649.6702575683594,
+   "kern_eager_us": 82.9361629486084,
+   "kern_graph_us": 82.92382049560547,
+   "state_bytes_per_call": 16777216,
+   "state_bw_gbs": 202.32082771547056,
+   "state_bw_frac_of_copy": 0.8337356820886134,
+   "all_bw_gbs": 210.23015938977224,
+   "kern_us_per_seq_step": 20.730955123901367,
+   "ref_graph_us_per_seq_step": 162.41756439208984,
+   "speedup_vs_ref_graph": 7.8345432432504545,
+   "speedup_vs_ref_eager": 12.455754172581429,
+   "clocks_after": "1560 MHz, 1590 MHz, 5000 MHz, 47, 36.49 W, 0x0000000000000004\n300 MHz, 1590 MHz, 405 MHz, 48, 10.06 W, 0x0000000000000001"
+  },
+  {
+   "T": 16,
+   "clocks_before": "1590 MHz, 1590 MHz, 5000 MHz, 45, 34.71 W, 0x0000000000000000\n300 MHz, 1590 MHz, 405 MHz, 48, 12.05 W, 0x0000000000000001",
+   "ref_eager_us": 2185.0930786132812,
+   "ref_graph_us": 2178.0581665039062,
+   "kern_eager_us": 312.77679443359375,
+   "kern_graph_us": 312.05975341796875,
+   "state_bytes_per_call": 67108864,
+   "state_bw_gbs": 215.0513267570114,
+   "state_bw_frac_of_copy": 0.886196278565878,
+   "all_bw_gbs": 223.45833205412234,
+   "kern_us_per_seq_step": 19.503734588623047,
+   "ref_graph_us_per_seq_step": 136.12863540649414,
+   "speedup_vs_ref_graph": 6.979618943640719,
+   "speedup_vs_ref_eager": 7.002162421395611,
+   "clocks_after": "1545 MHz, 1590 MHz, 5000 MHz, 49, 69.86 W, 0x0000000000000004\n300 MHz, 1590 MHz, 405 MHz, 48, 10.06 W, 0x0000000000000001"
+  }
+ ],
+ "all_correct": true,
+ "copy_bw_gbs": 242.66782873995663,
+ "per_token_ms_42_visits": {
+  "ref_eager": 45.50875534057617,
+  "ref_graph": 13.919942092895507,
+  "kernel_graph": 0.6136811485290528
+ }
+}

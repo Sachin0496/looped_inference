@@ -1,0 +1,179 @@
+[      0s] disk (start):
+[      0s] $ df -h /tmp /kaggle/working
+Filesystem      Size  Used Avail Use% Mounted on
+overlay         8.0T  7.1T  967G  89% /
+/dev/loop2       20G  240K   20G   1% /kaggle/working
+[      0s] exit 0
+[      0s] $ /usr/bin/python3 -m pip install -q gguf huggingface_hub
+[      6s] exit 0
+[      6s] downloading sensenova/SenseNova-Loop-9B-GGUF SenseNova-Loop-9B-BF16.gguf (18.4 GB)
+[     97s] gguf at /tmp/release_src/SenseNova-Loop-9B-BF16.gguf 18.42 GB
+[     99s] preview config/tokenizer files: ['chat_template.jinja', 'config.json', 'generation_config.json', 'model.safetensors.index.json', 'preprocessor_config.json', 'processor_config.json', 'tokenizer.json', 'tokenizer_config.json', 'video_preprocessor_config.json']
+[     99s] $ /usr/bin/python3 -u /tmp/gguf_to_hf.py --gguf /tmp/release_src/SenseNova-Loop-9B-BF16.gguf --config /tmp/preview_meta/config.json --preview-index /tmp/preview_meta/model.safetensors.index.json --check
+GGUF v3: 490 tensors, data starts at byte 10972576
+config vs GGUF metadata:
+  OK   loop.start: GGUF=4 config=4
+  OK   loop.end: GGUF=28 config=28
+  OK   loop.count: GGUF=2 config=2
+  OK   mhc.start: GGUF=4 config=4
+  OK   mhc.end: GGUF=28 config=28
+  OK   mhc.streams: GGUF=2 config=2
+  OK   mhc.iterations: GGUF=20 config=20
+  OK   mhc.fixed_identity: GGUF=False config=False
+  OK   mhc.pre_scale: GGUF=1.0 config=1.0
+  OK   block_count (phys+mtp): GGUF=57 config=57
+  OK   ssm.conv_kernel: GGUF=4 config=4
+  OK   ssm.state_size: GGUF=128 config=128
+  OK   ssm.group_count: GGUF=16 config=16
+  OK   ssm.time_step_rank: GGUF=32 config=32
+  OK   embedding_length: GGUF=4096 config=4096
+  OK   feed_forward_length: GGUF=12288 config=12288
+  OK   attention.head_count: GGUF=16 config=16
+  OK   attention.head_count_kv: GGUF=4 config=4
+  OK   attention.key_length: GGUF=256 config=256
+  OK   rope.freq_base: GGUF=10000000.0 config=10000000
+  OK   rope.dimension_count: GGUF=64 config=64
+  DIFF rope.scaling.type: GGUF=yarn config=None
+  DIFF context_length: GGUF=524288 config=262144
+  OK   recurrent_layers (per slot): GGUF=True config=True
+GGUF tensors consumed: 490/490
+HF outputs derived: 538 (distinct names 538), Preview index names: 871
+HF names with no GGUF source (vision, expected): 333
+HF names with no GGUF source (UNEXPECTED): 0
+problems: 0
+CHECK PASS
+[    108s] exit 0
+[    108s] $ /usr/bin/python3 -u /tmp/gguf_to_hf.py --gguf /tmp/release_src/SenseNova-Loop-9B-BF16.gguf --config /tmp/preview_meta/config.json --preview-index /tmp/preview_meta/model.safetensors.index.json --text-only --out /tmp/release_hf
+GGUF v3: 490 tensors, data starts at byte 10972576
+WARNING: 333 vision tensors not written (not in the GGUF). Pass --visual-src DIR, or --text-only; the output will not load into the full model without them.
+config: rope: GGUF declares YaRN (factor 2.0, original 262144); written into text_config.rope_parameters. Preview config has none. Pass --keep-config-rope to keep the config unchanged.
+config: --text-only: mtp_num_hidden_layers set to 0
+wrote model-00001-of-00006.safetensors: 1 tensors, 2.03 GB
+wrote model-00002-of-00006.safetensors: 68 tensors, 3.90 GB
+wrote model-00003-of-00006.safetensors: 156 tensors, 3.90 GB
+wrote model-00004-of-00006.safetensors: 156 tensors, 3.90 GB
+wrote model-00005-of-00006.safetensors: 133 tensors, 3.97 GB
+wrote model-00006-of-00006.safetensors: 9 tensors, 0.22 GB
+done: /tmp/release_hf
+[    297s] exit 0
+[    297s] converted dir: ['chat_template.jinja', 'config.json', 'generation_config.json', 'model-00001-of-00006.safetensors', 'model-00002-of-00006.safetensors', 'model-00003-of-00006.safetensors', 'model-00004-of-00006.safetensors', 'model-00005-of-00006.safetensors', 'model-00006-of-00006.safetensors', 'model.safetensors.index.json', 'preprocessor_config.json', 'processor_config.json', 'tokenizer.json', 'tokenizer_config.json', 'video_preprocessor_config.json']
+[    297s] deleted GGUF to free disk
+[    297s] disk (after conversion):
+[    297s] $ df -h /tmp /kaggle/working
+Filesystem      Size  Used Avail Use% Mounted on
+overlay         8.0T  7.1T  951G  89% /
+/dev/loop2       20G  240K   20G   1% /kaggle/working
+[    297s] exit 0
+[    297s] $ /usr/bin/python3 -u /tmp/kv_analysis.py
+[      0s] $ pip install -q 'transformers==5.18.0' 'accelerate>=1.11,<2' 'safetensors>=0.8' datasets 2>&1 | tail -2
+[     19s] $ pip install -q --no-deps git+https://github.com/OpenSenseNova/SenseNova-Loop.git 2>&1 | tail -2
+[     35s] torch 2.11.0+cu130 gpus 2 ['Tesla T4', 'Tesla T4']
+[     35s] weights at /tmp/release_hf
+[transformers] The tokenizer you are loading from '/tmp/release_hf' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+
+Loading weights:   0%|          | 0/523 [00:00<?, ?it/s]
+Loading weights:   0%|          | 1/523 [00:28<4:04:59, 28.16s/it]
+Loading weights:   0%|          | 2/523 [00:31<1:55:48, 13.34s/it]
+Loading weights:  27%|██▋       | 140/523 [00:31<00:44,  8.56it/s]
+Loading weights:  31%|███       | 161/523 [00:33<00:40,  8.86it/s]
+Loading weights:  33%|███▎      | 173/523 [00:33<00:35,  9.96it/s]
+Loading weights:  35%|███▍      | 183/523 [00:35<00:36,  9.29it/s]
+Loading weights:  36%|███▋      | 190/523 [00:36<00:38,  8.55it/s]
+Loading weights:  38%|███▊      | 200/523 [00:36<00:32,  9.94it/s]
+Loading weights:  40%|███▉      | 208/523 [00:38<00:34,  9.04it/s]
+Loading weights:  40%|████      | 211/523 [00:38<00:32,  9.46it/s]
+Loading weights:  42%|████▏     | 221/523 [00:38<00:24, 12.14it/s]
+Loading weights:  43%|████▎     | 226/523 [00:39<00:32,  9.05it/s]
+Loading weights:  45%|████▌     | 237/523 [00:39<00:22, 12.98it/s]
+Loading weights:  46%|████▌     | 241/523 [00:40<00:22, 12.63it/s]
+Loading weights:  47%|████▋     | 244/523 [00:41<00:31,  8.75it/s]
+Loading weights:  47%|████▋     | 247/523 [00:41<00:28,  9.79it/s]
+Loading weights:  48%|████▊     | 253/523 [00:41<00:24, 10.95it/s]
+Loading weights:  49%|████▉     | 255/523 [00:42<00:38,  6.96it/s]
+Loading weights:  51%|█████▏    | 269/523 [00:43<00:19, 12.87it/s]
+Loading weights:  52%|█████▏    | 272/523 [00:43<00:17, 14.07it/s]
+Loading weights:  53%|█████▎    | 277/523 [00:44<00:27,  8.82it/s]
+Loading weights:  53%|█████▎    | 279/523 [00:44<00:27,  8.80it/s]
+Loading weights:  55%|█████▌    | 290/523 [00:44<00:15, 14.86it/s]
+Loading weights:  56%|█████▋    | 295/523 [00:46<00:24,  9.32it/s]
+Loading weights:  59%|█████▊    | 306/523 [00:46<00:14, 14.68it/s]
+Loading weights:  59%|█████▉    | 309/523 [00:46<00:14, 14.99it/s]
+Loading weights:  60%|█████▉    | 313/523 [00:47<00:23,  8.94it/s]
+Loading weights:  62%|██████▏   | 322/523 [00:47<00:16, 12.21it/s]
+Loading weights:  62%|██████▏   | 325/523 [00:48<00:23,  8.31it/s]
+Loading weights:  65%|██████▍   | 338/523 [00:49<00:12, 14.65it/s]
+Loading weights:  66%|██████▌   | 346/523 [00:49<00:11, 15.20it/s]
+Loading weights:  70%|██████▉   | 364/523 [00:49<00:07, 22.42it/s]
+Loading weights:  73%|███████▎  | 382/523 [00:50<00:05, 25.41it/s]
+Loading weights:  75%|███████▍  | 392/523 [00:50<00:04, 27.95it/s]
+Loading weights:  78%|███████▊  | 407/523 [00:51<00:03, 34.62it/s]
+Loading weights:  81%|████████▏ | 425/523 [00:51<00:02, 44.03it/s]
+Loading weights:  83%|████████▎ | 433/523 [00:51<00:01, 47.88it/s]
+Loading weights:  85%|████████▌ | 446/523 [00:51<00:01, 58.22it/s]
+Loading weights:  87%|████████▋ | 454/523 [00:51<00:01, 44.52it/s]
+Loading weights:  88%|████████▊ | 462/523 [00:51<00:01, 48.43it/s]
+Loading weights:  92%|█████████▏| 479/523 [00:51<00:00, 68.69it/s]
+Loading weights:  93%|█████████▎| 489/523 [00:52<00:00, 60.83it/s]
+Loading weights:  95%|█████████▌| 497/523 [00:53<00:01, 17.87it/s]
+Loading weights:  97%|█████████▋| 505/523 [00:54<00:00, 19.85it/s]
+Loading weights:  98%|█████████▊| 510/523 [00:55<00:01, 10.24it/s]
+Loading weights:  98%|█████████▊| 514/523 [00:56<00:01,  7.92it/s]
+Loading weights:  99%|█████████▉| 517/523 [00:56<00:00,  8.69it/s]
+Loading weights: 100%|██████████| 523/523 [00:56<00:00,  9.21it/s]
+[transformers] [1mSenseNovaLoopForConditionalGeneration LOAD REPORT[0m from: /tmp/release_hf
+Key                                                | Status  | 
+---------------------------------------------------+---------+-
+model.visual.blocks.{0...26}.norm2.bias            | MISSING | 
+model.visual.blocks.{0...26}.attn.qkv.weight       | MISSING | 
+model.visual.blocks.{0...26}.norm1.bias            | MISSING | 
+model.visual.blocks.{0...26}.mlp.linear_fc2.bias   | MISSING | 
+model.visual.blocks.{0...26}.attn.proj.bias        | MISSING | 
+model.visual.blocks.{0...26}.norm2.weight          | MISSING | 
+model.visual.blocks.{0...26}.mlp.linear_fc1.weight | MISSING | 
+model.visual.blocks.{0...26}.attn.proj.weight      | MISSING | 
+model.visual.blocks.{0...26}.mlp.linear_fc1.bias   | MISSING | 
+model.visual.blocks.{0...26}.norm1.weight          | MISSING | 
+model.visual.blocks.{0...26}.mlp.linear_fc2.weight | MISSING | 
+model.visual.blocks.{0...26}.attn.qkv.bias         | MISSING | 
+model.visual.patch_embed.proj.bias                 | MISSING | 
+model.visual.merger.linear_fc2.bias                | MISSING | 
+model.visual.merger.linear_fc1.weight              | MISSING | 
+model.visual.merger.norm.bias                      | MISSING | 
+model.visual.merger.linear_fc2.weight              | MISSING | 
+model.visual.pos_embed.weight                      | MISSING | 
+model.visual.merger.norm.weight                    | MISSING | 
+model.visual.merger.linear_fc1.bias                | MISSING | 
+model.visual.patch_embed.proj.weight               | MISSING | 
+
+Notes:
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+[    119s] loaded; device map sample: {'model.visual': '0', 'model.language_model.embed_tokens': '0', 'model.language_model.layers.0': '0', 'model.language_model.layers.1': '0', 'model.language_model.layers.2': '0', 'model.language_model.layers.3': '0'}
+[    119s] full-attn layers [3, 7, 11, 15, 19, 23, 27, 31] looped [7, 11, 15, 19, 23, 27] pairs [(7, 11), (15, 19), (23, 27)] kv dim 2048
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Generating test split:   0%|          | 0/4358 [00:00<?, ? examples/s]
+Generating test split:  23%|██▎       | 1000/4358 [00:00<00:00, 8994.32 examples/s]
+Generating test split: 100%|██████████| 4358/4358 [00:00<00:00, 37775.59 examples/s]
+
+Generating train split:   0%|          | 0/36718 [00:00<?, ? examples/s]
+Generating train split: 100%|██████████| 36718/36718 [00:00<00:00, 752230.73 examples/s]
+
+Generating validation split:   0%|          | 0/3760 [00:00<?, ? examples/s]
+Generating validation split: 100%|██████████| 3760/3760 [00:00<00:00, 635628.67 examples/s]
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (297054 > 262144). Running this sequence through the model will result in indexing errors
+[    131s] data: calib 32, wiki eval 64, fineweb eval 64 x 2048
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+[    146s] fp16 warm-up: wiki nll 2.8110 on 4094 tokens, 277 tok/s
+[    146s] eval: 64 wiki + 64 fineweb sequences per variant
+[    375s] calibration done on 65536 tokens
+[    381s] PCA energy (layer.visit): {"3.0": {"energy@64": 0.4265825507062295, "energy@128": 0.5523609103526014, "energy@256": 0.6922891432889269, "energy@512": 0.8336828754579331, "energy@1024": 0.9510415114381664}, "7.0": {"energy@64": 0.5072363121835644, "energy@128": 0.6422208510068056, "energy@256": 0.7787818884899785, "energy@512": 0.8955128285450514, "energy@1024": 0.9725596884620767}, "7.1": {"energy@64": 0.5679717745267474, "energy@128": 0.6968234652604813, "energy@256": 0.8210211410663512, "energy@512": 0.920020833134287, "energy@1024": 0.9799296358692133}, "11.0": {"energy@64": 0.5657953807713028, "energy@128": 0.6977068939080971, "energy@256": 0.8255979469020426, "energy@512": 0.9251369679903475, "energy@1024": 0.9816105067265868}, "11.1": {"energy@64": 0.6229687834340869, "energy@128": 0.7448964121680565, "energy@256": 0.8582958261973079, "energy@512": 0.9424070207369514, "energy@1024": 0.9866329457855112}, "15.0": {"energy@64": 0.5367292593109396, "energy@128": 0.6769567569454048, "energy@256": 0.8123502478726925, "energy@512": 0.9211689968862772, "energy@1024": 0.9823066582586679}, "15.1": {"energy@64": 0.5989896697076115, "energy@128": 0.7315695851840962, "energy@256": 0.8495811725229917, "energy@512": 0.9390112075938674, "energy@1024": 0.9867286019381585}, "19.0": {"energy@64": 0.4826834606230093, "energy@128": 0.6191281293131061, "energy@256": 0.7645076450149826, "energy@512": 0.8979835389402003, "energy@1024": 0.9800340109598582}, "19.1": {"energy@64": 0.5379544306756044, "energy@128": 0.6724029015875859, "energy@256": 0.8071095612423109, "energy@512": 0.922563490266795, "energy@1024": 0.9857448929607516}, "23.0": {"energy@64": 0.4904270282633702, "energy@128": 0.640068852620609, "energy@256": 0.7936310867025235, "energy@512": 0.9235916031304906, "energy@1024": 0.9855461614095241}, "23.1": {"energy@64": 0.4840981171199293, "energy@128": 0.6356253023077807, "energy@256": 0.7954230291206508, "energy@512": 0.9335827906335409, "energy@1024": 0.9883906060190041}, "27.0": {"energy@64": 0.481334665185014, "energy@128": 0.6762868027049836, "energy@256": 0.8594661866087248, "energy@512": 0.9700933990188223, "energy@1024": 0.9947836466220322}, "27.1": {"energy@64": 0.44916781224960584, "energy@128": 0.6440607537151449, "energy@256": 0.8480704801431821, "energy@512": 0.968399097095457, "energy@1024": 0.9942876220718775}, "31.0": {"energy@64": 0.4630494731917428, "energy@128": 0.6219621561192865, "energy@256": 0.7891944988939491, "energy@512": 0.9202315436202924, "energy@1024": 0.9850350169625433}}
+Traceback (most recent call last):
+  File "/tmp/kv_analysis.py", line 356, in <module>
+    B = (Cba @ Pr) / lam
+         ~~~~^~~~
+RuntimeError: Expected all tensors to be on the same device, but got mat2 is on cuda:0, different from other tensors on cuda:1 (when checking argument in method wrapper_CUDA_mm)
+[    686s] exit 1
+[    686s] FAILED; key diff of the converted directory against the Preview checkpoint follows
+[    694s] converted shards: ['model-00001-of-00006.safetensors', 'model-00002-of-00006.safetensors', 'model-00003-of-00006.safetensors', 'model-00004-of-00006.safetensors', 'model-00005-of-00006.safetensors', 'model-00006-of-00006.safetensors']
+[    694s] KEY DIFF: converted 523 / preview 871 tensors; missing 0, unexpected 0, shape/dtype mismatch 0, index files absent []
